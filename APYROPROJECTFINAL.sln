@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APYROPROJECTFINAL", "APYROPROJECTFINAL\APYROPROJECTFINAL.csproj", "{F3EA8A3A-71FA-411A-A0F3-E47D41C038E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8953A662-C7AB-4806-BAC0-077479ECA325}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3EA8A3A-71FA-411A-A0F3-E47D41C038E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3EA8A3A-71FA-411A-A0F3-E47D41C038E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3EA8A3A-71FA-411A-A0F3-E47D41C038E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3EA8A3A-71FA-411A-A0F3-E47D41C038E9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {137768A4-CC1C-4635-ABB3-B74BB2C3EC74}
+	EndGlobalSection
+EndGlobal

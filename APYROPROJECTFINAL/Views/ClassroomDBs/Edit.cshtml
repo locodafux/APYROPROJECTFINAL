@@ -1,0 +1,128 @@
+﻿@model APYROPROJECTFINAL.Models.ClassroomDB
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_EducatorDashboardLayout.cshtml";
+}
+
+
+
+
+
+
+
+<div class="row col-md-12" style="margin-left:10%">
+    <div class="col-md-12">
+
+        <div class="widget p-5 row" style="background-color:#212b36 ; margin-top:-50px">
+            <div class="col-md-1"></div>
+            <div class="left  col col-md-5 p-3 ">
+                <h2 class="card-title  pb-1 fw-bold">Edit Class</h2>
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ClassID" />
+
+                                <div class="form-group" style="display:none">
+                    <label asp-for="Attendance_Option" class="control-label"></label>
+                    <input asp-for="Attendance_Option" class="form-control" />
+                    <span asp-validation-for="Attendance_Option" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group" style="display:none">
+                    <label asp-for="ClassCode" class="control-label"></label>
+                    <input asp-for="ClassCode" class="form-control" />
+                    <span asp-validation-for="ClassCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group" style="display:none">
+                    <label asp-for="Educator_Name" class="control-label"></label>
+                    <input asp-for="Educator_Name" class="form-control" />
+                    <span asp-validation-for="Educator_Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-2" style="width: 95%">
+                      
+                        <input asp-for="ClassName" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase"  />
+                        <label asp-for="ClassName" class="form-label"></label>
+                        <span asp-validation-for="ClassName" class="text-danger"></span>
+                    </div>
+
+            
+
+                    <div class="form-floating mb-2" style="width: 95%">
+                      
+                        <input asp-for="Section" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase"  />
+                        <label asp-for="Section" class="form-label"></label>
+                        <span asp-validation-for="Section" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-2" style="width: 95%">
+                  
+                        <input asp-for="Attendance_Start" type="time" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase"  />
+                        <label asp-for="Attendance_Start" class="form-label">Time Starts</label>
+                        <span asp-validation-for="Attendance_Start" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-2" style="width: 95%">
+          
+                        <input asp-for="Attendance_End" type="time" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase"  />
+                        <label asp-for="Attendance_End" class="form-label">Time Ends</label>
+                        <span asp-validation-for="Attendance_End" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-2" style="width: 95%">
+                 
+                        <input asp-for="Days" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase"  />
+                        <label asp-for="Days" class="form-label"></label>
+                        <span asp-validation-for="Days" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group" style="display:none">
+                    <label asp-for="EducatorEmail" class="control-label"></label>
+                    <input asp-for="EducatorEmail" class="form-control" />
+                    <span asp-validation-for="EducatorEmail" class="text-danger"></span>
+                    </div>
+               
+                       @* <input type="submit" value="Save" class="btn btn-success mb-3" style="font-size:18px; width:95%" />*@
+
+                    <button type="submit" class="btn btn-success mb-3" style="font-size: 18px; width: 95%">
+                        <i class="fa-solid fa-floppy-disk"></i> Save
+                    </button>
+
+                  
+                        <a class="btn btn-link" style="font-size:18px; width:95%" asp-controller="Educator" asp-action="Index">Back to List</a>
+                    
+
+                </form>
+
+
+            </div>
+
+            <div class="right col-md-6 row" style="position:relative">
+                <img class="img-fluid w-100  mx-auto" style="height:100%   ; position:relative; left:30px" src="/images/join2.png">
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

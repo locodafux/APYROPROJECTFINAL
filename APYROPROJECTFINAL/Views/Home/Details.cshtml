@@ -1,0 +1,580 @@
+﻿@model APYROPROJECTFINAL.Models.ClassroomViewModel
+
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+
+
+    var sampleData = new List<dynamic>();
+    foreach (var studentClassroom in Model.Students)
+    {
+        sampleData.Add(new
+        {
+            StudentName = studentClassroom.Student_Name,
+            StudentID = studentClassroom.Student_ID,
+            AttendanceStart = studentClassroom.Attendance_Start,
+            AttendanceEnd = studentClassroom.Attendance_End,
+            AttendanceTime = studentClassroom.Attendance_Time,
+            Status = studentClassroom.Status
+        });
+    }
+
+
+
+    // var sampleData = new List<dynamic>
+    //{
+  
+    //    new { StudentName = "Jilbert LiM", StudentID = "k1142116", AttendanceStart = "9:00 AM", AttendanceEnd = "3:00 PM", AttendanceTime = "6 hours", Status = "Absent" }
+    //};
+    
+ 
+}
+
+
+
+
+
+@functions {
+    public string MilitaryTo12HourFormat(string militaryTime)
+    {
+        var timeParts = militaryTime.Split(':');
+
+        if (timeParts.Length == 2 && int.TryParse(timeParts[0], out var hour) && int.TryParse(timeParts[1], out var minute))
+        {
+            var period = (hour >= 12) ? "PM" : "AM";
+            hour = (hour > 12) ? hour - 12 : hour;
+            hour = (hour == 0) ? 12 : hour;
+
+            return $"{hour:D2}:{minute:D2} {period}";
+        }
+
+        // Return original string if the conversion fails
+        return militaryTime;
+    }
+}
+
+
+
+
+
+<head>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+
+
+    <script defer src="~/face-api.min.js"></script>
+    <script defer src="~/videoattendance.js"></script>
+
+
+@*     <script src="~/videoattendance.js"></script> *@
+
+
+    <style>
+
+
+
+
+        .modal-content8 
+        {
+            background-color: #1A222B;
+            margin: 40% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            color: white;
+            width: 100%;
+            text-align: left;
+        }
+
+
+
+
+/* 
+        .modal2 
+        {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        } */
+
+  /*       .modal-content2 
+        {
+            background-color: #1A222B;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            color: white;
+            width: 20%;
+            text-align: center;
+        } */
+
+ /*        #loadingMessage
+        {
+            font-size: 20px; 
+            font-weight: bold;
+        } */
+
+
+
+
+
+
+
+
+
+        /*      body {
+                    margin: 0;
+                    padding: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                } */
+
+        canvas {
+            position: absolute;
+            display: none;
+        }
+
+        #videoInput {
+            opacity: 0;
+            display:none;
+        }
+    </style>
+</head>
+
+
+
+
+
+@* 
+
+<div id="loadingModal5" class="modal2">
+    <div class="modal-content2">
+        <p id="loadingMessage">Loading Tracker...</p>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    function showLoadingModal5() {
+        document.getElementById('loadingModal5').style.display = 'block';
+    }
+
+    function hideLoadingModal5() {
+        document.getElementById('loadingModal5').style.display = 'none';
+    }
+</script>
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* Status Tracker *@
+
+
+
+@* 
+<button type="button" class="btn btn-success" onclick="openModal()">Enable Student Tracker</button> *@
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="Video" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" style="background-color:#1A222B; color:white">
+            
+            <div class="modal-body">
+                <video id="videoInput" width="720" height="500" muted controls>
+                    <source src="~/Attendance Tracker.mp4" type="video/mp4" />
+                </video>
+
+                <img width="720" height="550" id="play" src="~/Attendancetrackerpicture11.png" />
+
+                @*<button id="play">Play </button> *@
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* <h1>@ViewBag.Classid1</h1> *@
+
+
+
+
+
+<script>
+    var classId1 = @ViewBag.Classid1;
+
+    // window.onload = function () {
+    //     showLoadingModal();
+    // };
+
+    let vid = document.getElementById("videoInput");
+    let play = document.getElementById("play");
+    
+
+    play.addEventListener("click", myFunction);
+
+    function myFunction() 
+    {
+        vid.play();
+    }
+</script>
+
+
+
+<script>
+    var status = '@ViewBag.Tracker'; // Set the status variable to "ON"
+
+
+
+    function openModal() {
+        if (status === "ON" ) 
+        { // Check if the status is "ON"
+
+            $('#myModal1').modal('show'); // Show the modal if status is "ON"
+
+        } 
+        else 
+        {
+
+            // alert("Status is not ON. Cannot open modal.");
+         
+        }
+    }
+    openModal()
+
+
+</script>
+
+
+
+
+@* <h1>@ViewBag.Tracker</h1> *@
+
+
+@* 
+
+<script>
+    var status = "ON"; // Set the status variable to "ON"
+
+    function openModal() {
+        if (status === "ON") { // Check if the status is "ON"
+
+            $('#myModal1').modal('show'); // Show the modal if status is "ON"
+
+        } else {
+            alert("Status is not ON. Cannot open modal.");
+        }
+    }
+    openModal()
+
+
+</script> *@
+
+
+
+
+
+
+
+
+
+<div id="modal10" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content8">
+            <div class="modal-header">
+                <h5 class="modal-title">APyro Algorithm Report</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You have not yet registered your face for verification. Please follow the instructions. Thank you!
+                <ol>  </ol>
+                <ol>
+                    <li>Kindly wait for the admin to reset your face verification for registration.</li>
+                    <li>Please wait 24 hours to reset your face verification.</li>
+                    <li>Please log out of your account for the admin to reset it.</li>
+                </ol>
+
+               @*  <span class="studentName5"></span> has no detected face. *@
+            </div>
+       @*      <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div> *@
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="widget p-4" style="display:flex; justify-content:space-between; width:1280px; margin-top: -90px ; min-height:200px">
+    <div class="Left mt-5"
+         style="width: fit-content; height: 100px">
+        <h5 class="fw-bold" style="color: white; font-size: 34px; margin-top: -10px; text-transform:uppercase ">@Model.ClassroomDB.ClassName</h5>
+        <p style="font-size: 22px; color: white;">
+@*            <span style="font-weight: bold; text-transform:uppercase ">@Model.ClassroomDB.Educator_Name <br />@Model.ClassroomDB.Section @Model.ClassroomDB.Attendance_Start @Model.ClassroomDB.Attendance_Start @Model.ClassroomDB.Days</span>*@
+            <a class="lead" style="color: white;  text-decoration: none  ;  text-transform:uppercase ">@Model.ClassroomDB.Educator_Name <br />@Model.ClassroomDB.Section @MilitaryTo12HourFormat(@Model.ClassroomDB.Attendance_Start) @MilitaryTo12HourFormat(@Model.ClassroomDB.Attendance_End) @Model.ClassroomDB.Days</a>
+        </p>
+       
+
+
+    </div>
+
+    <div class="Left" style=" align-items:center;
+        width: fit-content; height: 100px; margin-top: 22px">
+
+       
+        <div>
+            <a class="btn btn-success " style="color: #fff;
+                                font-weight: bold; width: 240px; margin-top: 28px;
+               border-radius: 15px ; font-size:20px">
+                <b>Take Attendance +</b>
+
+            </a>
+        @*     <button type="button" class="btn btn-success" onclick="openModal()">Enable Student Tracker</button> *@
+        </div>
+
+        <div>
+            <a class="btn btn-success" style="background-color: #222B33;
+                        color: #fff; font-weight: bold; mix-blend-mode:soft-light;
+                        width: 240px; margin-top: 8px; border-radius: 15px; font-size:20px">
+                <b>
+                    @Model.ClassroomDB.Attendance_Option
+                    <i class="fa-solid fa-lock"></i>
+                </b>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<div class="row" style="width: 1300px; margin-top: 10px">
+    <div class="col-md-7" style="width: 1300px">
+        <ejs-grid id="transactions" dataSource="@sampleData" gridLines="None"
+                  allowSorting="true" allowPaging="true" style="font-family: 'Inter'">
+            <e-grid-pagesettings pageSize="7">
+            </e-grid-pagesettings>
+                <e-grid-columns>
+                    <e-grid-column headerText="Student" field="StudentName" textAlign="Center" width="180px"></e-grid-column>
+                    <e-grid-column headerText="Student ID" field="StudentID" width="fit-content" textAlign="Center"></e-grid-column>
+                    <e-grid-column headerText="Attendance Start" field="AttendanceStart" textAlign="Center" width="fit-content"></e-grid-column>
+                    <e-grid-column headerText="Attendance End" field="AttendanceEnd" textAlign="Center" width="fit-content"></e-grid-column>
+                    <e-grid-column headerText="Attendance Time" field="AttendanceTime" textAlign="Center" width="fit-content"></e-grid-column>
+                    <e-grid-column headerText="Status" template="#typeColumntemplate" field="Status" textAlign="Center" width="fit-content"></e-grid-column>
+                </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+
+
+
+<script id="typeColumntemplate" type="text/x-template">
+
+        ${ if (Status == "Present")}
+    <span id="statusBadge" class="badge " style="color:#00b69b;background-color:#122829;font-size:16px" > ${ Status } </span>
+    ${else if (Status == "Absent")}
+    <span id="statusBadge" class="badge " style="color:#ee367f;background-color:#2a1b27;font-size:16px"> ${ Status } </span>
+     ${else if (Status == "Pending")}
+    <span id="statusBadge" class="badge " style="color:#2c50e3;background-color:#1e2231;font-size:16px"> ${ Status } </span>
+   @*   ${else if (Status == "Active")}
+     <span id="statusBadge" class="badge " style="color:#2c50e3;background-color:#1e2231;font-size:16px"> ${ Status } </span> *@
+    ${else }
+    <span id="statusBadge" class="badge bg-secondary" style="font-size:14px"> ${ Status } </span>
+    ${ /if}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<h1>Details</h1>
+
+<div>
+    <h4>ClassroomDB</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Attendance_Option)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Attendance_Option)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.ClassCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.ClassCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Educator_Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Educator_Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.ClassName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.ClassName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Section)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Section)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Attendance_Start)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Attendance_Start)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Attendance_End)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Attendance_End)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Days)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Days)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ClassroomDB.ClassID">Edit</a> |
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
+</div>
+*@
+
+
+
+@*
+
+
+<h4>Students</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Student ID
+            </th>
+            <th>
+                Attendance Start
+            </th>
+            <th>
+                Attendance End
+            </th>
+            <th>
+                Attendance Time
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var studentClassroom in Model.Students)
+        {
+            <tr>
+                <td>
+                    @studentClassroom.Student_Name
+                </td>
+                <td>
+                    @studentClassroom.Student_ID
+                <td>
+                        @studentClassroom.Attendance_Start
+                </td>
+                <td>
+                        @studentClassroom.Attendance_End
+                </td>
+                <td>
+                        @studentClassroom.Attendance_Time
+                </td>
+                <td>
+                        @studentClassroom.Status
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+*@

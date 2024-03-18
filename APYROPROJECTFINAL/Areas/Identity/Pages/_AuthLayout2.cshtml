@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/APYROPROJECT.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+
+    <style>
+
+
+
+        body {
+            /* Create a gradient from left to right with 50% #ECECEC and 50% #12161D */
+            background:#12161D ;
+            /* color:white;*/
+            overflow-y: auto;
+        }
+
+
+
+/*Button*/
+.custom-btn-group {
+    width: 110px;
+    background-color: #16BDB3;
+    border: solid;
+    border-width: thin;
+    color: #000;
+}
+
+
+/*Widget*/
+.widgetlim {
+    border-radius: 1rem;
+    height: fit-content;
+    color: #000;
+    width: 490px;
+}
+
+/*TextBox*/
+
+.custom-input-short {
+    width: 170px;
+    border-radius: -1px;
+}
+.custom-input-long {
+    width: 365px;
+    border-radius: -1px;
+}
+
+
+
+
+.input-bx {
+    position: relative;
+    width: 240px;
+}
+
+.input-bx input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #7f8fa6;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    transition: 0.6s;
+}
+
+    .input-bx span {
+        position: absolute;
+        left: 0;
+        padding: 10px;
+        font-size: 1rem;
+        color: #828587;
+        text-transform: capitalize;
+        pointer-events: none;
+        transition: 0.6s;
+    }
+    .input-bx input:valid ~ span,
+    .input-bx input:focus ~ span {
+        color: #828587;
+        transform: translateX(10px) translateY(-7px);
+        font-size: 0.65rem;
+        font-weight: 600;
+        padding: 0 10px;
+        background-color: #fff;
+    }
+
+
+.input-ax {
+    position: relative;
+    width: 475px;
+
+}
+
+    .input-ax input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #7f8fa6;
+        border-radius: 5px;
+        outline: none;
+        font-size: 1rem;
+        transition: 0.6s;
+    }
+
+    .input-ax span {
+        position: absolute;
+        left: 0;
+        padding: 10px;
+        font-size: 1rem;
+        color: #828587;
+        text-transform: capitalize;
+        pointer-events: none;
+        transition: 0.6s;
+    }
+
+    .input-ax input:valid ~ span,
+    .input-ax input:focus ~ span {
+        color: #828587;
+        transform: translateX(10px) translateY(-7px);
+        font-size: 0.65rem;
+        font-weight: 600;
+        padding: 0 10px;
+        background-color: #fff;
+    }
+
+
+
+        .validation-msg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+
+    </style>
+
+
+</head>
+
+
+
+<body>
+    <div>
+
+        <div class="col d-flex ms-4 mt-5">
+            <div>
+               @*  <img src="~/samplelogo.png" height="70px" width="75.5px" /> *@
+                <a href="/MainPage/MainHomePage"><img src="~/samplelogo.png" height="70px" width="75.5px" /></a>
+            </div>
+            <div class="ms-2 mt-2">
+                <p>
+                    <b style="font-size: 20px; color: white">APyro</b><br /> <b style="font-size: 16px;font-weight:700; color: #797979">Attendance Pyro</b>
+                </p>
+            </div>
+        </div>
+
+
+
+
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

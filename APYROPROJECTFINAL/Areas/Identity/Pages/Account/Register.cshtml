@@ -1,0 +1,243 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Areas/Identity/Pages/_AuthLayout2.cshtml";
+}
+
+
+
+
+
+
+
+<div class="row justify-content-center">
+    <div class="col-md-4 justify-content-center">
+        <div class="widgetlim p-3 justify-content-center" style="background-color: #fff   ; margin-top:-50px ; margin-bottom:20px ">
+            <form id="reg" class="align-items-center ">
+                <header class="a1 justify-content-center" style="font-size: 25px"><b>Sign Up</b></header>
+                <p style="font-size: 15px">Enter your following details to create an account.</p>
+
+                <div class="col d-flex ms-1">
+                    <div class="row">
+                        <div class="input-bx">
+                            <input class="input-a" type="text" id="sfirstname" required="required" />
+                            <span class="ms-3">Firstname</span>
+                        </div>
+
+                    </div>
+
+                    <div class="row ms-1">
+                        <div class="input-bx ms-1">
+                            <input type="text" id="slastname" required="required" />
+                            <span class="ms-3">Lastname</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-ax ms-1 mt-3">
+                        <input type="text" id="semail" required="required" />
+                        <span class="ms-3">Email</span>
+                    </div>
+
+                    <div class="input-ax ms-1 mt-3">
+                        <input type="text" id="scnum" required="required" />
+                        <span class="ms-3">Contact Number</span>
+                    </div>
+
+                    <div class="input-ax ms-1 mt-3">
+                        <input type="text" id="sunoro" required="required" />
+                        <span class="ms-3">University/Organization</span>
+                    </div>
+
+                    <div class="input-ax ms-1 mt-3">
+                        <input type="text" id="sidnum" required="required" />
+                        <span class="ms-3">ID Number</span>
+                    </div>
+
+                    <div class="input-ax ms-1 mt-3">
+                        <input type="text" id="ssection" required="required" />
+                        <span class="ms-3">Section</span>
+                    </div>
+
+
+                    <div class="input-ax ms-1 mt-3">
+                        <input type="text" id="suname" required="required" />
+                        <span class="ms-3">Username</span>
+                    </div>
+                </div>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                <div class="col d-flex ms-1 mt-3">
+                    <div class="row">
+                        <div class="input-bx">
+                            <input id="stxtPass" class="test" type="password" required="required" />
+                            <span class="ms-3">Password</span>
+                        </div>
+                    </div>
+
+                    <div class="row ms-2">
+                        <div class="input-bx">
+                            <input id="stxtPass2" class="test" type="password" required="required" />
+                            <span class="ms-3">Confirm Password</span>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="form-check ms-2 mt-2">
+                    <input class="form-check-input" type="checkbox" name="mycheckbox" id="ckShowPass" onclick="myshowp(this)" />
+                    Show password
+                </div>
+
+                <script>
+                    function myshowp(e) {
+                        txtBox = $('#stxtPass')
+                        txtBox2 = $('#stxtPass2')
+                        if (e.checked) {
+                            txtBox.attr("Type", "Text");
+                            txtBox2.attr("Type", "Text");
+                        }
+                        else {
+                            txtBox.attr("Type", "Password");
+                            txtBox2.attr("Type", "Password");
+                        }
+                    }
+                </script>
+
+
+
+                <div class="form-check ms-2 mt-2">
+                    <input class="form-check-input" type="checkbox">
+                    <label class="form-check-label">
+                        I agree with APyro
+                        <a href="/Home/Privacy">terms and conditions</a>.
+                    </label>
+                </div>
+                <div class="btn-group d-flex justify-content-center align-items-center mt-3">
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary " style="background-color: #16BDB3">Next</button>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <p>Already have account? <a href="/Login/index"> Log in</a></p>
+                </div>
+
+
+
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h2>Create a new account.</h2>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input asp-for="Input.Firstname" class="form-control" autocomplete="firstname" aria-required="true" />
+                        <label asp-for="Input.Firstname"></label>
+                        <span asp-validation-for="Input.Firstname" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input asp-for="Input.Lastname" class="form-control" autocomplete="lastname" aria-required="true" />
+                        <label asp-for="Input.Lastname"></label>
+                        <span asp-validation-for="Input.Lastname" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="form-floating">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Input.Email"></label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.Password"></label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.ConfirmPassword"></label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+        </form>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h3>Use another service to register.</h3>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                            about setting up this ASP.NET application to support logging in via external services</a>.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins!)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+
+
+
+
+*@
+

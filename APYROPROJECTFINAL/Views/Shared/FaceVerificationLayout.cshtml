@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/APYROPROJECT.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js")"></script>
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js")"></script>
+
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js")"></script>
+
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js")"></script>
+
+
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@2.6.0/dist/tf-core.min.js")"></script>
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@2.6.0/dist/tf-converter.min.js")"></script>
+
+
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@2.6.0/dist/tf-backend-wasm.min.js")"></script>
+    <!-- Pretrained facemesh model. -->
+
+    <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection@0.0.2/dist/face-landmarks-detection.min.js")"></script>
+
+
+    <!-- https://medium.com/swlh/how-to-access-webcam-and-take-picture-with-javascript-b9116a983d78 -->
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+
+
+    <script defer src="~/FaceVerification.js"></script>
+
+
+    <style>
+
+
+        .webcam {
+            position: relative; /* Make sure the video is positioned */
+            z-index: 1; /* Set a higher z-index for the video */
+        }
+
+        .output_canvas {
+            position: absolute; /* Position the canvas over the video */
+            top: 135px;
+            left: 45%;
+            transform: translateX(-45%);
+            z-index: 2; /* Set an even higher z-index for the canvas */
+        }
+
+
+
+
+
+    </style>
+
+
+</head>
+<body>
+    <div>
+
+
+
+
+        <script type="module">
+           // const videoElement = document.querySelector('.webcam');
+           // const canvasElement = document.querySelector('.output_canvas');
+           // const canvasCtx = canvasElement.getContext('2d');
+
+            function onResults(results) {
+                canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+                if (results.multiFaceLandmarks) {
+                    for (const landmarks of results.multiFaceLandmarks) {
+                        // Draw the FaceMesh overlay on the canvas
+                        drawConnectors(canvasCtx, landmarks, FACEMESH_TESSELATION,
+                            { color: '#C0C0C070', lineWidth: 1 });
+                        drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYE, { color: '#FF3030' });
+                        drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYEBROW, { color: '#FF3030' });
+                        drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_IRIS, { color: '#FF3030' });
+                        drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_EYE, { color: '#30FF30' });
+                        drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_EYEBROW, { color: '#30FF30' });
+                        drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_IRIS, { color: '#30FF30' });
+                        drawConnectors(canvasCtx, landmarks, FACEMESH_FACE_OVAL, { color: '#E0E0E0' });
+                        drawConnectors(canvasCtx, landmarks, FACEMESH_LIPS, { color: '#E0E0E0' });
+                    }
+                }
+            }
+
+            const faceMesh = new FaceMesh({
+                locateFile: (file) => {
+                    return 'https://cdn.jsdelivr.net/npm/@@mediapipe/face_mesh/' + file;
+                }
+            });
+
+            faceMesh.setOptions({
+                maxNumFaces: 1,
+                refineLandmarks: true,
+                minDetectionConfidence: 0.5,
+                minTrackingConfidence: 0.5
+            });
+            faceMesh.onResults(onResults);
+
+            const camera = new Camera(videoElement, {
+                onFrame: async () => {
+                    await faceMesh.send({ image: videoElement });
+                },
+                width: 1280,
+                height: 720
+            });
+            camera.start();
+        </script>
+
+
+
+        <div class="col d-flex ms-4 mt-5">
+            <div>
+                <img src="~/samplelogo.png" height="70px" width="75.5px" />
+            </div>
+            <div class="ms-2 mt-2">
+                <p>
+                    <b style="font-size: 20px; color: white">APyro</b><br /> <b style="font-size: 16px;font-weight:700; color: #797979">Attendance Pyro</b>
+                </p>
+            </div>
+        </div>
+
+
+
+        <script>
+
+            function take_snapshot() {
+
+
+                $('#exampleModalCenter').modal('show');
+
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+  
+
+                context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+                var imageData = canvas.toDataURL();
+                image.src = imageData;
+                image.style.display = 'none';
+
+
+
+                //context.drawImage(video, 0, 0, canvas.width, canvas.height
+                //context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                //var imageData = canvas.toDataURL();
+                //image.src = imageData;
+                //image.style.display = 'none';
+
+                data =
+                {
+                    name: 'ASPNETCORE',
+                    age: 30,
+                    imageData: imageData
+                };
+
+             
+
+
+
+                var capturedImageModal = document.getElementById('capturedImageModal');
+                capturedImageModal.src = imageData;
+                capturedImageModal.style.width = "1280px"; // Set a fixed width
+                capturedImageModal.style.height = "720px"; // Set a fixed height
+
+
+            }
+
+
+            function openSecondModal() {
+
+
+              
+                    // Show the second modal
+                    $('#exampleModalCenter').modal('hide');
+
+
+                    fetch('/FaceVerification/UploadImage', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    })
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            console.log(data);
+                        })
+                        .catch(function (err) {
+                            console.log(err);
+                        });
+
+
+
+                }
+
+
+            
+
+
+
+
+        </script>
+
+
+
+
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*     <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>*@
+                    </div>
+                    <div class="modal-body d-flex justify-content-center">
+                        <img id="capturedImageModal" src="" class="img-fluid mx-auto" alt="Captured Image">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Retake</button>
+                        <a href="/Identity/Account/StudentRegister" class="btn btn-success" onclick="openSecondModal();">Save</a>
+                        @*<button type="button" class="btn btn-success" onclick="openSecondModal();">Save</button>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+     
+
+        @RenderBody()
+    </div>
+</body>
+</html>

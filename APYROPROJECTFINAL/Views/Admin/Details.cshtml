@@ -1,0 +1,125 @@
+﻿@model APYROPROJECTFINAL.Models.ClassroomViewModel
+@{
+    Layout = "/Views/Shared/AdminLayout.cshtml";
+
+
+
+    var sampleData = new List<dynamic>();
+    foreach (var studentClassroom in Model.Students)
+    {
+        sampleData.Add(new
+        {
+            StudentName = studentClassroom.Student_Name,
+            StudentID = studentClassroom.Student_ID,
+            AttendanceStart = studentClassroom.Attendance_Start,
+            AttendanceEnd = studentClassroom.Attendance_End,
+            AttendanceTime = studentClassroom.Attendance_Time,
+            Status = studentClassroom.Status
+        });
+    }
+}
+
+
+@functions {
+    public string MilitaryTo12HourFormat(string militaryTime)
+    {
+        var timeParts = militaryTime.Split(':');
+
+        if (timeParts.Length == 2 && int.TryParse(timeParts[0], out var hour) && int.TryParse(timeParts[1], out var minute))
+        {
+            var period = (hour >= 12) ? "PM" : "AM";
+            hour = (hour > 12) ? hour - 12 : hour;
+            hour = (hour == 0) ? 12 : hour;
+
+            return $"{hour:D2}:{minute:D2} {period}";
+        }
+
+        // Return original string if the conversion fails
+        return militaryTime;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+<div class="widget p-4" style="display:flex; justify-content:space-between; width:1280px; margin-top: -90px ; min-height:200px">
+    <div class="Left mt-5"
+         style="width: fit-content; height: 100px">
+        <h5 class="fw-bold" style="color: white; font-size: 34px; margin-top: -10px; text-transform:uppercase ">@Model.ClassroomDB.ClassName</h5>
+        <p style="font-size: 22px; color: white;">
+            @*            <span style="font-weight: bold; text-transform:uppercase ">@Model.ClassroomDB.Educator_Name <br />@Model.ClassroomDB.Section @Model.ClassroomDB.Attendance_Start @Model.ClassroomDB.Attendance_Start @Model.ClassroomDB.Days</span>*@
+            <a class="lead" style="color: white;  text-decoration: none  ;  text-transform:uppercase ">@Model.ClassroomDB.Educator_Name <br />@Model.ClassroomDB.Section @MilitaryTo12HourFormat(@Model.ClassroomDB.Attendance_Start) @MilitaryTo12HourFormat(@Model.ClassroomDB.Attendance_End) @Model.ClassroomDB.Days</a>
+        </p>
+
+
+
+    </div>
+
+    <div class="Left" style=" align-items:center;
+        width: fit-content; height: 100px; margin-top: 22px">
+
+
+     @*    <div>
+            <a class="btn btn-success " style="color: #fff;
+                                font-weight: bold; width: 240px; margin-top: 28px;
+               border-radius: 15px ; font-size:20px">
+                <b>Take Attendance +</b>
+            </a>
+        </div> *@
+@* 
+        <div>
+            <a class="btn btn-success" style="background-color: #222B33;
+                        color: #fff; font-weight: bold; mix-blend-mode:soft-light;
+                        width: 240px; margin-top: 8px; border-radius: 15px; font-size:20px">
+                <b>
+                    @Model.ClassroomDB.Attendance_Option
+                    <i class="fa-solid fa-lock"></i>
+                </b>
+            </a>
+        </div> *@
+    </div>
+
+</div>
+
+
+
+
+<div class="row" style="width: 1300px; margin-top: 10px">
+    <div class="col-md-7" style="width: 1300px">
+        <ejs-grid id="transactions" dataSource="@sampleData" gridLines="None"
+                  allowSorting="true" allowPaging="true" style="font-family: 'Inter'">
+            <e-grid-pagesettings pageSize="7">
+            </e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column headerText="Student" field="StudentName" textAlign="Center" width="180px"></e-grid-column>
+                <e-grid-column headerText="Student ID" field="StudentID" width="fit-content" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Attendance Start" field="AttendanceStart" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Attendance End" field="AttendanceEnd" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Attendance Time" field="AttendanceTime" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Status" template="#typeColumntemplate" field="Status" textAlign="Center" width="fit-content"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+
+
+<script id="typeColumntemplate" type="text/x-template">
+
+        ${ if (Status == "Present")}
+    <span id="statusBadge" class="badge " style="color:#00b69b;background-color:#122829;font-size:16px" > ${ Status } </span>
+    ${else if (Status == "Absent")}
+    <span id="statusBadge" class="badge " style="color:#ee367f;background-color:#2a1b27;font-size:16px"> ${ Status } </span>
+     ${else if (Status == "Pending")}
+    <span id="statusBadge" class="badge " style="color:#2c50e3;background-color:#1e2231;font-size:16px"> ${ Status } </span>
+    ${else }
+    <span id="statusBadge" class="badge bg-secondary" style="font-size:14px"> ${ Status } </span>
+    ${ /if}
+
+</script>

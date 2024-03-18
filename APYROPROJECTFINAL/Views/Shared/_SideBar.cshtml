@@ -1,0 +1,122 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+
+    List<Object> menuItems = new List<Object>();
+
+
+    menuItems.Add(new
+    {
+        text = "General",
+        seperator = true,
+    });
+
+    menuItems.Add(new
+    {
+        text = "Dashboard",
+        url = "/Home/Index",
+        iconCss = "fa-solid fa-box"
+
+    });
+
+
+    menuItems.Add(new
+    {
+        text = "Account",
+        url = "/Identity/Account/Manage",
+        iconCss = "fa-solid fa-folder-closed"
+
+    });
+
+    menuItems.Add(new
+    {
+        text = "Join Class",
+        iconCss = "fa-solid fa-arrow-right-arrow-left",
+        url = "/Home/CheckCode"
+    });
+
+    menuItems.Add(new
+    {
+        text = "Extras",
+        seperator = true,
+    });
+
+    menuItems.Add(new
+    {
+        text = "Data Analytics",
+        iconCss = "fa-solid fa-chart-simple",
+        url = "/Home/DataAnalytics"
+        // url = "#"
+    });
+
+    // menuItems.Add(new
+    // {
+    //     text = "Help",
+    //     iconCss = "fa-solid fa-question-circle",
+    //     url = "#"
+    // });
+
+    // menuItems.Add(new
+    // {
+    //     text = "Settings",
+    //     iconCss = "fa-solid fa-gear",
+    //     url = "#"
+    // });
+
+
+}
+
+
+
+<ejs-sidebar id="sidebar" width="290px" enableDock dockSize="100px" target=".dock-target">
+    <e-content-template>
+
+        <div class="logo-wrapper">
+            <div class="app-logo">
+                <img src="~/samplelogo.png" height="70px" width="75.5px" />
+            </div>
+            <div class="w-100"></div>
+            <i id ="sidebar-toggler" class="fa-solid"></i>
+
+        </div>
+
+        <div class="profile-wrapper">
+            <img class="profile-pic" src="~/DefaultProfile.png" />
+            <div class="titles d-flex flex-column ps-3">
+                <h6 class="mb-0">APYRO</h6>
+                <span class="text-muted">Apyro User</span>
+            </div>
+        </div>
+
+        <ejs-menu id="menu" items="menuItems"
+                  orientation="Vertical"
+                  hamburgerMode></ejs-menu>
+    </e-content-template>
+
+</ejs-sidebar>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        dockBar = document.getElementById('sidebar').ej2_instances[0];
+        document.getElementById('sidebar-toggler').onclick = function () {
+            dockBar.toggle();
+        };
+
+    })
+</script>
+
+
+
+
+
+@*For sub items in sidebar items *@
+@*Include make sure include hamburgerMode for <ejs-menu> to arrow down the sub items in side bar items *@
+@*   items = new List<object>()
+        {
+            new { text = "Open" },
+            new { text = "Save" },
+            new { text = "Exit" }
+        }*@

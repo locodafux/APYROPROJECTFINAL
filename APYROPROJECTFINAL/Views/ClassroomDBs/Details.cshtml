@@ -1,0 +1,1440 @@
+﻿@*@model APYROPROJECTFINAL.Models.ClassroomDB*@
+@model APYROPROJECTFINAL.Models.ClassroomViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_EducatorDashboardLayout.cshtml";
+
+
+
+    var sampleData = new List<dynamic>();
+    foreach (var studentClassroom in Model.Students)
+    {
+        sampleData.Add(new
+        {
+            StudentName = studentClassroom.Student_Name,
+            StudentID = studentClassroom.Student_ID,
+            AttendanceStart = studentClassroom.Attendance_Start,
+            AttendanceEnd = studentClassroom.Attendance_End,
+            AttendanceTime = studentClassroom.Attendance_Time,
+            Status = studentClassroom.Status,
+            Classcode = studentClassroom.Classroom_Code
+        });
+    }
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+<style>
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+
+
+
+
+    .modal-content3 
+    {
+        background-color: #1A222B;
+        margin: 40% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        color: white;
+        width: 100%;
+        text-align: left;
+    }
+
+
+
+
+
+
+
+    .modal2 
+    {
+        display: none; 
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5); 
+     }
+
+    .modal-content2 
+    { 
+        background-color: #1A222B;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        color:white;
+        width: 20%;
+        text-align: center;
+     }
+
+    #loadingMessage 
+    {
+        font-size: 20px; /* Adjust the font size as needed */
+        font-weight: bold;
+    }
+
+
+
+
+
+
+    #myModal {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: auto;
+        height: auto;
+    }
+
+    #myModal1 {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: auto;
+        height: auto;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 100%;
+    }
+
+    .modal-content1 {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 100%;
+    }
+
+    #modal-image {
+        max-width: auto;
+        max-height: auto;
+        display: block;
+        margin: auto;
+    }
+
+
+
+    #overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+
+    #loading-container {
+        text-align: center;
+    }
+
+    #loading {
+        display: inline-block;
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 100%;
+        width: 100px;
+        height: 100px;
+        animation: spin 1s linear infinite;
+        position: relative;
+    }
+
+    #countdown {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #3498db;
+        font-size: 1.2em;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+@*<p>Displayed ID: @ViewBag.Id</p>
+
+@foreach (var data in ViewBag.ClassData)
+{
+    <p>ClassCode: @data.ClassCode, StudentName: @data.StudentName, ImageFile: @data.ImageFile</p>
+}
+*@
+
+
+@*<p>Displayed ID: @ViewBag.Classid</p>
+
+<p>Displayed IDs: @ViewBag.Classids</p>*@
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+    var classId = @ViewBag.Classid;
+
+
+
+
+   
+
+        // if (loading == "yes") {
+           
+        // } else {
+        //     console.log("Condition is false");
+        // }
+  
+
+
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     showLoadingModal();
+    // });
+
+    // window.onload = function () {
+    //     showLoadingModal();
+    // };
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+@*<p>Displayed ID: @ViewBag.Class</p>
+
+<p>Displayed ID: @ViewBag.Classid</p>
+*@
+
+
+@*@if (ViewBag.ClassData != null)
+{
+    foreach (var data in ViewBag.ClassData)
+    {
+        <p>ClassCode: @data.ClassCode, StudentName: @data.StudentName, ImageFile: @data.ImageFile</p>
+    }
+}
+else
+{
+    <p>No data available</p>
+}*@
+
+
+
+
+
+@functions {
+    public string MilitaryTo12HourFormat(string militaryTime)
+    {
+        var timeParts = militaryTime.Split(':');
+
+        if (timeParts.Length == 2 && int.TryParse(timeParts[0], out var hour) && int.TryParse(timeParts[1], out var minute))
+        {
+            var period = (hour >= 12) ? "PM" : "AM";
+            hour = (hour > 12) ? hour - 12 : hour;
+            hour = (hour == 0) ? 12 : hour;
+
+            return $"{hour:D2}:{minute:D2} {period}";
+        }
+
+        // Return original string if the conversion fails
+        return militaryTime;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+<script defer src="~/face-api.min.js"></script>
+<script defer src="~/Script2.js"></script>
+
+<script defer src="~/Script3.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+<div class="control-section">
+    @{
+        Html.BeginForm("Createnew", "ClassroomDBs", FormMethod.Post);
+        {
+            <p style="font-weight:normal">
+                Click the "Create Document" button to view the created Excel document. Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
+            </p>
+            <br />
+            <div>
+                Save As :
+                <input type="radio" id="XLS" name="SaveOption" value="ExcelXls" />
+                <label for="XLS" style="font-weight:normal">XLS</label>
+                &nbsp;
+                <input type="radio" id="XLSX" name="SaveOption" value="Xlsx" checked="checked" />
+                <label for="XLSX" style="font-weight:normal">XLSX</label>
+                <input type="text" name="valueINeed" value="@ViewBag.Class" style="display: none;" />
+
+            </div>
+            <br />
+            <div class="celldiv">
+                <input id="createbtn" class="e-btn" type="submit" name="button" value="Create Document" style="width:160px; text-transform:capitalize" />
+            </div>
+            Html.EndForm();
+        }
+    }
+</div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="loadingModal" class="modal2">
+    <div class="modal-content2">
+        <p id="loadingMessage">Loading Classroom...</p>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    function showLoadingModal1() {
+        document.getElementById('loadingModal').style.display = 'block';
+    }
+
+    function hideLoadingModal1() {
+        document.getElementById('loadingModal').style.display = 'none';
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+@* <div id="modal5" class="modal">
+    <div class="modal-content2">
+        <span id="studentName"></span> has no detected face.
+    </div>
+</div> *@
+
+
+
+<div id="modal5" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content3">
+            <div class="modal-header">
+                <h5 class="modal-title">APyro Algorithm Report</h5>
+       @*          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> *@
+            </div>
+            <div class="modal-body">
+                <span class="studentName"></span> has no detected face.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="widget p-2" style="display:flex; justify-content:space-between; width:1280px; margin-top: -90px; margin-bottom:8px ; min-height:50px">
+
+    <div>
+        <input class="btn btn-success" type="file" id="imageUpload" style="width: 260px; border-radius: 15px;display:none">
+        <label for="imageUpload" class="btn btn-success btn-block btn-outlined" style="color: #fff; font-weight: bold; width: 250px; margin-top: 8px; border-radius: 15px; font-size: 20px;">Face-to-Face <i class="fa-solid fa-upload"></i></label>
+
+
+        <input class="btn btn-danger" type="file" id="imageUploadNew" style="width: 260px; border-radius: 15px ; display:none">
+        <label for="imageUploadNew" class="btn btn-success btn-block btn-outlined" style="color: #fff; font-weight: bold; width: 250px; margin-top: 8px; border-radius: 15px; font-size: 20px;">Virtual Meeting <i class="fa-solid fa-upload"></i></label>
+    </div>
+
+    <button id="studentracker" class="btn btn-primary" type="submit" name="button" style="color: #fff; font-weight: bold; width: 250px; margin-top: 8px; border-radius: 15px; font-size: 20px;">
+        @* Enable Tracker *@ @ViewBag.enable  <i class="fa-solid fa-users-viewfinder"></i>
+
+    </button>
+
+
+</div>
+
+
+
+
+<div class="widget p-4" style="display:flex; justify-content:space-between; width:1280px; min-height:200px">
+    <div class="Left mt-5"
+         style="width: fit-content; height: 100px">
+        <h5 class="fw-bold" style="color: white; font-size: 34px; margin-top: 10px ; text-transform:uppercase">@Model.ClassroomDB.ClassName</h5>
+        <p style="font-size: 22px; color: white;">
+           @* <span style="font-weight: bold; text-transform:uppercase">ClASSCODE : @Model.ClassroomDB.ClassCode <br />@Model.ClassroomDB.Section @Model.ClassroomDB.Attendance_Start @Model.ClassroomDB.Attendance_Start @Model.ClassroomDB.Days</span>*@
+            <a class="lead" style="color: white;  text-decoration: none  ;  text-transform:uppercase "><b>ClASSCODE : @Model.ClassroomDB.ClassCode</b> <br />@Model.ClassroomDB.Section @MilitaryTo12HourFormat(@Model.ClassroomDB.Attendance_Start) @MilitaryTo12HourFormat(@Model.ClassroomDB.Attendance_End) @Model.ClassroomDB.Days</a>
+
+        </p>
+    </div>
+
+ 
+
+
+    <div class="Left" style=" align-items:center;
+        width: fit-content; height: 100px; margin-top: 2%">
+
+@*         <input class="btn btn-success" type="file" id="imageUpload" style="width: 260px; border-radius: 15px">
+
+        <input class="btn btn-danger" type="file" id="imageUploadNew" style="width: 260px; border-radius: 15px"> *@
+
+
+
+   @*      <button id="studentracker" class="btn btn-primary" type="submit" name="button" style="color: #fff; font-weight: bold; width: 250px; margin-top: 8px; border-radius: 15px; font-size: 20px;">
+            Enable Tracker  <i class="fa-solid fa-users-viewfinder"></i></i>
+
+        </button> *@
+
+
+
+@*         <a id="studentracker" class="btn btn-primary" href="@Url.Action("videoattendance", "ClassroomDBs")" style="color: #fff; font-weight: bold; width: 250px; margin-top: 8px; border-radius: 15px; font-size: 20px;">
+            Enable Tracker  <i class="fa-solid fa-users-viewfinder"></i>
+        </a>
+  *@
+
+@* 
+        <button id="studentracker" class="btn btn-primary" type="submit" name="button" style="color: #fff; font-weight: bold; width: 250px; margin-top: 8px; border-radius: 15px; font-size: 20px;">
+            Enable Tracker  <i class="fa-solid fa-users-viewfinder"></i>
+        </button> *@
+    
+
+        <script>
+            $(document).ready(function () {
+                $('#studentracker').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ClassroomDBs/Tracker', // Replace with your actual controller and action
+                        data: { trackerstatus: "ON", classcode1: '@ViewBag.Class' },
+                        success: function (response) {
+                            if (response.success) {
+                                console.log('Tracker status updated successfully');
+                                alert('Attendance Tracker status updated.');
+                                window.location.reload();
+                            } else {
+                                console.log('Error updating tracker status:', response.message);
+                            }
+                        },
+                        error: function (error) {
+                            console.log('Error updating tracker status:', error);
+                        }
+                    });
+                });
+            });
+
+
+            $(document).ready(function () {
+                $('#studentracker').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ClassroomDBs/TrackerEducator', // Replace with your actual controller and action
+                        data: { trackereducator: "ON", classcode2: '@ViewBag.Class' },
+                        success: function (response) {
+                            if (response.success) {
+                                console.log('Attendance Tracker status updated');
+                                window.location.reload();
+                            } else {
+                                console.log('Error updating Educator tracker status:', response.message);
+                            }
+                        },
+                        error: function (error) {
+                            console.log('Error updating Educator tracker status:', error);
+                        }
+                    });
+                });
+            });
+
+        </script>
+
+
+
+
+
+
+        <div class="control-section">
+            @{
+                Html.BeginForm("Createnew", "ClassroomDBs", FormMethod.Post);
+                {
+                    //<p style="font-weight:normal">
+                    //    Click the "Create Document" button to view the created Excel document. Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
+                    //</p>
+
+                    <div style="margin-top:5%">
+                        Export As :
+                        <input type="radio" id="XLS" name="SaveOption" value="ExcelXls" />
+                        <label for="XLS" style="font-weight:normal">XLS</label>
+                        &nbsp;
+                        <input type="radio" id="XLSX" name="SaveOption" value="Xlsx" checked="checked" />
+                        <label for="XLSX" style="font-weight:normal">XLSX</label>
+                        <input type="text" name="valueINeed" value="@ViewBag.Class" style="display: none;" />
+
+                    </div>
+        
+                    <div class="celldiv">
+                        <button id="createbtn" class="btn btn-success" type="submit" name="button" style="color: #fff; font-weight: bold; width: 250px; margin-top: 8px; border-radius: 15px; font-size: 20px;">
+                            Export  <i class="fa-solid fa-file-export"></i>
+
+                        </button>
+
+                    </div>
+
+                    Html.EndForm();
+                }
+            }
+        </div>
+
+
+
+
+@*        <div>
+            <a class="btn btn-success" style="color: #fff;
+                                font-weight: bold; width: 250px; margin-top: 8px;
+               border-radius: 15px; font-size:20px">
+                <b>Export  <i class="fa-solid fa-file-export"></i></b>
+            </a>
+        </div>*@
+
+        <div>
+            <a class="btn " style="background-color: #222b33;
+                        color: #fff; font-weight: bold; 
+                        width: 250px; margin-top: 8px; border-radius: 15px ; font-size:20px">
+                <b>
+                    @Model.ClassroomDB.Attendance_Option
+                    <i class="fa-solid fa-angle-down"></i>
+                </b>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+@* 
+
+@foreach (var studentClassroom in Model.Students)
+{
+    @if (studentClassroom.Status == "Pending")
+    {
+        <h2>Pending Status: @studentClassroom.Status</h2>
+        <!-- Add more content or logic specific to "Pending" status if needed -->
+    }
+    else
+    {
+        <h2>Status: @studentClassroom.Status</h2>
+        <!-- Add content or logic for other statuses if needed -->
+    }
+} *@
+
+
+
+
+
+
+
+@*
+<h1>Details</h1>
+
+<div>
+    <h4>ClassroomDB</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Attendance_Option)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Attendance_Option)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.ClassCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.ClassCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Educator_Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Educator_Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.ClassName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.ClassName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Section)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Section)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Attendance_Start)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Attendance_Start)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Attendance_End)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Attendance_End)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassroomDB.Days)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassroomDB.Days)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ClassroomDB.ClassID">Edit</a> |
+    <a asp-controller="Educator" asp-action="Index">Back to List</a>*@
+    @*   <a asp-action="Edit" asp-route-id="@Model?.ClassID">Edit</a> |
+    <a asp-action="Index">Back to List</a>*@
+@*</div>*@
+
+
+
+
+@* 
+<h2>@Model.ClassroomDB.Attendance_Start</h2> *@
+
+
+
+
+
+
+
+@*
+
+@foreach (var studentClassroom in Model.Students)
+{
+    @if (studentClassroom.Status == "Pending")
+    {
+        <h2>Pending Status: @studentClassroom.Status</h2>
+        <!-- Add more content or logic specific to "Pending" status if needed -->
+    }
+    else
+    {
+        <h2>Status: @studentClassroom.Status</h2>
+        <!-- Add content or logic for other statuses if needed -->
+    }
+} *@
+
+
+
+
+
+
+<div class="row" style="width: 1300px; margin-top: 10px">
+    <div class="col-md-7" style="width: 1300px">
+        <ejs-grid id="transactions" dataSource="@sampleData" gridLines="None"
+                  allowSorting="true" allowPaging="true" style="font-family: 'Inter'">
+            <e-grid-pagesettings pageSize="6">
+            </e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column headerText="Student" field="StudentName" textAlign="Center" width="180px"></e-grid-column>
+                <e-grid-column headerText="Student ID" field="StudentID" width="fit-content" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Attendance Start" field="AttendanceStart" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Attendance End" field="AttendanceEnd" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Attendance Time" field="AttendanceTime" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Class Code" field="Classcode" textAlign="Center" width="fit-content" visible="false"></e-grid-column>
+                <e-grid-column headerText="Status" template="#typeColumntemplate" field="Status" textAlign="Center" width="fit-content" ></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+
+
+
+<script id="typeColumntemplate" type="text/x-template">
+
+@*         ${ if (Status == "Present")}
+    <span id="statusBadge" class="badge " style="color:#00b69b;background-color:#122829;font-size:16px" > ${ Status } </span>
+    ${else if (Status == "Absent")}
+    <span id="statusBadge" class="badge " style="color:#ee367f;background-color:#2a1b27;font-size:16px"> ${ Status } </span>
+     ${else if (Status == "Pending")}
+    <span id="statusBadge" class="badge " style="color:#2c50e3;background-color:#1e2231;font-size:16px"> ${ Status } </span>
+     ${else if (Status == "Accept")}
+    <span id="statusBadge" class="badge bg-success " style="font-size:14px"> ${ Status } </span>
+    ${else }
+    <span id="statusBadge" class="badge bg-secondary" > ${ Status } </span>
+    ${ /if} *@
+
+            ${ if (Status == "Present")}
+        <span id="statusBadge" class="badge " style="color:#00b69b;background-color:#122829;font-size:16px" > ${ Status } </span>
+        ${else if (Status == "Absent")}
+        <span id="statusBadge" class="badge " style="color:#ee367f;background-color:#2a1b27;font-size:16px"> ${ Status } </span>
+         ${else if (Status == "Pending")}
+        <span id="statusBadge" class="badge " style="color:#2c50e3;background-color:#1e2231;font-size:16px"> ${ Status } </span>
+         ${else if (Status == "Accept")}
+         <span id="statusBadge" class="btn bg-success " style="color:#fff;font-size:14px;font-weight: bold;"> ${ Status } </span>
+@*           ${else if (Status == "Active")}
+         <span id="statusBadge" class="badge " style="color:#2c50e3;background-color:#1e2231;font-size:16px"> ${ Status } </span> *@
+        ${else }
+        <span id="statusBadge" class="badge bg-secondary" > ${ Status } </span>
+        ${ /if}
+
+</script>
+
+
+
+<!-- Add a new script section at the end of your code -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the grid element
+        var grid = document.getElementById('transactions').ej2_instances[0];
+        // var currentTime = new Date();
+      
+
+        // Attach a rowSelected event handler to the grid
+        grid.addEventListener('rowSelected', function (args) 
+        {
+            // Get the selected record
+            var selectedRecord = args.data;
+    
+
+
+            // Check if the selected record has Status == "Accept"
+            if (selectedRecord && selectedRecord.Status === "Accept") 
+            {
+                // Display the selected record in the console
+                var studentID = selectedRecord.StudentID;
+                var classcode = selectedRecord.Classcode;
+                var status = selectedRecord.Status;
+                var attendanceend = selectedRecord.AttendanceEnd;
+                // Display the selected record details in the console
+                console.log('Selected Record with Status "Accept":', selectedRecord);
+                console.log('StudentID:', studentID);
+                console.log('Classcode:', classcode);
+                console.log('Status:', status);
+                // console.log('Attendance End:', attendanceend);
+          
+
+ 
+               
+                // handleAcceptClick(status, studentID, classcode);
+                handleAcceptClick(status, studentID, classcode);
+            }
+
+
+            // Assuming selectedRecord.AttendanceEnd is in the format "HH:mm"
+            // var attendanceEndParts = selectedRecord.AttendanceEnd.split(':');
+            // var selectedRecordHour = parseInt(attendanceEndParts[0]);
+            // var selectedRecordMinute = parseInt(attendanceEndParts[1]);
+
+            // // Get the current time
+            // var now = new Date();
+            // var currentHour = now.getHours();
+            // var currentMinute = now.getMinutes();
+
+            // // Check if the current time is more than 1 hour past the AttendanceEnd time
+            // if  (
+            //     (currentHour > selectedRecordHour || (currentHour === selectedRecordHour && currentMinute >= selectedRecordMinute)) &&
+            //     selectedRecord.Status !== "Accept" &&
+            //     selectedRecord.Status !== "Present"
+            //     )
+            //  {
+            //     var studentID = selectedRecord.StudentID;
+            //     var classcode = selectedRecord.Classcode;
+            //     var status = selectedRecord.Status;
+            //     var attendanceend = selectedRecord.AttendanceEnd;
+            //     console.log('Selected Record with Status "Absent":', selectedRecord);
+            //     console.log('StudentID:', studentID);
+            //     console.log('Classcode:', classcode);
+            //     console.log('Status:', status);
+            //     console.log('Current Time:', currentHour + ':' + currentMinute);
+            // }
+
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Add a new script section at the end of your code -->
+<script>
+    function handleAcceptClick(status, studentId, classcode) {
+        // Check if the selected record has Status == "Accept"
+        if (status === "Accept") {
+            // Make an AJAX request to update the status
+            $.ajax({
+                type: 'POST',
+                url: '/ClassroomDBs/UpdateStatus', // Replace with your actual controller and action
+                data: { studentId: studentId, classcode: classcode },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Status updated successfully');
+                        window.location.reload();
+                    } else {
+                        console.log('Error updating status:', response.message);
+                    }
+                },
+                error: function (error) {
+                    console.log('Error updating status:', error);
+                }
+            });
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+<!-- Add a new script section at the end of your code -->
+<script>
+    document.addEventListener("DOMContentLoaded", function ()
+    {
+
+
+        var grid = document.getElementById('transactions').ej2_instances[0];
+
+        // Attach a function to check conditions periodically
+        setInterval(function () {
+            // Iterate through each row in the grid
+            grid.getRows().forEach(function (row) {
+                // Get the data associated with the row
+                var rowData = grid.getRowObjectFromUID(row.getAttribute('data-uid')).data;
+
+                // Extract necessary information from the rowData
+                var attendanceEndParts = rowData.AttendanceEnd.split(':');
+                var selectedRecordHour = parseInt(attendanceEndParts[0]);
+                var selectedRecordMinute = parseInt(attendanceEndParts[1]);
+
+                // Get the current time
+                var now = new Date();
+                var currentHour = now.getHours();
+                var currentMinute = now.getMinutes();
+
+                // Check if the current time is more than 1 hour past the AttendanceEnd time
+                if (
+                    (currentHour > selectedRecordHour || (currentHour === selectedRecordHour && currentMinute >= selectedRecordMinute)) &&
+                    rowData.Status !== "Accept" &&
+                    rowData.Status !== "Present" &&
+                    rowData.Status !== "Absent"
+                ) {
+                   
+                    var studentID = rowData.StudentID;
+                    var classcode = rowData.Classcode;
+                    var status = rowData.Status;
+                    var attendanceend = rowData.AttendanceEnd;
+                    console.log('Selected Record with Status "Absent":', rowData);
+                    console.log('StudentID:', studentID);
+                    console.log('Classcode:', classcode);
+                    console.log('Status:', status);
+                    console.log('Current Time:', currentHour + ':' + currentMinute);
+                    updatestatusabsent(status, studentID, classcode);
+                    showLoadingModal();
+                    // window.location.reload();
+                }
+            });
+        }, 5000); // Run the loop every 60 seconds
+
+        // var grid = document.getElementById('transactions').ej2_instances[0];
+
+        // var currentTime = new Date();
+
+
+        // // Attach a rowSelected event handler to the grid
+        // grid.addEventListener('rowSelected', function (args) {
+        //     // Get the selected record
+        //     var selectedRecord = args.data;
+         
+        //     // Assuming selectedRecord.AttendanceEnd is in the format "HH:mm"
+        //     var attendanceEndParts = selectedRecord.AttendanceEnd.split(':');
+        //     var selectedRecordHour = parseInt(attendanceEndParts[0]);
+        //     var selectedRecordMinute = parseInt(attendanceEndParts[1]);
+
+        //     // Get the current time
+        //     var now = new Date();
+        //     var currentHour = now.getHours();
+        //     var currentMinute = now.getMinutes();
+
+        //     // Check if the current time is more than 1 hour past the AttendanceEnd time
+        //     if (
+        //         (currentHour > selectedRecordHour || (currentHour === selectedRecordHour && currentMinute >= selectedRecordMinute)) &&
+        //         selectedRecord.Status !== "Accept" &&
+        //         selectedRecord.Status !== "Present"
+        //     ) {
+        //         var studentID = selectedRecord.StudentID;
+        //         var classcode = selectedRecord.Classcode;
+        //         var status = selectedRecord.Status;
+        //         var attendanceend = selectedRecord.AttendanceEnd;
+        //         console.log('Selected Record with Status "Absent":', selectedRecord);
+        //         console.log('StudentID:', studentID);
+        //         console.log('Classcode:', classcode);
+        //         console.log('Status:', status);
+        //         console.log('Current Time:', currentHour + ':' + currentMinute);
+        //     }
+
+        // });
+    });
+</script>
+
+
+
+
+
+
+<div id="overlay">
+    <div class="row d-flex">
+        <div class="col" id="loading-container">
+            <div id="loading"></div>
+            <div id="countdown" style="margin-top: -1.5%; font-size: 68px ; display:none">3</div>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+            <b style="font-size: 38px">
+                Loading... 
+            </b>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    var seconds = 3;
+
+    function updateCountdown() {
+        var countdownElement = document.getElementById("countdown");
+        countdownElement.textContent = seconds;
+    }
+
+    function countdown() {
+        updateCountdown();
+
+        if (seconds <= 0) {
+            location.reload();
+        } else {
+            seconds--;
+            setTimeout(countdown, 1000);
+        }
+    }
+
+    function showLoadingModal() {
+        document.getElementById("overlay").style.display = "flex";
+        countdown();
+    }
+
+</script>
+
+
+
+<!-- Add a new script section at the end of your code -->
+<script>
+    function updatestatusabsent(status, studentId, classcode) {
+        // Check if the selected record has Status == "Accept"
+        if (status === "Pending") {
+            // Make an AJAX request to update the status
+            $.ajax({
+                type: 'POST',
+                url: '/ClassroomDBs/UpdateStatusAbsent', // Replace with your actual controller and action
+                data: { studentId: studentId, classcode: classcode },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Status updated successfully');
+                        // window.location.reload();
+                    } else {
+                        console.log('Error updating status:', response.message);
+                    }
+                },
+                error: function (error) {
+                    console.log('Error updating status:', error);
+                }
+            });
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* 
+
+<!-- Add a new script section at the end of your code -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the grid element
+        var grid = document.getElementById('transactions').ej2_instances[0];
+
+        // Attach a rowSelected event handler to the grid
+        grid.addEventListener('rowSelected', function (args) {
+            // Get the selected record
+            var selectedRecord = args.data;
+
+            // Check if the selected record has Status == "Accept"
+            if (selectedRecord && selectedRecord.Status === "Accept") {
+                // Display the selected record in the console
+                var studentID = selectedRecord.StudentID;
+                var classcode = selectedRecord.Classcode;
+                var status = selectedRecord.Status;
+                // Display the selected record details in the console
+                console.log('Selected Record with Status "Accept":', selectedRecord);
+                console.log('StudentID:', studentID);
+                console.log('Classcode:', classcode);
+                console.log('Status:', status);
+
+                handleAcceptClick(status, studentID, classcode);
+            }
+        });
+    });
+</script>
+
+<!-- Add a new script section at the end of your code -->
+<script>
+    function handleAcceptClick(status, studentId, classcode) {
+        // Check if the selected record has Status == "Accept"
+        if (status === "Accept") {
+            // Make an AJAX request to update the status
+            $.ajax({
+                type: 'POST',
+                url: '/ClassroomDBs/UpdateStatus', // Replace with your actual controller and action
+                data: { studentId: studentId, classcode: classcode },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Status updated successfully');
+                    } else {
+                        console.log('Error updating status:', response.message);
+                    }
+                },
+                error: function (error) {
+                    console.log('Error updating status:', error);
+                }
+            });
+        }
+    }
+</script>
+ *@
+
+
+
+
+
+
+
+
+
+@* 
+<!-- Add a new script section at the end of your code -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the grid element
+        var grid = document.getElementById('transactions').ej2_instances[0];
+
+        // Attach a rowSelected event handler to the grid
+        grid.addEventListener('rowSelected', function (args) {
+            // Get the selected record
+            var selectedRecord = args.data;
+
+            // Display the selected record in the console
+            console.log('Selected Record:', selectedRecord);
+        });
+    });
+</script> *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* 
+<div class="row" style="width: 1300px; margin-top: 10px">
+    <div class="col-md-7" style="width: 1300px">
+        <ejs-grid id="transactions" dataSource="@sampleData" gridLines="None"
+                  allowSorting="true" allowPaging="true" style="font-family: 'Inter'">
+            <e-grid-pagesettings pageSize="10">
+            </e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column headerText="Student" field="StudentName" textAlign="Center" width="180px"></e-grid-column>
+                <e-grid-column headerText="Student ID" field="StudentID" width="fit-content" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Attendance Start" field="AttendanceStart" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Attendance End" field="AttendanceEnd" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Attendance Time" field="AttendanceTime" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Status" template="#typeColumntemplate" field="Status" textAlign="Center" width="fit-content"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+
+
+
+<script id="typeColumntemplate" type="text/x-template">
+
+        ${ if (Status == "Present")}
+    <span id="statusBadge" class="badge " style="color:#00b69b;background-color:#122829;font-size:16px" > ${ Status } </span>
+    ${else if (Status == "Absent")}
+    <span id="statusBadge" class="badge " style="color:#ee367f;background-color:#2a1b27;font-size:16px"> ${ Status } </span>
+     ${else if (Status == "Pending")}
+    <span id="statusBadge" class="badge " style="color:#2c50e3;background-color:#1e2231;font-size:16px"> ${ Status } </span>
+    ${else }
+    <span id="statusBadge" class="badge bg-success" > ${ Status } </span>
+    ${ /if}
+
+</script>
+
+ *@
+
+
+
+
+
+
+
+<div id="myModal" class="modal">
+    <div style="width:940px;height:650px ;background-color:#1a222b ; position:relative ; border-radius:15px">
+
+
+        <div class="modal-content" style="background-color:#1a222b">
+
+            <div id="modal-container" style="width:900px;height:550px">
+            </div>
+        </div>
+
+
+        <button id="recordButton" class="btn btn-success" onclick="closeModal()" style="position:absolute ; bottom:10px ; right:20px">Record</button>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+<script>
+    function closeModal() {
+        const modal = document.getElementById('myModal');
+        modal.style.display = 'none';
+        window.location.reload(); // This line will refresh the current page
+    }
+</script>
+
+
+
+
+
+
+
+
+<div id="myModal1" class="modal">
+    <div style="width:940px;height:650px ;background-color:#1a222b ; position:relative ; border-radius:15px">
+
+
+        <div class="modal-content1" style="background-color:#1a222b">
+
+            <div id="modal-container1" style="width:900px;height:550px">
+            </div>
+        </div>
+
+
+        <button id="recordButton" class="btn btn-success" onclick="closeModal1()" style="position:absolute ; bottom:10px ; right:20px">Record</button>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+    function closeModal1() {
+        const modal = document.getElementById('myModal1');
+        modal.style.display = 'none';
+        window.location.reload(); // This line will refresh the current page
+    }
+</script>
+
+
+
+
+
+
+
+
+@*
+
+
+<h4>Students</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Student ID
+            </th>
+            <th>
+                Attendance Start
+            </th>
+            <th>
+                Attendance End
+            </th>
+            <th>
+                Attendance Time
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var studentClassroom in Model.Students)
+        {
+            <tr>
+                <td>
+                    @studentClassroom.Student_Name
+                </td>
+                <td>
+                    @studentClassroom.Student_ID
+                <td>
+                        @studentClassroom.Attendance_Start
+                </td>
+                <td>
+                        @studentClassroom.Attendance_End
+                </td>
+                <td>
+                        @studentClassroom.Attendance_Time
+                </td>
+                <td>
+                        @studentClassroom.Status
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+<h1>Details</h1>
+<div>
+    <h4>ClassroomDB</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Attendance_Option)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Attendance_Option)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassCode)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ClassCode)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Educator_Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Educator_Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ClassName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Section)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Section)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Attendance_Start)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Attendance_Start)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Attendance_End)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Attendance_End)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Days)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Days)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EducatorEmail)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EducatorEmail)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ClassID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+*@
+

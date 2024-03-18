@@ -1,0 +1,296 @@
+﻿@model IEnumerable<APYROPROJECTFINAL.Models.ClassroomDB>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    ViewData["isDashboard"] = true;
+    Layout = "/Views/Shared/_EducatorDashboardLayout.cshtml";
+
+
+  
+}
+
+
+@functions {
+    public string MilitaryTo12HourFormat(string militaryTime)
+    {
+        var timeParts = militaryTime.Split(':');
+
+        if (timeParts.Length == 2 && int.TryParse(timeParts[0], out var hour) && int.TryParse(timeParts[1], out var minute))
+        {
+            var period = (hour >= 12) ? "PM" : "AM";
+            hour = (hour > 12) ? hour - 12 : hour;
+            hour = (hour == 0) ? 12 : hour;
+
+            return $"{hour:D2}:{minute:D2} {period}";
+        }
+
+        // Return original string if the conversion fails
+        return militaryTime;
+    }
+}
+
+
+
+
+@* <p>
+
+    <a class="btn btn-success" asp-controller="ClassroomDBs" asp-action="Create">+Add Class</a>
+</p>
+ *@
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+            <div class="col-md-3 col-xs-6 border-primary mb-3">
+        <div class="card mb-3" style="max-width: 320px;min-height:230px;
+                 background-color: #1a222b; border-radius: 12px; font-family:'Inter';">
+            <div class="row g-0">
+                <div class="col-md-12">
+                        <div class="card-header text-white " style="background-color: #222b33;
+                         border-top-right-radius: 12px; border-top-left-radius: 12px;">
+                            <div style="height:50px">
+                                <h5 class="card-title" style="font-size: 20px; text-transform:uppercase"><b>@item.ClassName</b></h5>
+
+                            </div>
+                          
+@*                            <p class="card-text" style="font-size: 14px ; text-transform:uppercase"><b>@item.Section  @item.Attendance_Start  @item.Attendance_End  @item.Days</b></p>*@
+                            <a class="lead" style="color: white;  text-decoration: none ; font-size: 14px ;  text-transform:uppercase ">@item.Section   @MilitaryTo12HourFormat(item.Attendance_Start) @MilitaryTo12HourFormat(item.Attendance_End)  @item.Days <br />@item.Educator_Name</a>
+                          
+@*                            <p class="card-text" style="font-size: 14px ; margin-top:-10px ; text-transform:uppercase"><b>@item.Educator_Name </b></p>*@
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+
+
+                    <div class="card-body">
+                        <div class="col-m">
+                            <img src="" width="100%" alt="">
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                        <div class="card-footer " >
+                        <p class="card-text">
+
+                                <a id ="detailsButton" class="btn btn-outline-light me-4" asp-controller="ClassroomDBs" asp-action="Details" asp-route-id="@item.ClassID">
+                                <i class="bi bi-folder2-open" ></i> Show Details
+                            </a>
+                                <a class="btn float-right" asp-controller="ClassroomDBs" asp-action="Edit" asp-route-id="@item.ClassID" style="color: white">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a class="btn float-right" asp-controller="ClassroomDBs" asp-action="Delete" asp-route-id="@item.ClassID" style="color: white">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    }
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+@*<h1>Index</h1>
+
+<p>
+    <a asp-controller="ClassroomDBs" asp-action="Create">Create New</a>
+</p>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.ClassName
+                                    <a class="text-white float-right"><i class="bi bi-pencil-square"></i></a>
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="" width="100%" alt="">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">Description Sample</p>
+                            <p class="card-text"><b>Cinema: </b>Name Sample</p>
+                            <p class="card-text"><b>Category: </b>Name Sample</p>
+                            <p class="card-text"><b>Start Date: </b>Name Sample</p>
+                            <p class="card-text"><b>End Date: </b>Name Sample</p>
+                            <p class="card-text ">
+                                <b>Status: </b>
+                                Status Sample
+                               
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">*@
+                               @* <a class="btn btn-outline-primary float-right">
+                                    <i class="bi bi-eye-fill"> </i> Show Details
+                                </a>*@
+                               @* <a asp-controller="ClassroomDBs" asp-action="Details" asp-route-id="@item.ClassID" class="btn btn-outline-primary float-right">
+                                    <i class="bi bi-eye-fill"></i> Show Details
+                                </a>*@
+
+                             @*   <a class="btn btn-success text-white">
+                                    <i class="bi bi-cart-plus"> </i> Delete
+                                </a>*@
+@*
+                                <a asp-controller="ClassroomDBs" asp-action="Delete" asp-route-id="@item.ClassID" class="btn btn-success text-white">
+                                    <i class="bi bi-cart-plus"></i> Delete
+                                </a>
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+<p>
+    <a asp-controller="ClassroomDBs" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance_Option)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Educator_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Section)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance_Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance_End)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Days)
+            </th>
+            <th></th>
+        </tr>
+    </thead> 
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attendance_Option)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Educator_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attendance_Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attendance_End)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Days)
+                </td>
+                <td>
+                    <a asp-controller="ClassroomDBs" asp-action="Edit" asp-route-id="@item.ClassID">Edit</a> |
+                    <a asp-controller="ClassroomDBs" asp-action="Details" asp-route-id="@item.ClassID">Details</a> |
+                    <a asp-controller="ClassroomDBs" asp-action="Delete" asp-route-id="@item.ClassID">Delete</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Lsdfdsfdsre</a>.</p>
+    <p>User id : @ViewData["UserID"]</p>
+</div>*@
+
+
+

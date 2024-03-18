@@ -1,0 +1,354 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["isDashboard"] = true;
+    var Polar = "Polar";
+
+
+
+}
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js" integrity="sha512-UcDEnmFoMh0dYHu0wGsf5SKB7z7i5j3GuXHCnb3i4s44hfctoLihr896bxM0zL7jGkcHQXXrJsFIL62ehtd6yQ==" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+
+
+
+
+<div id="content">
+
+
+<div class="row mb-4 " @* style="margin-top:-80px" *@ >
+
+
+
+    <div class="col-md-6">
+        <div class="widget">
+            <div class="p-4">
+                <h5 class="fw-bold">Areas For Improvements</h5>
+            </div>
+
+            <center>
+    
+                <ejs-chart id="container" load="load" >
+                    <e-chart-tooltipsettings enable="true">
+                    </e-chart-tooltipsettings>
+                    <e-chart-legendsettings enableHighlight="true" position="Top" >
+
+                        <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                  
+                    </e-chart-legendsettings>
+
+                    <e-chart-primaryxaxis interval="1" labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.OnTicks" valueType="@Syncfusion.EJ2.Charts.ValueType.Category"></e-chart-primaryxaxis>
+                <e-chart-primaryyaxis visible="false" >
+                </e-chart-primaryyaxis>
+                    <e-series-collection>
+
+
+                    <e-series dataSource="ViewBag.ChartPointsradar" opacity="0.5" name="Improved" xName="Period" width="2" yName="ProductRevenue_A" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Radar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Area" fill="#274f7e">
+                        <e-series-border color="transparent" width="0"></e-series-border>
+                    </e-series>
+
+
+                    <e-series dataSource="ViewBag.ChartPointsradar" opacity="0.5" name="For Improvements" xName="Period" width="2" yName="ProductRevenue_B" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Radar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Area" fill="#219C90">
+                        <e-series-border color="transparent" width="0"></e-series-border>
+                    </e-series>
+
+
+                 
+          
+                    </e-series-collection>
+                </ejs-chart>
+
+
+
+            </center>
+    @*             <div class="property-panel-section">
+                    <div class="property-panel-content">
+                        <table id="property" class="property-panel-table" title="Properties" style="width: 100%">
+                            <tr style="height: 50px">
+                                <td style="width: 50%">
+                                    <div>Series Type:</div>
+                                </td>
+                                <td style="width: 50%;">
+                                    <ejs-dropdownlist id="serieschange" dataSource="@ViewBag.select" change="seriesChange" value="Polar" popupHeight="220px"></ejs-dropdownlist>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+      *@
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.primaryXAxis.coefficient = ej.base.Browser.isDevice ? 80 : 100;
+        }
+        function seriesChange() {
+            var chart = document.getElementById('container').ej2_instances[0];
+            chart.series[0].type = this.value;
+            chart.series[1].type = this.value;
+            chart.series[2].type = this.value;
+            chart.series[0].animation.enable = false;
+            chart.series[1].animation.enable = false;
+            chart.series[2].animation.enable = false;
+            chart.refresh();
+        }
+    </script>
+    
+   
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="col-md-6">
+
+        <div class="widget chart" >
+            <div class="p-4">
+                <h5 class="fw-bold">Stack Bar Overview</h5>
+            </div>
+
+            <center>
+
+ 
+            <ejs-chart id="splineContainer" load="load" height="250" >
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+    
+                    <e-series dataSource="ViewBag.ChartPoints11" xName="Month" yName="AppleSales" name="Present" width=2 columnWidth="0.6" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingBar100" fill="#274f7e">
+                        <e-series-border width="1" color="#ffffff"></e-series-border>
+                    </e-series>
+                    <e-series dataSource="ViewBag.ChartPoints11" xName="Month" yName="OrangeSales" name="Absent" width=2  columnWidth="0.6" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingBar100" fill="#219C90">
+                        <e-series-border width="1" color="#ffffff"></e-series-border>
+                    </e-series>
+             
+                </e-series-collection>
+                <e-chart-tooltipsettings enable="true" format="${point.x} : <b>${point.y} (${point.percentage}%)</b>"></e-chart-tooltipsettings>
+                <e-chart-legendsettings visible="true" enableHighlight="true" position="Top">
+                        <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+
+                </e-chart-legendsettings>
+            </ejs-chart>
+
+            </center>
+        <script>
+            function load(args) {
+                var selectedTheme = location.hash.split('/')[1];
+                selectedTheme = selectedTheme ? selectedTheme : 'Material';
+                args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+                args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            }
+        </script>
+
+
+        <center>
+                <table class="table table-dark table-bordered table-striped" style="margin-top: 50px; width: 20%; height: 40px; text-align: center; vertical-align: middle">
+                    <tr>
+                        <th style="border: 1px solid white; padding: 8px;">Scores</th>
+                        <th style="border: 1px solid white; padding: 8px;">Actual</th>
+                        <th style="border: 1px solid white; padding: 8px;">Basis</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white; padding: 8px;">Present</td>
+                        <td style="border: 1px solid white; padding: 8px; color: @(ViewBag.PresentPasses ? "green" : "red");">@ViewBag.ActualPresentPercentage%</td>
+                        <td style="border: 1px solid white; padding: 8px; color:green">@ViewBag.BasisPresent%</td>
+
+
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white; padding: 8px;">Absent</td>
+                        <td style="border: 1px solid white; padding: 8px; color: @(ViewBag.AbsentPasses ? "green" : "red");">@ViewBag.ActualAbsentPercentage%</td>
+                        <td style="border: 1px solid white; padding: 8px;color:green">@ViewBag.BasisAbsent%</td>
+
+
+                    </tr>
+
+                </table>
+
+        </center>
+     
+
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row mb-4">
+
+
+
+
+
+
+    <div class="col-md-4">
+        <div class="widget chart" >
+            <div class="p-4">
+                <h5 class="fw-bold">Attendance Distribution</h5>
+            </div>
+            <ejs-accumulationchart id="doughnutchart" enableSmartLabels background='#1a222b'>
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="ViewBag.ChartPoints"
+                                           xName="Browser" yName="Users"
+                                           innerRadius="60%" legendShape="Circle"
+                                           palettes=@(new string[]{"#274f7e"@* , "#E9B824" *@, "#219C90", "#D83F31"})>
+                        <e-accumulationseries-datalabel name="DataLabelMappingName" visible="false"></e-accumulationseries-datalabel>
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+                <e-accumulationchart-legendsettings position="Top">
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-accumulationchart-legendsettings>
+                <e-accumulationchart-tooltipsettings enable="true"></e-accumulationchart-tooltipsettings>
+            </ejs-accumulationchart>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="col-md-8">
+
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Attendance Performance Overview</h5>
+            </div>
+            <ejs-chart id="spline-chart" background='#1a222b' palettes=@(new string[]{"#274f7e"@* ,"#ffe91a" *@,"#219C90"})>
+                <e-chart-primaryxaxis valueType="Category">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis>
+                    <e-majorgridlines width="1" color="#32414d" dashArray="3,5"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series dataSource="@ViewBag.AttendanceChartData" xName="Day" width="3"
+                              yName="Present" name="Present" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
+                    @*   <e-series dataSource="@ViewBag.AttendanceChartData" xName="Day" width="3"
+                    yName="Late" name="Late" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series> *@
+                    <e-series dataSource="@ViewBag.AttendanceChartData" xName="Day" width="3"
+                              yName="Absent" name="Absent" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
+                </e-series-collection>
+
+                <e-chart-legendsettings position="Top" alignment="Far">
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-chart-legendsettings>
+                <e-chart-tooltipsettings enable shared></e-chart-tooltipsettings>
+            </ejs-chart>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<center>
+<div>
+    <a class="btn btn-success " id="print" style="color: #fff;
+                                font-weight: bold; width: 240px; margin-top: 28px;
+               border-radius: 15px ; font-size:20px ; margin-top:-10px">
+            <b>Save Analytics   <i class="fa-solid fa-image  fa-lg ms-2" style="color: #ffffff;"></i></b>
+           
+
+    </a>
+    @*     <button type="button" class="btn btn-success" onclick="openModal()">Enable Student Tracker</button> *@
+</div>
+</center>
+
+<script src="html2canvas.js"></script>
+
+<script>
+    document.getElementById("print").onclick = function () {
+        const screenshotTarget = document.getElementById("content");
+        html2canvas(screenshotTarget).then((canvas) => {
+            const base64image = canvas.toDataURL("image/png");
+            var anchor = document.createElement('a');
+            anchor.setAttribute("href", base64image);
+            anchor.setAttribute("download", "APyroAnalytics.png");
+            anchor.click();
+            anchor.remove();
+
+        });
+    };
+</script>

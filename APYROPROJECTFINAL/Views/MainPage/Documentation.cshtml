@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+
+*@
+@{
+    Layout = "/Views/Shared/_MainHomePageLayout.cshtml";
+}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+<div class="container">
+    <section id="main">
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                <div class="modal-content position-relative d-flex justify-content-center">
+                    <button type="button" class="close position-absolute" style="width:30px; height: 30px; border-radius:50%; right: -30px; top: -30px;" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                    <video style="width:100%" controls="controls autoplay">
+                        <source src="~/Team Absolute - APyro Demonstration.mp4" type="video/mp4" />
+                    </video>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="flex-container" style="color: white">
+            <div class="col-md-12 d-flex" style="height: 250px; width: 100%;">
+                <div class="d-flex justify-content-center align-items-center" style="width:30%;">
+                        @*       <img src="~/samplelogo.png" height="70px" width="75.5px" /> *@
+                    <a href="/MainPage/MainHomePage"><img src="~/samplelogo 1.png" style="margin-left: 10%" /></a>
+                </div>
+
+                <div class="col d-flex justify-content-center align-items-center" style="width:40%;">
+                    <a href="@Url.Action("Policies", "MainPage")" style=" margin-left: 40px;text-decoration: none;color: white;font-size: 24px;">Policies</a>
+                    <a href="@Url.Action("ContactUs", "MainPage")" style=" margin-left: 40px;text-decoration: none;color: white;font-size: 24px;">Contact Us</a>
+                    <a href="@Url.Action("Documentation", "MainPage")" style=" margin-left: 40px;text-decoration: none;color: white;font-size: 24px;">Documentation</a>
+                    <a href="@Url.Action("AboutUs", "MainPage")" style=" margin-left: 40px;text-decoration: none;color: white;font-size: 24px;">About Us</a>
+                </div>
+
+
+             
+            </div>
+
+            <div class="d-flex flex-column align-items-center">
+                <h1 class="mb-3" style="margin-top:-20px">Documentation</h1>
+                <div class="card col-11 col-sm-10 col-lg-10 col-xl-8" data-toggle="modal" data-target="#exampleModalCenter" style="border-radius:25px; overflow:hidden;  background-color:#1A222B; position:relative;">
+                    <div class="d-flex justify-content-center align-items-center" style="position:absolute; height:300px; width:100%;">
+                        <img src="~/play-button.png">
+                    </div>
+                    <img class="card-img-top" style="height:300px" src="~/demo .png" alt="Video Preview">
+                    <div class="card-body" style="padding:20px;  ">
+                        <h3 style="color:lightgray">Demo</h3>
+                        <h4 style="color:lightblue">
+                            "Experience our advanced attendance system in action. Effortless tracking, real-time monitoring, and customizable features await. Revolutionize your attendance management with us!"
+                        </h4>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+</div>

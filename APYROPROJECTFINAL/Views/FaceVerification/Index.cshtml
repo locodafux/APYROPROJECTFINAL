@@ -1,0 +1,448 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/FaceVerificationLayout.cshtml";
+}
+
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+
+
+</head>
+<body>
+
+
+    <style>
+        body {
+            /* Create a gradient from left to right with 50% #ECECEC and 50% #12161D */
+            background: #12161D;
+            /* color:white;*/
+            overflow-y: auto;
+        }
+
+
+        .card-body {
+            border-radius: 20px;
+            background-color: #222b33;
+        }
+
+        .container {
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .face {
+            width: 400px;
+            border: 2px solid #28D5CA;
+            height: 400px;
+            border-radius: 50%;
+            background-color: white;
+        }
+
+        .card {
+            width: 600px;
+            background-color: #222b33;
+            border-radius: 20px;
+        }
+
+        .directions {
+            color: white;
+            font-weight: 600;
+        }
+
+
+
+
+
+        .modal-content {
+            position: relative;
+            background-color: #1a222b;
+            color: white;
+            height: fit-content;
+            text-align: center;
+        }
+
+        .circle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 350px;
+            height: 350px;
+            border: solid white 1px;
+            border-radius: 50%;
+        }
+
+        .instruction {
+            position: relative;
+            margin-left: 30px;
+            background-color: white;
+            color: #2d94f3;
+            height: 40px;
+            width: fit-content;
+            font-weight: 600;
+            border-radius: 3px;
+            font-size: 18px;
+        }
+
+        .ins-2 {
+            position: relative;
+            top: 50px;
+        }
+
+        .ins-3 {
+            position: relative;
+            top: 20px;
+        }
+
+        .arrow {
+            position: absolute;
+            font-size: 80px;
+            transform: rotate(70deg);
+            color: white;
+        }
+
+        .arrow2 {
+            position: absolute;
+            left: 30px;
+            top: -100px;
+            font-size: 80px;
+            transform: rotate(-20deg);
+            color: white;
+        }
+
+        .arrow3 {
+            position: absolute;
+            left: 30px;
+            top: -100px;
+            font-size: 80px;
+            transform: rotate(-50deg);
+            color: white;
+        }
+
+        .btn-link {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        #second {
+            display: none;
+            color: white;
+            font-weight: 600;
+        }
+
+        #third {
+            display: none;
+            color: white;
+            font-weight: 600;
+        }
+
+
+    </style>
+
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            $('#myModal').modal('show');
+        });
+
+        function step2() {
+
+            var step1 = document.getElementById("step1");
+            var step2 = document.getElementById("step2");
+
+
+
+
+            step1.style.display = "none";
+            step2.style.display = "block";
+
+        }
+
+        function step3() {
+
+            var x = document.getElementById("step2");
+            var y = document.getElementById("step3");
+
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+
+        function step4() {
+
+            var x = document.getElementById("step3");
+            var y = document.getElementById("step4");
+
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+
+        function step5() {
+
+            var x = document.getElementById("step4");
+            var y = document.getElementById("step5");
+
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+
+        function step6() {
+
+            var x = document.getElementById("step5");
+            var y = document.getElementById("step6");
+
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+
+        function step7() {
+
+            var x = document.getElementById("step6");
+            var y = document.getElementById("step7");
+
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+
+
+    </script>
+
+    @* The modal *@
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            @* step 1 *@
+            <div class="modal-content" id="step1" style="background-color:#1A222B">
+                <div class="modal-body">
+                    <img class="img-fluid rounded" src="/images/387615914_874684063854540_5667093615812608220_n.png" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="step2()">Next</button>
+                </div>
+            </div>
+            @* step 2 *@
+            <div class="modal-content" id="step2" style="background-color:#1A222B; display: none;">
+
+                <div class="modal-body">
+                    <img class="img-fluid rounded" src="/images/396834698_340271478489943_9130426555563247068_n.png" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="step3()">Next</button>
+                </div>
+            </div>
+            @* step 3 *@
+            <div class="modal-content" id="step3" style="background-color:#1A222B;  display: none;">
+
+                <div class="modal-body">
+                    <img class="img-fluid rounded" src="/images/396837573_912574647049449_3988996639264760645_n.png" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="step4()">Next</button>
+                </div>
+            </div>
+
+            @* step 4 *@
+            <div class="modal-content" id="step4" style="background-color:#1A222B;  display: none;">
+
+                <div class="modal-body">
+                    <img class="img-fluid rounded" src="/images/387615914_2461801963989896_1302866987614582277_n.png" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="step5()">Next</button>
+                </div>
+            </div>
+
+            @* step 5 *@
+            <div class="modal-content" id="step5" style="background-color:#1A222B;  display: none;">
+
+                <div class="modal-body">
+                    <img class="img-fluid rounded" src="/images/370251333_1056833412418065_7416480265816403007_n.png" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="step6()">Next</button>
+                </div>
+            </div>
+
+            @* step 6 *@
+            <div class="modal-content" id="step6" style="background-color:#1A222B;  display: none;">
+
+                <div class="modal-body">
+                    <img class="img-fluid rounded" src="/images/371464791_327506596663842_4295376002588515529_n.png" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="step7()">Next</button>
+                </div>
+            </div>
+
+            @* step 7 *@
+            <div class="modal-content" id="step7" style="background-color:#1A222B;  display: none;">
+
+                <div class="modal-body">
+                    <img class="img-fluid rounded" src="/images/395780761_2580366465460528_3799541997862870493_n.png" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    @* ------------------- *@
+
+
+
+
+
+
+
+
+
+    <div class="container h-100 w-100 flex">
+        <div class="d-flex justify-content-center h-75 text-center ">
+            <div class="card" style="">
+
+                <div class="dflex card-body justify-content-center">
+
+                    <div class="progress mb-5 mt-4 mx-auto w-75">
+                        <div class="progress-bar " id="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                    <h3 class="directions" id="directions"></h3>
+                    <p class="directions" id="countdown"></p>
+                    <div class=" face mx-auto mt-5">
+                        <video id="webcam" class="webcam" autoplay width="400" height="400" style="border-radius: 50%;"></video>
+                        <canvas class="output_canvas" width="400" height="400"></canvas>
+                        @*<button id="capture" class="btn btn-success" onclick="take_snapshot()">Capture</button>*@
+                        <img id="image" style="display: none;" />
+                    </div>
+                    <button id="start-capture" class="btn pt-4"><i class="fa fa-camera fa-3x fa-fw" style="color:white"></i></button>
+                    <button id="capture-running" class="btn" style="display: none;"><i class="fa fa-refresh fa-spin fa-3x fa-fw" style="color:white"></i></button>
+                    <span id="info-text" style="display: none; color:white">Loading</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        var data;
+        var video = document.getElementById('webcam');
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        var image = document.getElementById('image');
+
+
+
+
+
+        //document.getElementById('capture').addEventListener('click', function () {
+        //    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        //    var imageData = canvas.toDataURL();
+        //    image.src = imageData;
+        //    image.style.display = 'block';
+
+        //    data =
+        //    {
+        //        name: 'ASPNETCORE',
+        //        age: 30,
+        //        imageData: imageData
+        //    };
+
+
+
+        //    var capturedImageModal = document.getElementById('capturedImageModal');
+        //    capturedImageModal.src = imageData;
+        //    capturedImageModal.style.width = "820px"; // Set a fixed width
+        //    capturedImageModal.style.height = "520px"; // Set a fixed height
+
+
+        //});
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+        //function openSecondModal() {
+        //    // Show the second modal
+        //    $('#exampleModalCenter').modal('hide');
+
+
+        //    fetch('/FaceVerification/UploadImage', {
+        //        method: 'POST',
+        //        headers: { 'Content-Type': 'application/json' },
+        //        body: JSON.stringify(data)
+        //    })
+        //        .then(function (response) {
+        //            return response.json();
+        //        })
+        //        .then(function (data) {
+        //            console.log(data);
+        //        })
+        //        .catch(function (err) {
+        //            console.log(err);
+        //        });
+
+
+
+        //}
+
+    </script>
+
+
+
+
+
+</body>
+</html>

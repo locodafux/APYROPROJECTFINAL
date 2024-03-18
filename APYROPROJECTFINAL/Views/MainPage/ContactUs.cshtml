@@ -1,0 +1,74 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "/Views/Shared/_MainHomePageLayout.cshtml";
+}
+
+
+
+<style>
+    body {
+        margin: 0;
+        background-color: #12161d;
+        font-family: "Inter";
+    }
+
+    .flex-container {
+        height: 820px;
+        width: 1600px;
+    }
+
+    .container {
+        margin-left: 0%;
+    }
+
+    #l {
+        margin-left: 40px;
+        text-decoration: none;
+        color: white;
+        font-size: 24px;
+    }
+
+</style>
+
+
+<div class="container">
+    <section id="main">
+        <div class="flex-container" style="color: white">
+            <div class="col-md-12 d-flex" style="height: 15%; width: 100%;">
+                <div class="d-flex justify-content-center align-items-center" style="width:30%;">
+                    @*       <img src="~/samplelogo.png" height="70px" width="75.5px" /> *@
+                    <a href="/MainPage/MainHomePage"><img src="~/samplelogo 1.png" style="margin-left: 10%" /></a>
+                </div>
+                <div class="col d-flex justify-content-center align-items-center" style="width:40%">
+                    <a id="l" href="@Url.Action("Policies", "MainPage")">Policies</a>
+                    <a id="l" href="@Url.Action("ContactUs", "MainPage")">Contact Us</a>
+                    <a id="l" href="@Url.Action("Documentation", "MainPage")">Documentation</a>
+                    <a id="l" href="@Url.Action("AboutUs", "MainPage")">About Us</a>
+
+                   
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center" style="width:20%; ">
+                </div>
+            </div>
+
+            <div class="col-md-12 pageTitle d-flex justify-content-center align-items-center">
+                <div class="row">
+                    <div class="d-flex justify-content-center align-items-center"><h1 style="font-size: 70px">Contact Us</h1></div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="/contactus.png" style="width: 73%;" />
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+   
+
+
+
+
+
+    </section>
+</div>

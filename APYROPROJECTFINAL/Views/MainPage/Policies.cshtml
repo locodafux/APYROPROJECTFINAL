@@ -1,0 +1,90 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "/Views/Shared/_MainHomePageLayout.cshtml";
+}
+
+<style>
+    body {
+        margin: 0;
+        background-color: #242423;
+        font-family: "Inter";
+    }
+
+    .flex-container {
+        height: 820px;
+        width: 1630px;
+    }
+
+    .container {
+        margin-left: 0%;
+    }
+
+    a {
+        margin-left: 40px;
+        text-decoration: none;
+        color: white;
+        font-size: 24px;
+    }
+</style>
+
+
+<div class="container">
+    <section id="main">
+        <div class="flex-container" style="color: white">
+            <div class="col-md-12 d-flex" style="height: 25%; width: 100%;">
+                <div class="d-flex justify-content-center align-items-center" style="width:30%;">
+                    @*       <img src="~/samplelogo.png" height="70px" width="75.5px" /> *@
+                    <a href="/MainPage/MainHomePage"><img src="~/samplelogo 1.png" style="margin-left: 10%" /></a>
+                </div>
+
+                <div class="col d-flex justify-content-center align-items-center" style="width:40%">
+                    <a id="l" href="@Url.Action("Policies", "MainPage")">Policies</a>
+                    <a id="l" href="@Url.Action("ContactUs", "MainPage")">Contact Us</a>
+                    <a id="l" href="@Url.Action("Documentation", "MainPage")">Documentation</a>
+                    <a id="l" href="@Url.Action("AboutUs", "MainPage")">About Us</a>
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center" style="width:30%; ">
+                </div>
+            </div>
+
+            <div class="col-md-12 pageTitle d-flex justify-content-center align-items-center" style="background-color:#1A222B; height:25%">
+                <h1 style="font-size: 80px">Policies</h1>
+            </div>
+
+            <div class="content col-md-12 d-flex justify-content-center align-items-center">
+                <div class="col-md-9 mt-3">
+                    <h2>General Statement</h2>
+                    <p style="font-size: 20px">
+                        At APYRO, we prioritize integrity, transparency, and data privacy in our attendance management system. Users, including students and educators from the University of Makati, can trust that their rights and privacy are respected and protected. Our policies ensure transparency in system operations, including the use of facial recognition technology. We handle personal data responsibly, in compliance with laws, and implement stringent security measures. Users are encouraged to verify attendance records, and we are committed to addressing any discrepancies promptly. Continuous improvement drives enhancements to our system, guided by user feedback. By using APYRO, users agree to our terms, affirming our dedication to trust, accountability, and innovation in attendance management while safeguarding user privacy and data security.
+                    </p>
+                </div>
+            </div>
+
+            <div class="content col-md-12 d-flex justify-content-center align-items-center">
+                <div class="col-md-9 mt-5">
+                    <h2>Overview</h2>
+                    <p style="font-size: 20px">APYRO's Overview Policy encapsulates our unwavering commitment to integrity, transparency, and data privacy in our attendance management system. Guided by these principles, we prioritize clear communication, stringent data protection measures, and continuous improvement. Users can expect transparent disclosures on system functionality and data usage, while stringent security measures ensure the responsible handling of personal information. We strive for accuracy in attendance tracking and promptly address any discrepancies reported by users. By adhering to our policies, users affirm our dedication to maintaining trust, accountability, and innovation in attendance management, while safeguarding user privacy and data security.</p>
+                </div>
+            </div>
+
+            <div class="content col-md-12 d-flex justify-content-center align-items-center">
+                <div class="col-md-9 mt-5">
+                    <h2>Contact Information</h2>
+                    <p style="font-size: 20px">For any inquiries, concerns, or assistance, please don't hesitate to reach out to us. We value your feedback and are here to support you. You can contact us through our dedicated contact page on our website. Our team is committed to providing prompt and helpful assistance to address any questions or issues you may have regarding our attendance management system. We look forward to hearing from you and ensuring your experience with APYRO is positive and satisfactory.</p>
+                </div>
+            </div>
+
+
+            <div class="content col-md-12 d-flex justify-content-center align-items-center">
+                <div class="col-md-9 mt-5">
+                    <h2>Do Not Sell/Share My Information</h2>
+                    <p style="font-size: 20px">At APYRO, we respect your privacy and are committed to protecting your personal information. If you wish to opt out of the sale or sharing of your information, please let us know by contacting our dedicated privacy team through the contact page on our website. We will promptly process your request and ensure that your information is not sold or shared with third parties for marketing or other purposes. Your privacy is important to us, and we appreciate the trust you place in us.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>

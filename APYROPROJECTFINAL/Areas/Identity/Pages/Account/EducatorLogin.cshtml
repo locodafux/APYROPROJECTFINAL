@@ -1,0 +1,228 @@
+﻿@page
+@model EducatorLoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "~/Areas/Identity/Pages/_AuthLayout.cshtml";
+}
+
+@**@
+
+
+<style>
+
+
+
+    .btn-outline {
+        color: white;
+        background-color: transparent;
+        border-color: #4fbfa8;
+        border-radius: 5px;
+    }
+
+    .btn-colour {
+        color: black;
+        border:none;
+        background-color: #4fbfa8;
+        border-radius: 5px;
+        width: 111px;
+        height: 41px;
+        font-weight: 700;
+    }
+
+
+    .frame {
+        width: 184px;
+        height: 185px;
+    }
+
+    .widget {
+        border-radius: 1rem;
+        text-align: center;
+        height: fit-content;
+        width: 480px;
+        background-color: #FFFFFF;
+        position: relative;
+        left: 50%;
+        top: 120px;
+        transform: translateX( -50%);
+    }
+
+</style>
+
+
+
+<div style="position:absolute; width: 100vw; height: 100vh; ">
+    <div class="row" style="position:relative">
+      
+        <div class="col-6" justify-content="center" style="position:relative">
+
+
+              <form id="account" method="post">
+
+            <div style="position:absolute; top: 20px; left: 33px; ">
+                <img src="~/logo.png" style="width:90px; height:92.5px;" />
+            </div>
+            <div style="position: absolute; top: 40px; left: 143px;">
+                <p style="font-size: 20px; font-weight:700;">APyro</p>
+                <p style="color: #797979; margin-top:-20px;font-weight:700; ">Attendance Pyro</p>
+            </div>
+
+            <div class="widget p-3">
+                <img class="frame" src="~/images/no-pfp.png" />
+                <p style="font-weight:700; font-size:26px">Log in your account</p>
+                <p style="color:#797979; font-size:14px; margin-top:-15px">Welcome back!</p>
+                <div class="mb-3" >
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-floating mb-2">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                        <label asp-for="Input.Email" class="form-label"></label>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                        <label asp-for="Input.Password" class="form-label"></label>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div style="text-align:left">
+                        <label asp-for="Input.RememberMe" class="form-label">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                </div>
+
+
+                    <button id="login-submit" type="submit" class="btn btn-colour mb-3">Log In</button><br />
+                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a><br /><br />
+                    <p>Dont have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl style=" text-decoration:none;">Sign up</a></p>
+
+
+            </div>
+            </form>
+        </div>
+
+        @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+        }
+
+
+
+
+
+        <div class="col-6" style="color:white; height:100vh">
+
+            <div class="row">
+                <div class="col-7" style="position:relative; ">
+                    <div style="width:80px; height:80px; border-radius:50%; position:absolute; top:150px; left:100px; z-index: 9;">
+                        <img src="/images/glasses.png" style="width:100%; height:100%" />
+                    </div>
+                    <div style="width:80px; height:80px; border-radius:50%; position:absolute; top:280px; left:60px;z-index: 9;">
+                        <img src="/images/grad.png" style="width:100%; height:100%" />
+                    </div>
+                    <div style="width:80px; height:80px; border-radius:50%; position:absolute; top:410px; left:100px;z-index: 9;">
+                        <img src="/images/excla.png" style="width:100%; height:100%" />
+                    </div>
+
+                    <div style="background-color:#1F3A38; width:210px; height:20px; position:absolute; top:180px; left:170px"></div>
+                    <div style="background-color:#1F3A38; width:450px; height:20px; position:absolute; top:310px; left:130px"></div>
+                    <div style="background-color:#1F3A38; width:210px; height:20px; position:absolute; top:440px; left:170px"></div>
+                    <div style="background-color:#1F3A38; width:20px; height:280px; position:absolute; top:180px; left:370px; border-radius:10px;"></div>
+
+                    <div style="width:fit-content; height:fit-content; background: transparent; border-color:#28D5CA; border-width: 1px; border-style:solid; position:absolute; top:541px; left:140px; border-radius: 1rem;">
+                        <p style="padding-left:10px; padding-top: 10px;  ">
+                            Introducing APYRO: Revolutionizing Attendance Management in Higher Education. Experience the transformative power of APYRO, your all-in-one attendance management solution. Try it now and simplify your attendance tracking process.
+                        </p>
+                    </div>
+
+
+                </div>
+
+                <div class="col-5" style="  position:relative ; top:160px">
+                    <img src="~/images/mid-logo.png" width="320px" height="320px" class="mid-logo" />
+                </div>
+            </div>
+            <div style="height:230px; width:230px; position:absolute; bottom:0px; right:0px"> <img style="width:100%; height:100%" src="/images/robot.png" /></div>
+
+            <div style="width:30px; height: 30px; position:absolute; bottom:170px; right:280px; background-color:#16BDB3; border-radius:50%;"></div>
+            <div style="width:30px; height: 30px; position:absolute; bottom:150px; right:230px; background-color:#16BDB3; border-radius:50%;"></div>
+            <div style="width:15px; height: 15px; position:absolute; bottom:130px; right:190px; background-color:#16BDB3; border-radius:50%;"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+                <h2>Use a local account to log in.</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-floating">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                    <label asp-for="Input.Email" class="form-label"></label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div>
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe" class="form-label">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                </div>
+                <div>
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                    </p>
+                    <p>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+
+*@
+
+
+

@@ -1,0 +1,74 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+    
+*@
+@{
+    Layout = "/Views/Shared/_EducatorStudentSignUpLayout.cshtml";
+    
+
+
+}
+
+
+<div class="col d-flex ms-4 mt-5">
+    <div>
+  @*       <img src="~/samplelogo.png" height="70px" width="75.5px" /> *@
+        <a href="/MainPage/MainHomePage"><img src="~/samplelogo.png" height="70px" width="75.5px" /></a>
+    </div>
+    <div class="ms-2 mt-2">
+        <p>
+            <b style="font-size: 20px; color: white">APyro</b><br /> <b style="font-size: 16px;font-weight:700; color: #797979">Attendance Pyro</b>
+        </p>
+    </div>
+</div>
+<div class="d-flex w-100 h-100 flex-column justify-content-center align-items-center">
+
+
+
+    <div class="card d-flex text-center" style="width: 461px; height:605px; border-radius:15px; background-color:#1A222B; color:white; margin-top:-20px;">
+        <div class="card-body">
+            <img src="/images/20945889 1.png" />
+            <h1 class="fw-bold" style="font-size:34px;">APyro</h1>
+            <h4 class="fw-bold" style="font-size:18px;">Attendance Pyro</h4>
+
+            <div class="mx-auto d-flex flex-column mb-4" style="width: 286px; text-align:left;">
+      @*           <span class=" mb-3" style="font-size: 16px;">Select Sign Up</span> *@
+                <a href="/Identity/Account/EducatorRegister" class="btn btn-primary mb-2 fw-bold" style="font-size:18px;background-color: #0844F4">
+                    Educator’s sign up here</a>
+                <a href="/Identity/Account/StudentRegister" class="btn btn-primary fw-bold" style="font-size:18px;background-color: #0844F4">Student's sign up here</a>
+            </div>
+            <div class=" d-flex flex-column">
+                <span class="mb-2" style="font-size:14px;">Already have and account?</span>
+                <a href="/Identity/Account/Login" class="btn btn-link text-decoration-none fw-bold" style="font-size:20px">Sign In</a>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+@*<input type="file" id="imageUpload">
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modal-container">
+            <img id="modal-image" src="" alt="Detected Faces">
+        </div>
+        <button id="recordButton" class="btn btn-success" onclick="closeModal()">Record</button>
+    </div>
+</div>*@
+

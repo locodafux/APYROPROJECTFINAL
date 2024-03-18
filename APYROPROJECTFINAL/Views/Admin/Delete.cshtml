@@ -1,0 +1,77 @@
+﻿@model APYROPROJECTFINAL.Models.ClassroomDB
+@{
+    Layout = "/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ClassroomDB</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Attendance_Option)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Attendance_Option)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Educator_Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Educator_Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClassName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClassName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Section)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Section)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Attendance_Start)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Attendance_Start)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Attendance_End)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Attendance_End)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Days)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Days)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EducatorEmail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EducatorEmail)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ClassID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-controller="Admin" asp-action="Index">Back to List</a>
+    </form>
+</div>

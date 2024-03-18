@@ -1,0 +1,279 @@
+﻿@model IEnumerable<APYROPROJECTFINAL.Models.ClassroomDB>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var classCodes = ViewBag.ClassCodes as List<ClassroomDB>;
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+}
+
+
+
+
+    <style>
+    .flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        text-align: center;
+        background-color: #222b33;
+        color: white;
+        height: fit-content;
+        border-radius: 20px;
+    }
+
+    .card-body {
+        min-height: 600px;
+    }
+
+    .left {
+        /*  border-right: solid 5px #20242a; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align:center;
+    }
+
+    .right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+
+    .input {
+        height: fit-content;
+        background-color: rgb(45, 52, 61);
+        color: white;
+    }
+
+        .input:focus {
+            background-color: rgb(45, 52, 61);
+            color: white;
+        }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+
+
+    </style>
+
+
+
+
+
+
+
+<div class="row col-md-12" style="margin-left:10%">
+    <div class="col-md-12">
+
+        <div class="widget p-5 row" style="background-color:#212b36">
+            <div class="col-md-1"></div>
+            <div class="left  col col-md-5 p-3 ">
+                <h2 class="card-title  pb-3 fw-bold">Join Class</h2>
+                <h4 class="card-subtitle text-muted  pb-5" >Enter the code your teacher shared</h4>
+                 <form asp-action="CheckCode" method="post">
+                <div class="form-floating mx-auto mb-3 " style="width:95%;">
+                    <input type="text" class="form-control w-100 " style=" height: 55px; color: white;
+                     background-color: #212529" autocomplete="current-classname" aria-required="true" name="code" />
+                    <label class="form-label">Class Code</label>
+                    <span class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-success mb-5  mx-auto" style="font-size:18px; width:95%"> + Join Class</button>
+             
+                <a href="#" class="card-link  pb-3" style="text-decoration:none; color:#797979;">Not joining a class?</a>
+                </form>
+                <a href="#" class="card-link " style="color: #4062DB;
+                 text-decoration:none; font-weight:600; font-size:20px;">Back</a>
+             
+            </div>
+       
+            <div class="right col-md-6 row" style="position:relative">
+                <img class="img-fluid w-100  mx-auto" style="height:120%  ;margin-top:-10% ; position:relative; left:30px" src="/images/join2.png">
+            </div>
+
+               
+          
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@if (ViewBag.IsCodeCorrect != null)
+{
+
+    @if ((bool)ViewBag.IsCodeCorrect)
+    {
+        <p>Correct</p>
+
+        <script>
+            window.location.href = '@Url.Action("Index", "Home")';
+        </script>
+    }
+    else
+    {
+      @*  <p>Incorrect</p>*@
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+<h4>Class Codes Controller</h4>
+<ul>
+    @if (classCodes != null)
+    {
+        foreach (var classCode in classCodes)
+        {
+            <li>@classCode.ClassCode</li>
+        }
+    }
+</ul>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CheckCode" method="post">
+            <div class="form-group">
+                <label for="Attendance_Option" class="control-label">Join Class</label>
+                <input type="text" id="Attendance_Option" class="form-control" name="code" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+
+@if (ViewBag.IsCodeCorrect != null)
+{
+
+    @if ((bool)ViewBag.IsCodeCorrect)
+    {
+        <p>Correct</p>
+
+        <script>
+            window.location.href = '@Url.Action("Index", "Home")';
+        </script>
+    }
+    else
+    {
+        <p>Incorrect</p>
+    }
+}
+
+
+*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+<h4>Class Codes Controller</h4>
+<ul>
+    @if (classCodes != null)
+    {
+        foreach (var classCode in classCodes)
+        {
+            <li>@classCode.ClassCode</li>
+        }
+    }
+</ul>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CheckCode" method="post">
+            <div class="form-group">
+                <label for="Attendance_Option" class="control-label">Join Class</label>
+                <input type="text" id="Attendance_Option" class="form-control" name="code" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+
+
+@if (ViewBag.IsCodeCorrect != null)
+{
+
+    @if ((bool)ViewBag.IsCodeCorrect)
+    {
+        <p>Correct</p>
+
+        <script>
+            window.location.href = '@Url.Action("Index", "Home")';
+        </script>
+    }
+    else
+    {
+        <p>Incorrect</p>
+    }
+}*@

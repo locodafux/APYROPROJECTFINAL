@@ -1,0 +1,464 @@
+﻿@model IEnumerable<APYROPROJECTFINAL.Models.ClassroomDB>
+@{
+    ViewData["Title"] = "Home Page";
+    ViewData["isDashboard"] = true;
+    Layout = "/Views/Shared/_Layout.cshtml";
+    var classCodes = ViewBag.ClassCodes as List<ClassroomDB>;
+}
+@*<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>User Id : @ViewData["UserID"]</p>
+</div>*@
+
+
+
+
+
+
+
+@functions {
+    public string MilitaryTo12HourFormat(string militaryTime)
+    {
+        var timeParts = militaryTime.Split(':');
+
+        if (timeParts.Length == 2 && int.TryParse(timeParts[0], out var hour) && int.TryParse(timeParts[1], out var minute))
+        {
+            var period = (hour >= 12) ? "PM" : "AM";
+            hour = (hour > 12) ? hour - 12 : hour;
+            hour = (hour == 0) ? 12 : hour;
+
+            return $"{hour:D2}:{minute:D2} {period}";
+        }
+
+        // Return original string if the conversion fails
+        return militaryTime;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+      <div class="col-md-4 mb-4">
+        <div class="d-flex flex-row widget summary income">
+            <div class="d-flex flex-column justify-content-center p-5">
+                    <a class="btn btn-outline-light " asp-controller="Home" asp-action="Details" asp-route-id="@item.ClassID">
+                    <i class="fa-solid fa-folder-open  fa-2x " ></i>
+                </a>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                    <h5 class="display-6 fw-bold ms-3 me-2" style="font-size: 23px; text-transform:uppercase ">@item.ClassName</h5>
+                    <a class="lead ms-3 me-2" style="color: white;  text-decoration: none ; font-size: 14px ;  text-transform:uppercase ">@item.Section   @MilitaryTo12HourFormat(item.Attendance_Start) @MilitaryTo12HourFormat(item.Attendance_End)  @item.Days</a>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.ClassName
+                                    <a class="text-white float-right"><i class="bi bi-pencil-square"></i></a>
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="" width="100%" alt="">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">Description Sample</p>
+                            <p class="card-text"><b>Cinema: </b>Name Sample</p>
+                            <p class="card-text"><b>Category: </b>Name Sample</p>
+                            <p class="card-text"><b>Start Date: </b>Name Sample</p>
+                            <p class="card-text"><b>End Date: </b>Name Sample</p>
+                            <p class="card-text ">
+                                <b>Status: </b>
+                                Status Sample
+
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">*@
+                                @* <a class="btn btn-outline-primary float-right">
+                            <i class="bi bi-eye-fill"> </i> Show Details
+                            </a>*@
+                               @* <a asp-controller="Home" asp-action="Details" asp-route-id="@item.ClassID" class="btn btn-outline-primary float-right">
+                                    <i class="bi bi-eye-fill"></i> Show Details
+                                </a>
+*@
+                                @*   <a class="btn btn-success text-white">
+                            <i class="bi bi-cart-plus"> </i> Delete
+                            </a>*@
+
+                          @*      <a asp-controller="ClassroomDBs" asp-action="Delete" asp-route-id="@item.ClassID" class="btn btn-success text-white">
+                                    <i class="bi bi-cart-plus"></i> Delete
+                                </a>
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+   Summary Widgets
+*@
+@*
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="d-flex flex-row widget summary income">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-users-between-lines fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <a href="@Url.Action("StudentClassroom", "Home")" class="lead" style="color: white;  text-decoration: none;">Classroom 1</a>
+                <h1 class="display-6 fw-bold">Subject</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary expense">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-users-between-lines fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Classroom 2</span>
+                <h1 class="display-6 fw-bold">Subject</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary balance">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-users-between-lines fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Classroom 3</span>
+                <h1 class="display-6 fw-bold">Subject</h1>
+            </div>
+        </div>
+    </div>
+
+</div>
+*@
+
+
+@*
+   Summary Widgets Original
+
+
+<div class="row mb-4">
+
+
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary income">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-users-between-lines fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Classroom 1</span>
+                <h1 class="display-6 fw-bold">Subject</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary expense">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-users-between-lines fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Classroom 2</span>
+                <h1 class="display-6 fw-bold">Subject</h1>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div class="d-flex flex-row widget summary balance">
+            <div class="d-flex flex-column justify-content-center p-5">
+                <i class="fa-solid fa-users-between-lines fa-2xl"></i>
+            </div>
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Classroom 3</span>
+                <h1 class="display-6 fw-bold">Subject</h1>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+*@
+
+
+
+
+
+
+
+@*Doughnut and Spline Chart *@
+
+<div class="row mb-4">
+
+
+
+    @* <div class="col-md-4">
+    <div class="widget chart">
+    <div class="p-4">
+    <h5 class="fw-bold">Attendance Summary </h5>
+    </div>
+    <ejs-accumulationchart id="doughnutchart" enableSmartLabels background='#1a222b'>
+    <e-accumulation-series-collection>
+    <e-accumulation-series dataSource="ViewBag.DougnutChartData"
+    xName="categoryTitleWithIcon" yName="amount"
+    innerRadius="60%" legendShape="Circle"
+    palettes=@(new string[]{"#0e8d76","#a4b219","#cb9b00","#8a442c","#0454b5","#7d0a0a","#822690","#4c2090","#313e93","#0096ac"})>
+    <e-accumulationseries-datalabel name="formattedamount" visible></e-accumulationseries-datalabel>
+    </e-accumulation-series>
+    </e-accumulation-series-collection>
+    <e-accumulationchart-legendsettings position="Top">
+    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+    </e-accumulationchart-legendsettings>
+    <e-accumulationchart-tooltipsettings enable></e-accumulationchart-tooltipsettings>
+    </ejs-accumulationchart>
+
+    </div>
+    </div>
+    *@
+
+
+    <div class="col-md-4">
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Attendance Distribution</h5>
+            </div>
+            <ejs-accumulationchart id="doughnutchart" enableSmartLabels background='#1a222b'>
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="ViewBag.ChartPoints"
+                                           xName="Browser" yName="Users"
+                                           innerRadius="60%" legendShape="Circle"
+                                           palettes=@(new string[]{"#274f7e"@* , "#E9B824" *@, "#219C90", "#EE9322"})>
+                        <e-accumulationseries-datalabel name="DataLabelMappingName" visible="false"></e-accumulationseries-datalabel>
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+                <e-accumulationchart-legendsettings position="Top">
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-accumulationchart-legendsettings>
+                <e-accumulationchart-tooltipsettings enable="true"></e-accumulationchart-tooltipsettings>
+            </ejs-accumulationchart>
+
+
+        </div>
+    </div>
+
+
+
+
+    <div class="col-md-8">
+
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Attendance Performance Overview</h5>
+            </div>
+            <ejs-chart id="spline-chart" background='#1a222b' palettes=@(new string[]{"#274f7e"@* ,"#ffe91a" *@,"#219C90"})>
+                <e-chart-primaryxaxis valueType="Category">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis>
+                    <e-majorgridlines width="1" color="#32414d" dashArray="3,5"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series dataSource="@ViewBag.AttendanceChartData" xName="Day" width="3"
+                              yName="Present" name="Present" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
+                  @*   <e-series dataSource="@ViewBag.AttendanceChartData" xName="Day" width="3"
+                              yName="Late" name="Late" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series> *@
+                    <e-series dataSource="@ViewBag.AttendanceChartData" xName="Day" width="3"
+                              yName="Absent" name="Absent" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
+                </e-series-collection>
+
+                <e-chart-legendsettings position="Top" alignment="Far">
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-chart-legendsettings>
+                <e-chart-tooltipsettings enable shared></e-chart-tooltipsettings>
+            </ejs-chart>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    @*  <div class="col-md-8">
+
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="fw-bold">Attendance Performance Overview</h5>
+            </div>
+            <ejs-chart id="spline-chart" background='#1a222b' palettes=@(new string[]{"#54ffa9","#ffe91a"})>
+                <e-chart-primaryxaxis valueType="Category">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis>
+                    <e-majorgridlines width="1" color="#32414d" dashArray="3,5"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series dataSource="@ViewBag.SplineChartData" xName="day" width="3"
+                              yName="income" name="Present" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
+                    <e-series dataSource="@ViewBag.SplineChartData" xName="day" width="3"
+                              yName="expense" name="Late" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"></e-series>
+                </e-series-collection>
+
+                <e-chart-legendsettings position="Top" alignment="Far">
+                    <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                </e-chart-legendsettings>
+                <e-chart-tooltipsettings enable shared></e-chart-tooltipsettings>
+            </ejs-chart>
+
+
+        </div>
+
+    </div>*@
+  
+
+
+
+</div>
+
+
+@*Recent Transactions and More*@
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="widget">
+            <div class="p-4">
+                <h5 class="fw-bold">Recent Actions</h5>
+            </div>
+            <div class="px-4 pb-4">
+                <ejs-grid id="recent-transactions"
+                          dataSource="@ViewBag.RecentTransactions" gridLines="None">
+                    <e-grid-columns>
+                        <e-grid-column headerText="Category" field="CategoryTitleWithIcon"></e-grid-column>
+                        <e-grid-column headerText="Date" field="Date" type="date" format="MMM-dd-yy"></e-grid-column>
+                        <e-grid-column headerText="Time" field="FormattedAmount" textAlign="Right"></e-grid-column>
+                    </e-grid-columns>
+                </ejs-grid>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="widget h-100">
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <span><i class="fa-solid fa-plus fa-2xl"></i>Widget</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*<e-linestyle width="0"></e-linestyle> = this if for e-chart-primaryyaxix to fade color*@
+@*toggleVisibility ="false" = This is for donut chart and e-chart to not clickable in e-accumulationchart-legendsettings*@

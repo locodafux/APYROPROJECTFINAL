@@ -1,0 +1,92 @@
+﻿@model IEnumerable<APYROPROJECTFINAL.Models.ClassroomDB>
+@{
+    Layout = "/Views/Shared/AdminLayout.cshtml";
+}
+
+@* <h3>Welcome</h3> *@
+
+<style>
+    td,th {padding:10px}
+</style>
+
+
+<p>
+
+    <a class="btn btn-success" style="margin-top:-120px" asp-controller="Admin" asp-action="Create">+Add Class</a>
+</p>
+
+
+<table class="table table-dark table-bordered  table-striped" style="margin-top:-50px ;width:120%;height:400px;text-align:center;vertical-align:middle">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance_Option)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Educator_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Section)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance_Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance_End)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Days)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EducatorEmail)
+            </th>
+             
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attendance_Option)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Educator_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attendance_Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attendance_End)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Days)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EducatorEmail)
+                </td>
+                <td >
+                    <a asp-action="Edit" asp-route-id="@item.ClassID"><i class="fa-solid fa-pencil" style="color:white"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.ClassID"><i class="fa-solid fa-folder-open" style="color:white"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.ClassID"><i class="fa-solid fa-trash" style="color:white"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

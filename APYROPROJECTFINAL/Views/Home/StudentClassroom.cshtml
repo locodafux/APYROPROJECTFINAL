@@ -1,0 +1,212 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+   Layout= "/Views/Shared/_Layout.cshtml";
+
+
+    // Sample data
+    var sampleData = new List<dynamic>
+    {
+        new { StudentName = "Jilbert Lim", StudentID = "k1142116", AttendanceStart = "9:00 AM", AttendanceEnd = "3:00 PM", AttendanceTime = "6 hours", Status = "Absent" },
+        new { StudentName = "Patrick Etesam", StudentID = "k11833007", AttendanceStart = "9:30 AM", AttendanceEnd = "2:30 PM", AttendanceTime = "5 hours", Status = "Present" },
+        new { StudentName = "Leonardo Timkang", StudentID = "k11822418", AttendanceStart = "10:00 AM", AttendanceEnd = "4:00 PM", AttendanceTime = "6 hours", Status = "Late" },
+        new { StudentName = "Khrizza Persona", StudentID = "k11833237", AttendanceStart = "9:15 AM", AttendanceEnd = "2:30 PM", AttendanceTime = "5 hours", Status = "Present" },
+        new { StudentName = "Jan Kent Diego", StudentID = "k11453218", AttendanceStart = "9:00 AM", AttendanceEnd = "4:00 PM", AttendanceTime = "6 hours", Status = "Absent" }
+    };
+
+}
+
+
+
+<div class="widget p-4" style="display:flex; justify-content:space-between; width:1280px; margin-top: -90px" >
+    <div class="Left mt-5"
+        style="width: fit-content; height: 100px">
+        <h5 class="fw-bold" style="color: white; font-size: 34px; margin-top: 30px">Subject</h5>
+        <p style="font-size: 22px; color: white;">
+            <span style="font-weight: bold;">Section and Schedule </span>
+        </p>
+    </div> 
+
+    <div class="Left" style=" align-items:center; 
+        width: fit-content; height: 100px; margin-top: 22px">
+        
+        <input class="btn btn-success" type="file" id="imageUpload" style="width: 260px; border-radius: 15px">
+        <div>
+            <a class="btn btn-success" style="color: #fff;
+                                font-weight: bold; width: fit-content; margin-top: 8px;
+               border-radius: 15px">
+                <b>Take Attendance +</b>
+            </a>
+        </div>
+
+        <div>
+            <a class="btn btn-success" style="background-color: #222B33;
+                        color: #fff; font-weight: bold; mix-blend-mode:soft-light;
+                        width: fit-content; margin-top: 8px; border-radius: 15px">
+                <b>
+                    Face Attendance
+                    <i class="fa-solid fa-lock"></i>
+                </b>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<div class="row" style="width: 1300px; margin-top: 10px">
+    <div class="col-md-7" style="width: 1300px">
+        <ejs-grid id="transactions" dataSource="@sampleData" gridLines="None"
+                  allowSorting="true" allowPaging="true" style="font-family: 'Inter'">
+            <e-grid-pagesettings pageSize="10">
+            </e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column headerText="Student" field="StudentName" textAlign="Center" width="180px"></e-grid-column>
+                <e-grid-column headerText="Student ID" field="StudentID" width="fit-content" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Attendance Start" field="AttendanceStart" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Attendance End" field="AttendanceEnd" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Attendance Time" field="AttendanceTime" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Status" template="#typeColumntemplate" field="Status" textAlign="Center" width="fit-content"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+
+
+
+@*
+     <div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModalAndUpdateBadge()">&times;</span>
+        <div id="modal-container">
+            <img id="modal-image "  src="" alt="Detected Faces">
+        </div>
+        <button id="recordButton" class="btn btn-success" onclick="closeModal()">Record</button>
+    </div>
+</div>
+
+
+<script>
+    function closeModal() {
+        const modal = document.getElementById('myModal');
+        modal.style.display = 'none';
+
+    }
+</script>
+
+
+*@
+
+
+<div id="myModal" class="modal">
+    <div style="width:940px;height:650px ;background-color:white ; position:relative" >
+
+ 
+    <div class="modal-content">
+     
+        <div id="modal-container"  style="width:900px;height:550px" >
+       
+        </div>
+    </div>
+
+
+    <button id="recordButton" class="btn btn-success" onclick="closeModal()" style="position:absolute ; bottom:10px ; right:20px">Record</button>
+
+    </div>
+
+
+</div>
+
+
+
+
+<script>
+    function closeModal() {
+        const modal = document.getElementById('myModal');
+        modal.style.display = 'none';
+
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id ="typeColumntemplate" type="text/x-template">
+
+        ${ if (Status == "Present")}
+    <span id="statusBadge" class="badge bg-success" > ${ Status } </span>
+    ${else if (Status == "Absent")}
+    <span id="statusBadge" class="badge bg-danger" > ${ Status } </span>
+    ${else }
+    <span id="statusBadge" class="badge bg-secondary" > ${ Status } </span>
+    ${ /if}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+@*<script id="typeColumntemplate" type="text/x-template">
+    ${if(Status == "Present")}
+        <span class="badge bg-success">${Status}</span>
+    ${else if(Status == "Absent")}
+        <span class="badge bg-danger">${Status}</span>
+    ${else}
+         <span class="badge bg-secondary">${Status}</span>
+    ${/if}
+
+
+</script>*@
+
+
+
+
+
+
+
+
+
+
+@*
+<div class="row" style="width: 1400px; margin-top: 10px">
+    <div class="col-md-7" style="width: 1300px">
+        <ejs-grid id="transactions" dataSource="@Model" gridLines="None"
+                  allowSorting="true" allowPaging="true">
+            <e-grid-pagesettings pageSize="10">
+            </e-grid-pagesettings>
+            <e-grid-columns >
+                <e-grid-column headerText="Name" textAlign="Center" width="180px"></e-grid-column>
+                <e-grid-column headerText="Student ID" width="fit-content" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Attendance Start" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Attendance End" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Attendance Time" textAlign="Center" width="fit-content"></e-grid-column>
+                <e-grid-column headerText="Status" textAlign="Center" width="fit-content"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+*@
+

@@ -1,0 +1,163 @@
+﻿@model APYROPROJECTFINAL.Models.ClassroomDB
+@{
+    Layout = "/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+
+
+
+
+<div class="row col-md-12" style="margin-left:10%">
+    <div class="col-md-12">
+
+        <div class="widget p-5 row" style="background-color:#212b36 ; margin-top:-50px">
+            <div class="col-md-1"></div>
+            <div class="left  col col-md-11 p-3 ">
+                <h2 class="card-title  pb-1 fw-bold">Create Class</h2>
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="col-11 d-flex  ">
+                        <div class="form-floating mb-2" style="width: 95%">
+                            <input class="form-control  " asp-for="ClassName" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" autocomplete="current-classname" aria-required="true" />
+                        <label class="form-label" asp-for="ClassName">Class Name</label>
+                            <span asp-validation-for="ClassName" class="text-danger"></span>
+
+                        </div>
+
+
+                        <div class="form-floating mb-2 ms-2" style="width: 95%">
+                            <input class="form-control" asp-for="Section" style="color: white;
+                       background-color: #212529 ; text-transform:uppercase" autocomplete="current-section" aria-required="true" />
+                            <label asp-for="Section" class="form-label">Section</label>
+                            <span asp-validation-for="Section" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-11 d-flex  ">
+                    <div class="form-floating mb-2" style="width: 95%">
+                        <input asp-for="EducatorEmail" class="form-control" style="color: white;
+                    background-color: #212529" autocomplete="current-attendance_option" aria-required="true" />
+                        <label asp-for="EducatorEmail" class="form-label">Educator Email</label>
+                        <span asp-validation-for="EducatorEmail" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-floating mb-2 ms-2" style="width: 95%">
+                        <input asp-for="Educator_Name" class="form-control" style="color: white;
+                    background-color: #212529" autocomplete="current-attendance_option" aria-required="true" />
+                        <label asp-for="Educator_Name" class="form-label">Educator Name</label>
+                        <span asp-validation-for="Educator_Name" class="text-danger"></span>
+
+                    </div>
+
+                    </div>
+
+                    <div class="form-floating mb-2" style="width: 92%">
+                        <input asp-for="Days" class="form-control" style=" color: white;
+                       background-color: #212529 ; text-transform:uppercase" autocomplete="current-attendance_date" aria-required="true" />
+                        <label asp-for="Days" class="form-label">Attendance Date</label>
+                        <span asp-validation-for="Days" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-floating mb-2" style="width: 92%">
+                        <input asp-for="Attendance_Start" type="time" class="form-control" style=" color: white;
+                       background-color: #212529" autocomplete="current-attendance_start" aria-required="true" />
+                        <label asp-for="Attendance_Start" class="form-label">Time Starts</label>
+                        <span asp-validation-for="Attendance_Start" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-2" style="width: 92%">
+                        <input asp-for="Attendance_End" type="time" class="form-control" style="color: white;
+                       background-color: #212529" autocomplete="current-attendance_end" aria-required="true" />
+                        <label asp-for="Attendance_End" class="form-label">Time Ends</label>
+                        <span asp-validation-for="Attendance_End" class="text-danger"></span>
+
+                    </div>
+
+                    @*  <div class="form-floating mb-2" style="width: 80%">
+                    <input asp-for="Attendance_Option" class="form-control" style="color: white;
+                    background-color: #212529" autocomplete="current-attendance_option" aria-required="true" />
+                    <label asp-for="Attendance_Option" class="form-label">Attendance Option</label>
+                    <span asp-validation-for="Attendance_Option" class="text-danger"></span>
+
+                    </div>*@
+
+                    @*         <div class="form-floating mb-2" style="width: 80%">
+                    <input  asp-for="ClassCode"  class="form-control" style="color: white;
+                    background-color: #212529" autocomplete="current-attendance_option" aria-required="true" />
+                    <label  asp-for="ClassCode" class="form-label">Class Code</label>
+                    <span asp-validation-for="ClassCode" class="text-danger"></span>
+
+                    </div>*@
+
+
+
+                    <button type="submit" value="Create" class="btn btn-success mb-3" style="font-size:18px; width:92%"><b>+ Create Class</b></button>
+
+                </form>
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    $(window).on('load', function () {
+        $('#myModal').modal('show');
+    });
+
+
+    function hide() {
+        $('#myModal').modal('hide');
+    }
+
+</script>
+
+@* The modal *@
+
+
+
+<div class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" style="background-color:#1A222B">
+
+            <div class="modal-body">
+                <img style="width: 100%; height:100%" src="/images/createclassmodal.png" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="hide()">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

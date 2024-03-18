@@ -1,0 +1,169 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "/Views/Shared/_MainHomePageLayout.cshtml";
+}
+
+
+
+
+<style>
+    body {
+        margin: 0;
+        background-color: #242423;
+        font-family: "Inter";
+    }
+
+    .flex-container
+    {
+        margin-left:-2%;
+        height: 820px;
+        width: 1720px;
+        background: repeating-linear-gradient(168deg, #12161D 0px, #12161D 750px, #1A222B 280px, hsl(210,14%, 16%));
+        border-left: white;
+    }
+
+    .container {
+        margin-left: 0%;
+    }
+
+    a {
+        margin-left: 40px;
+        text-decoration: none;
+        color: white;
+        font-size: 24px;
+    }
+</style>
+
+
+<div class="container">
+    <section id="main">
+        <div class="flex-container" style="color: white">
+            <div class="col-md-12 d-flex" style="height: 250px; width: 100%;">
+                <div class="d-flex justify-content-center align-items-center" style="width:30%;">
+                    <img src="~/samplelogo 1.png" style="margin-left: 10%"  />
+                </div>
+
+                <div class="col d-flex justify-content-center align-items-center" style="width:40%">
+                    <a href="@Url.Action("Policies", "MainPage")">
+                        Policies
+                    </a>
+                    <a href="@Url.Action("ContactUs", "MainPage")">
+                        Contact Us
+                    </a>
+                    <a href="@Url.Action("Documentation", "MainPage")">
+                        Documentation
+                    </a>
+                    <a href="@Url.Action("AboutUs", "MainPage")">
+                        About Us
+                    </a>
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center" style="width:30%; ">
+                    <i class="fa-solid fa-circle-question fa-xl"></i>
+                </div>
+
+            </div>
+            <div class="col-md-12 d-flex" style="width: 100%">
+                <div class="col-md-6 d-flex flex-column align-items-center">
+                    <div class="row flex-column align-items-center"
+                         style=" width: 50%;">
+                        <div class="text text-center" style="margin-left: 15%">
+                            <h1 style="font-size: 60px"><b>Welcome to </b> <br /><b style="color: #39A7FF">APyro</b></h1>
+                        </div>
+                        <div style="margin-left: 15%; margin-top: 5%">
+                            <p class="d-flex flex-column align-items-center"
+                               style="font-size: 24px">
+                                "Empowering HyFlex Learning: <br />
+                                Modern Attendance Management
+                                <br /> for  Hybrid Education."
+                            </p>
+                        </div>
+                        <div class="col d-flex justify-content-between" style="margin-top: 7%">
+                            <a href="/Identity/Account/Login" class="btn" style="background-color:#0844F4; color: white; width: 45%;
+                                      border-radius: 10px">
+                                Log in
+                            </a>
+                            <a href="@Url.Action("EducatorStudentSignUp", "MainPage")" class="btn btn-outline-primary" style="color: white; width: 45%;
+                                       border-radius: 10px">
+                                Sign up
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="img-div" class="col-md-6 d-flex flex-column align-items-center"
+                     style="margin-top: -6%">
+                    <img src="~/photoroom.png" id="image" alt="" width="70%" style="margin-right: 15%" />
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* 
+<div style="position:absolute; width: 100vw; height: 100vh; ">
+    <div class="row" style="position:relative">
+        <div class="col-6" justify-content="center" style="position:relative">
+            <div style="position:absolute; top: 38px; left: 33px; ">
+                <img src="~/logo.png" style="width:90px; height:92.5px;" />
+            </div>
+            <div style="position: absolute; top: 44px; left: 134px;">
+                <p style="color: #000; font-size: 20px; font-weight:700;"><b>APyro</b></p>
+                <p style="color: #797979; margin-top:-20px;font-weight:700;">Attendance Pyro</p>
+            </div>
+
+            <div class="widget1 p-5" style="color:black">
+                <img class="frame" style="margin-top:15px" src="~/Frame-1.png" />
+                <h1 style="font-weight:700; font-size: 34px; margin-top: 30px">APyro</h1>
+                <p> <span style="font-weight:600 ;font-size:18px">A smart attendance management</span> </p>
+                <p class="mb-5" style="margin-top:-10px ;font-size:18px"><span style="font-weight:600 ">system</span> for Higher Education.</p>
+                <div class="d-flex justify-content-evenly" style="margin-top: 10px">
+                    <a href="/Identity/Account/Login" class="btn btn-success" style="background-color: #16BDB3; color: black; font-weight: bold; width: 100px;"><b>Log In</b></a>
+                    <a href="@Url.Action("EducatorStudentSignUp", "MainPage")" class="btn btn-success" style="background-color: #16BDB3; color: black; font-weight: bold; width: 100px; margin-left: 50px"><b>Sign Up</b></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6" style="color:white">
+            <div class="d-flex justify-content-evenly mt-5">
+                <button type="button" class="btn btn-success mt-1" style=" width: 111px; height: 41px;">
+                    FAQ
+                </button>
+                <button type="button" class="btn btn-success mt-1" style=" width: fit-content; height: 41px;
+                    padding-left: 25px; padding-right: 25px ">
+                    Documentation
+                </button>
+                <button type="button" class="btn btn-success mt-1" style=" width: 111px; height: 41px;">
+                    About Us
+                </button>
+                <button type="button" class="btn btn-success mt-1" style=" width: 144px; height: 41px;">
+                    Contact Us
+                </button>
+
+
+            </div>
+            <div>
+                <img src="~/big-logo.png" width="542px" height="674px" style="position: relative; left: 50%; top:80px; transform: translateX( -50%);" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+ *@
