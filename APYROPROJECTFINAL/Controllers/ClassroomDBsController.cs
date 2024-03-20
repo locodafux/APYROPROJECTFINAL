@@ -665,7 +665,20 @@ namespace APYROPROJECTFINAL.Controllers
             {
                 // Update the Status field to "Present"
                 student.Status = "Present";
-                student.Attendance_Time = DateTime.Now.ToString();
+
+
+                TimeZoneInfo phTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
+
+                // Convert the UTC time to Philippines Standard Time
+                DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
+
+                // Update the Attendance_Time field with the Philippines time
+                student.Attendance_Time = phTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+
+
+
+
+                //student.Attendance_Time = DateTime.Now.ToString();
 
                 student.Present = (student.Present ?? 0) + 1;
                // student.Absent = (student.Absent ?? 0) + 15;
@@ -1432,7 +1445,21 @@ namespace APYROPROJECTFINAL.Controllers
             if (studentClassroom != null)
             {
                 studentClassroom.Status = "Absent";
-                studentClassroom.Attendance_Time = DateTime.Now.ToString();
+
+
+                TimeZoneInfo phTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
+
+                // Convert the UTC time to Philippines Standard Time
+                DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
+
+                // Update the Attendance_Time field with the Philippines time
+                studentClassroom.Attendance_Time = phTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+
+
+                //studentClassroom.Attendance_Time = DateTime.Now.ToString();
+
+
+
                 studentClassroom.Absent = (studentClassroom.Absent ?? 0) + 1;
                 _context.SaveChanges();
 
