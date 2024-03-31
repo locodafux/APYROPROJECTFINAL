@@ -5,27 +5,236 @@
     Layout = "/Views/Shared/_MainHomePageLayout.cshtml";
 }
 
-
-
-
 <style>
+
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Prevent horizontal scrollbar */
+    }
+
+    .main {
+        position:relative;
+        overflow: hidden;
+        min-height: 100vh; /* Ensures the container fills the viewport height */
+        color: white;
+    }
+
+    .logo-con{
+        display: flex;
+        align-items: center;
+       
+    }
+
+    .logo-con img{
+        width: 60%;
+    }
+
+    .nav-con{
+        display: flex;
+        width: 100%;
+        margin-top: 3%;
+        justify-content: space-evenly;
+      
+    }
+
+    .nav-a-con{
+        display: flex;
+        justify-content: space-evenly;
+        width: 70%;
+        padding-left: 6%;
+    }
+
+    .nav-a-con a {
+        display: flex;
+        flex-wrap: wrap;
+        width: 150px;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        font-size: 20px;
+        
+    }
+
+
+    .slanted-white {
+        position: fixed;
+        bottom: -460px;
+        left: 0;
+        width: 100%;
+        height: 500px; /* Automatically adjusts height based on content */
+        background-color: white;
+        transform-origin: bottom left;
+        transform: skewY(-18deg); /* Adjust skew angle as needed */
+        z-index: -1; /* Push the slanted white section below content */
+    }
+
+        /* Optional: Add gradient to the slanted area */
+        .slanted-white:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 500px; /* Adjust gradient height as needed */
+            background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(91, 91, 91, 1));
+        }
+
+        .body-con{
+            position: relative; /* Ensure proper stacking */
+            display: flex;
+            width: 100%;
+            z-index: 2; /* Ensure content is above slanted white section */
+            
+        }
+
+        .btn-con{
+            display:flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: 50%;
+        }
+
+        .btn-con a {
+            flex: 1 0 30px;
+        }
+
+        .text-con {
+            width: 50%;
+        }
+
+        .paragraph-con {
+            margin-top: 5%; 
+            width: 50%;
+            justify-content: center;
+        }
+
+        @@media screen and (max-width: 768px) {
+            .body-con{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .img-div {
+                display: none; /* Hide the image div */
+            }
+
+            .img-div img {
+                display: none; /* Hide the image div */
+            }
+
+            .text-con{
+                width: 80%;
+            }
+
+            .paragraph-con{
+                width: 80%;
+            }
+
+            .btn-con{
+                width: 80%;
+            }
+        }
+
+
+    
+</style>
+
+
+
+<div class="main">
+   <div class="home-container">
+        <div class="nav-con col-md-12">
+            <div class="logo-con">
+                <img src="~/samplelogo 1.png" />
+            </div>
+
+            <div class="nav-a-con">
+                <a href="@Url.Action("Policies", "MainPage")">
+                    Policies
+                </a>
+                <a href="@Url.Action("ContactUs", "MainPage")">
+                    Contact Us
+                </a>
+                <a href="@Url.Action("Documentation", "MainPage")">
+                    Documentation
+                </a>
+                <a href="@Url.Action("AboutUs", "MainPage")">
+                    About Us
+                </a>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center" style="width:10%; ">
+                <i class="fa-solid fa-circle-question fa-xl"></i>
+            </div>
+        </div>
+   </div>
+
+
+    <div class="body-con mt-5 col-md-12">
+        <div class="col-md-6 d-flex flex-column align-items-center">
+            <div class="row flex-column align-items-center"
+                 style=" width: 100%;">
+                <div class="text-con text-center">
+                    <h1 style="font-size: 60px"><b>Welcome to </b> <br /><b style="color: #39A7FF">APyro</b></h1>
+                </div>
+                <div class="paragraph-con">
+                    <p style="font-size: 24px">
+                        "Empowering HyFlex Learning:
+                        Modern Attendance Management for  Hybrid Education."
+                    </p>
+                </div>
+                <div class="btn-con">
+                    <a href="/Identity/Account/Login" class="btn" style="background-color:#0844F4; color: white; 
+                                      border-radius: 10px">
+                        Log in
+                    </a>
+                    <a href="@Url.Action("EducatorStudentSignUp", "MainPage")" class="btn btn-outline-primary" style="color: white;
+                                       border-radius: 10px">
+                        Sign up
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="img-div col-md-6 d-flex flex-column justify-content-center align-items-center">
+            <img src="~/photoroom.png" id="image" alt="" width="70%" style="margin-right: 15%" />
+        </div>
+    </div>
+
+    <div class="slanted-white">
+
+
+    </div>
+
+
+
+
+</div>
+
+
+@* <style>
     body {
         margin: 0;
         background-color: #242423;
         font-family: "Inter";
     }
 
-    .flex-container
-    {
-        margin-left:-2%;
+    .flex-container {
+        margin-left: -2%;
         height: 820px;
         width: 1720px;
         background: repeating-linear-gradient(168deg, #12161D 0px, #12161D 750px, #1A222B 280px, hsl(210,14%, 16%));
         border-left: white;
     }
 
+
+
     .container {
         margin-left: 0%;
+        width: 100%
     }
 
     a {
@@ -34,6 +243,24 @@
         color: white;
         font-size: 24px;
     }
+
+
+    @@media only screen and (min-width: 768px) {
+        .flex-container {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .col {
+            width: 33.33%;
+        }
+
+            .col img {
+                width: 100%;
+                height: auto;
+            }
+    }
+
 </style>
 
 
@@ -42,7 +269,7 @@
         <div class="flex-container" style="color: white">
             <div class="col-md-12 d-flex" style="height: 250px; width: 100%;">
                 <div class="d-flex justify-content-center align-items-center" style="width:30%;">
-                    <img src="~/samplelogo 1.png" style="margin-left: 10%"  />
+                    <img src="~/samplelogo 1.png" style="margin-left: 10%" />
                 </div>
 
                 <div class="col d-flex justify-content-center align-items-center" style="width:40%">
@@ -103,7 +330,19 @@
         </div>
     </section>
 </div>
+ *@
 
+
+
+
+
+
+
+
+
+
+ 
+ 
 
 
 
