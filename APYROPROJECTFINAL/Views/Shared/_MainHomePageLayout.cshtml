@@ -10,71 +10,147 @@
 
 
     <style>
+       
        body{ 
             Overflow-y:scroll;
             background-color: #12161d;
        }
+       nav {
+        margin: 20px;
+        display: flex;
+        justify-content: space-between;
+        color:white;
+      }
+      nav ul {
+        list-style-type: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      nav ul a {
+        text-decoration: none;
+        color: white;
+        font-size: 21px;
+        font-style: bold;
+        line-height: 60px;
+        margin-right: 50px;
+      }
+
+    .m-nav a {
+       text-decoration: none;
+       color: white;
+       font-size: 21px;
+       font-style: bold;
+       line-height: 60px;
+       margin-right: 50px;
+                }
+
+      .logo {
+        height: 60px;
+      }
+
+      .burger {
+        display: none;
+      }
+      .m-nav {
+
+            list-style: none !important;
+        color: white!important;
+        font-size: 32px;
+        display: none;
+      }
+
+      .m-nav li {
+        padding: 8px;
+        background-color: #1a222b;
+      }
+
+      .m-nav li:hover {
+        padding: 8px;
+        background-color: white;
+        color: black;
+      }
+
+      @@media only screen and (max-width: 728px) {
+        .m-nav {
+                list-style-type: none;
+                margin-left:-5%;
+        }
+        nav ul {
+          display: none;
+        }
+
+        .burger {
+          display: block;
+          margin-top: 35px;
+          margin-right: 15px;
+          float: right;
+        }
+        .logo {
+          display: block;
+        }
+      }
+
+      @@media screen and (min-width: 728px) {
+            .m-nav {
+            list-style: none !important;
+                color: white !important;
+                font-size: 32px;
+                display: none !important;
+            }
+
+            .m-nav a{
+                list-style: none !important;
+                color: white !important;
+                font-size: 32px;
+                display: none !important;
+            }
+      }
+
+      
     </style>
 
-   @*  <style>
-        body {
-        
-            background: linear-gradient(to right, #ECECEC 50%, #12161D 50%);
-            margin-bottom: 60px;
-        }
-
-        .btn {
-            color: white;
-            background-color: transparent;
-            border-color: #16bdb3;
-            border-radius: 5px;
-        }
-
-        .btn-colour {
-            color: black;
-            background-color: #16bdb3;
-            border-radius: 5px;
-            width: 111px;
-            height: 41px;
-            font-weight: 700;
-        }
-
-
-        .frame {
-            width: 344px;
-            height: 227px;
-        }
-
-        .widget1 {
-            border-radius: 1rem;
-            text-align: center;
-            height: 580px;
-            width: 460px;
-            background-color: #FFFFFF;
-            position: relative;
-            left: 50%;
-            top: 160px;
-            transform: translateX( -50%);
-        }
-
-        .mid-logo {
-            position: relative;
-            left: 40%;
-            top: 145px;
-            transform: translateX( -50%);
-            z-index: 9;
-            width: 320px;
-            height: 320px;
-        }
-    
-   
-
-    </style> *@
+ 
 </head>
 <body>
-    <div>
+    <div class="header">
+        <nav>
+            <a href="/MainPage/MainHomePage"><img class="logo" src="~/samplelogo 1.png" alt="" /></a>
+            <ul>
+                <li> <a href="/MainPage/Policies">Policies</a></li>
+                <li> <a href="/MainPage/Documentation">Documentation</a></li>
+                <li><a href="/MainPage/AboutUs">About Us</a></li>
+                <li> <a href="/MainPage/ContactUs">Contact Us</a></li>
+            </ul>
+            <i class="burger fa-solid fa-bars fa-2xl"
+               id="toggle-nav"
+                style="color: #ffffff"></i>
+        </nav>
+        <ul class="m-nav" id="m-nav">
+            <li> <a href="/MainPage/Policies">Policies</a></li>
+            <li> <a href="/MainPage/Documentation">Documentation</a></li>
+            <li><a href="/MainPage/AboutUs" >About Us</a></li>
+            <li> <a href="/MainPage/ContactUs">Contact Us</a></li>
+        </ul>
+
+      
         @RenderBody()
     </div>
 
+    <script>
+        var burger = document.getElementById("toggle-nav");
+        var m_nav = document.getElementById("m-nav");
+
+        function toggleNav() {
+            if (m_nav.style.display == "block") {
+                m_nav.style.display = "none";
+            } else {
+                m_nav.style.display = "block";
+            }
+        }
+
+        burger.addEventListener("click", toggleNav);
+    </script>
 </body>
 </html>
