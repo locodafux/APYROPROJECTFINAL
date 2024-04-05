@@ -107,6 +107,21 @@
             margin: auto;
         }
 
+        
+
+        /* CSS for mobile screens */
+        @@media only screen and (max-width: 767px) {
+            .sidebar {
+                display: none; /* hide sidebar */
+            }
+
+         
+            .login-partial {
+                display: none; /* hide login partial */
+            }
+        }
+
+
     </style>
 
 
@@ -129,7 +144,12 @@
 <body class="e-bigger">
 
 
-    <partial name="_SideBar" />
+    <div class="sidebar">
+        <partial name="_SideBar" />
+    </div>
+    
+    
+    
 
    
 
@@ -154,10 +174,11 @@
 @*             <i class="fa-solid fa-magnifying-glass"></i> *@
             <i class=""></i>
 
-               <partial name="_LoginPartial.cshtml" />
 
-    
-            
+            <div class="login-partial">
+
+            </div>
+               <partial name="_LoginPartial.cshtml" />
             <div>
                 <i class="fa-solid fa-bell" id="notif" onclick="showNotif()"></i>
                 <i id="alert" class="fa-solid fa-exclamation fa-sm" style="color: red; position:absolute; right: 67px; "></i>
