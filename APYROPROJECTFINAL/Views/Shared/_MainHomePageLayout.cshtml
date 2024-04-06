@@ -40,10 +40,14 @@
     .m-nav a {
        text-decoration: none;
        color: white;
-       font-size: 21px;
+       font-size: 18px;
        font-style: bold;
        line-height: 60px;
-       margin-right: 50px;
+       padding-left: 8px;
+            margin: 0px;
+            display: block;
+            width: 100%;
+            height: 100%;
                 }
 
       .logo {
@@ -54,28 +58,38 @@
         display: none;
       }
       .m-nav {
-
-            list-style: none !important;
+        position:absolute;
+        top:100px;
+        list-style: none !important;
         color: white!important;
         font-size: 32px;
+        width:90%;
         display: none;
+        z-index: 9;
       }
 
       .m-nav li {
-        padding: 8px;
+        padding: 2px;
         background-color: #1a222b;
+        
       }
 
       .m-nav li:hover {
-        padding: 8px;
+        padding: 2px;
         background-color: white;
-        color: black;
       }
 
+      .m-nav li:hover a{
+         color:black;
+      }
+
+       
+
       @@media only screen and (max-width: 728px) {
+         
         .m-nav {
                 list-style-type: none;
-                margin-left:-5%;
+                /* margin-left:-7%; */
         }
         nav ul {
           display: none;
@@ -118,20 +132,20 @@
         <nav>
             <a href="/MainPage/MainHomePage"><img class="logo" src="~/samplelogo 1.png" alt="" /></a>
             <ul>
-                <li> <a href="/MainPage/Policies">Policies</a></li>
+                <li > <a href="/MainPage/Policies">Policies</a></li>
                 <li> <a href="/MainPage/Documentation">Documentation</a></li>
                 <li><a href="/MainPage/AboutUs">About Us</a></li>
-                <li> <a href="/MainPage/ContactUs">Contact Us</a></li>
+                <li > <a href="/MainPage/ContactUs">Contact Us</a></li>
             </ul>
             <i class="burger fa-solid fa-bars fa-2xl"
                id="toggle-nav"
                 style="color: #ffffff"></i>
         </nav>
         <ul class="m-nav" id="m-nav">
-            <li> <a href="/MainPage/Policies">Policies</a></li>
+            <li style="border-top-right-radius: 5px; border-top-left-radius:5px;"> <a href="/MainPage/Policies">Policies</a></li>
             <li> <a href="/MainPage/Documentation">Documentation</a></li>
             <li><a href="/MainPage/AboutUs" >About Us</a></li>
-            <li> <a href="/MainPage/ContactUs">Contact Us</a></li>
+            <li style="border-bottom-right-radius:5px; border-bottom-left-radius:5px;"> <a href="/MainPage/ContactUs">Contact Us</a></li>
         </ul>
 
       
