@@ -15,18 +15,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js" integrity="sha512-UcDEnmFoMh0dYHu0wGsf5SKB7z7i5j3GuXHCnb3i4s44hfctoLihr896bxM0zL7jGkcHQXXrJsFIL62ehtd6yQ==" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
 
+<style>
+    @@media only screen and (max-width: 768px) {
+        .container {
+            margin-bottom: 50px;
+        }
+    }
+</style>
 
 
 
+  <div class="container ">
 
-<div id="content">
+<div class="row ">
 
+      
 
-<div class="row mb-4 " @* style="margin-top:-80px" *@ >
-
-
-
-    <div class="col-md-6">
+    <div class="col-md-6 mb-2">
         <div class="widget">
             <div class="p-4">
                 <h5 class="fw-bold">Areas For Improvements</h5>
@@ -212,7 +217,7 @@
 
 
 
-
+    
 
 
 
@@ -234,14 +239,14 @@
 
 
 
-<div class="row mb-4">
+<div class="row mb-4 mt-4">
 
 
 
 
 
 
-    <div class="col-md-4">
+    <div class="col-md-4 mb-2 ">
         <div class="widget chart" >
             <div class="p-4">
                 <h5 class="fw-bold">Attendance Distribution</h5>
@@ -315,26 +320,26 @@
 
 </div>
 
-
-</div>
-
-
-
-
-
-
+       
 <center>
-<div>
-    <a class="btn btn-success " id="print" style="color: #fff;
+    <div>
+        <button class="btn btn-success " id="print" style="color: #fff;
                                 font-weight: bold; width: 240px; margin-top: 28px;
                border-radius: 15px ; font-size:20px ; margin-top:-10px">
             <b>Save Analytics   <i class="fa-solid fa-image  fa-lg ms-2" style="color: #ffffff;"></i></b>
-           
 
-    </a>
-    @*     <button type="button" class="btn btn-success" onclick="openModal()">Enable Student Tracker</button> *@
-</div>
+
+        </button>
+    </div>
 </center>
+</div>
+
+
+
+
+
+
+
 
 <script src="html2canvas.js"></script>
 

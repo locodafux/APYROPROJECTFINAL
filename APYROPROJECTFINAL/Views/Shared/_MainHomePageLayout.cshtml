@@ -40,10 +40,11 @@
     .m-nav a {
        text-decoration: none;
        color: white;
-       font-size: 21px;
+       font-size: 18px;
        font-style: bold;
        line-height: 60px;
        margin-right: 50px;
+       padding-left: 8px;
                 }
 
       .logo {
@@ -55,27 +56,33 @@
       }
       .m-nav {
 
-            list-style: none !important;
+        list-style: none !important;
         color: white!important;
         font-size: 32px;
         display: none;
       }
 
       .m-nav li {
-        padding: 8px;
+        padding: 2px;
         background-color: #1a222b;
       }
 
       .m-nav li:hover {
-        padding: 8px;
+        padding: 2px;
         background-color: white;
-        color: black;
       }
 
+      .m-nav li:hover a{
+         color:black;
+      }
+
+       
+
       @@media only screen and (max-width: 728px) {
+         
         .m-nav {
                 list-style-type: none;
-                margin-left:-5%;
+                margin-left:-7%;
         }
         nav ul {
           display: none;
