@@ -107,6 +107,14 @@
             margin: auto;
         }
 
+        .burger {
+            display:none;
+        }
+
+        .m-nav {
+            display: none;
+        }
+
         
 
         /* CSS for mobile screens */
@@ -118,6 +126,62 @@
          
             .login-partial {
                 display: none; /* hide login partial */
+            }
+
+            .navbar {
+                position:relative;
+                background-color:white;
+            }
+
+            .burger {
+                display: block;
+                position: absolute;
+                left: 8px;
+            }
+
+            .m-nav {
+                position:absolute;
+                top:60px;
+                margin-left: -3%;
+                width: 95%;
+                font-size:18px;
+                list-style-type: none;
+            }
+           
+            .m-nav a{
+                color:white;
+                text-decoration:none;
+                    margin: 0px;
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+            }
+            .logout {
+                color: white;
+                text-decoration: none;
+                margin: 0px;
+                display: block;
+                font-size: 18px;
+                padding:0px;
+            }
+            .m-nav li {
+                padding: 5px;
+                background-color: #1A222B;
+                width: 100%;
+            }
+
+                    .m-nav li:hover {
+                        background-color: white;
+                    }
+
+                    .m-nav li:hover a, .m-nav li:hover .logout {
+                            color: black;
+                        }
+                }
+
+        @@media screen and (min-width: 728px) {
+            .m-nav {
+                display:none !important;
             }
         }
 
@@ -170,15 +234,19 @@
     </header>*@
 
     <nav class="navbar sticky-top bg-body-tertiary">
-        <div class="container-fluid py-2 px-4">
+        <div class="container-fluid py-2 px-4 d-flex justify-content-between" >
 @*             <i class="fa-solid fa-magnifying-glass"></i> *@
             <i class=""></i>
 
 
             <div class="login-partial">
-
+                <partial name="_LoginPartial.cshtml" />
             </div>
-               <partial name="_LoginPartial.cshtml" />
+            <i class="burger fa-solid fa-bars fa-2xl"
+               id="toggle-nav"
+               style="color: #ffffff"></i>
+           
+             
             <div>
                 <i class="fa-solid fa-bell" id="notif" onclick="showNotif()"></i>
                 <i id="alert" class="fa-solid fa-exclamation fa-sm" style="display: none; color: red; position:absolute; right: 67px; "></i>
@@ -199,7 +267,22 @@
         <h3>Late Count: @ViewBag.LateCount</h3>
         <h3>Excused Count: @ViewBag.ExcusedCount</h3> *@
 
+        <ul class="m-nav" id="m-nav">
+            <li style="border-top-right-radius: 5px; border-top-left-radius:5px;"> <a href="/Home/Index">Dashboard</a></li>
+            <li> <a href="/Identity/Account/Manage">Account</a></li>
+            <li><a href="/Home/CheckCode">Join Class</a></li>
+            <li > <a href="/Home/DataAnalytics">Data Analytics</a></li>
+            <li style="border-bottom-right-radius:5px; border-bottom-left-radius:5px;">
+                <form style="margin: 0px; padding:0px;"  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="logout btn btn-link">
+                         Logout
+                    </button>
 
+                </form>
+            </li>
+
+           
+        </ul>
 
 
         <div id="notification" class="text-white p-3" style=" display: none ; width: 310px; height: fit-content; position: absolute; top: 60px; right: 30px; background-color: #1A222B; border-radius: 15px;">
@@ -322,9 +405,24 @@
 
 
         <script>
+        var burger = document.getElementById("toggle-nav");
+        var m_nav = document.getElementById("m-nav");
+        var x = document.getElementById("notification");
+
+
+        function toggleNav() {
+            if (m_nav.style.display == "block") {
+                m_nav.style.display = "none";
+            } else {
+                m_nav.style.display = "block";
+                x.style.display = "none";
+
+            }
+        }
+
+        burger.addEventListener("click", toggleNav);
 
             function hide() {
-                var x = document.getElementById("notification");
 
 
                 x.style.display = "none";
@@ -337,6 +435,8 @@
                 y.style.display = "none";
                 if (x.style.display === "none") {
                     x.style.display = "block";
+                    m_nav.style.display = "none";
+
                 } else {
                     x.style.display = "none";
                 }
