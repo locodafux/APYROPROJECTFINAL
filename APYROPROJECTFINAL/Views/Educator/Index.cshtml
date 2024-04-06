@@ -12,6 +12,16 @@
 }
 
 
+<style>
+    @@media only screen and (max-width: 767px) {
+        .main-con {
+            display: flex;
+            justify-content: center;
+        }
+    }
+</style>
+
+
 @functions {
     public string MilitaryTo12HourFormat(string militaryTime)
     {
@@ -44,8 +54,8 @@
 <div class="row">
     @foreach (var item in Model)
     {
-            <div class="col-md-3 col-xs-6 border-primary mb-3">
-        <div class="card mb-3" style="max-width: 320px;min-height:230px;
+        <div class="main-con col-md-3 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 320px;min-height:230px;
                  background-color: #1a222b; border-radius: 12px; font-family:'Inter';">
             <div class="row g-0">
                 <div class="col-md-12">

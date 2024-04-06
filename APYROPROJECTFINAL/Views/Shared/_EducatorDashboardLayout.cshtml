@@ -71,11 +71,22 @@
 
  *@
 
+
+ <style>
+    @@media only screen and (max-width: 767px) {
+        .login-educator {
+            display: none; /* hide login partial */
+        }
+    }
+ </style>
+
 </head>
 
 <body class ="e-bigger">
-
-    <partial name="_SideBarEducator" />
+    <div class="login-educator">
+        <partial name="_SideBarEducator" />
+    </div>
+    
 
 
 
