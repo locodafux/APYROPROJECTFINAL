@@ -147,8 +147,8 @@
                 font-size:18px;
                 list-style-type: none;
             }
-           
-            .m-nav a{
+
+                .m-nav a, .logout {
                 color:white;
                 text-decoration:none;
                     margin: 0px;
@@ -274,7 +274,7 @@
             <li > <a href="/Home/DataAnalytics">Data Analytics</a></li>
             <li style="border-bottom-right-radius:5px; border-bottom-left-radius:5px;">
                 <form style="margin: 0px; padding:0px;"  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="logout btn btn-link">
+                    <button type="submit" class="logout btn btn-link" style="text-align:left;">
                          Logout
                     </button>
 
