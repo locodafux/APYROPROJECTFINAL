@@ -186,7 +186,7 @@ namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, Roles.Educator.ToString());
-                    await _userManager.AddToRoleAsync(user, Roles.Developer.ToString());
+                    //await _userManager.AddToRoleAsync(user, Roles.Developer.ToString());
 
 
                     _logger.LogInformation("User created a new account with password.");
