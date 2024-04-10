@@ -250,12 +250,34 @@
 
 
 
+<style>
+
+    .widgetlim {
+        background-color: #1A222B ; 
+        color:white ;  
+        margin-top:-50px ; 
+        margin-bottom:20px;
+        margin-left:20px
+    }
+   
 
 
-<div class="row justify-content-center">
+    @@media only screen and (max-width: 767px) {
+        .widgetlim {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 10px;
+        }
+    }
+</style>
+
+
+
+
+<div class="main-con row justify-content-center">
     <div class="col-md-4 justify-content-center">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div class="widgetlim p-3 justify-content-center" style="background-color: #1A222B ; color:white ;  margin-top:-50px ; margin-bottom:20px;margin-left:20px ">
+            <div class="widgetlim p-3 justify-content-center" >
 
                 <header class="a1 justify-content-center" style="font-size: 25px"><b>Sign Up</b></header>
                 <p style="font-size: 15px">Enter your following details to create an account.</p>
