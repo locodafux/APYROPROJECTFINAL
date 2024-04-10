@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <link rel="icon" href="~/samplelogo 1.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - APYROPROJECTFINAL</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -62,7 +63,72 @@
 
 
     </style>
-
+    <style>
+        .burger {
+            display: none;
+        }
+        .m-nav {
+            display: none;
+        }
+        /* CSS for mobile screens */
+        @@media only screen and (max-width: 767px) {
+            .sidebar {
+                display: none; /* hide sidebar */
+            }
+            .login-partial {
+                display: none; /* hide login partial */
+            }
+            .navbar {
+                position: relative;
+                background-color: white;
+            }
+            .burger {
+                display: block;
+                position: absolute;
+                left: 8px;
+            }
+            .m-nav {
+                position: absolute;
+                top: 50px;
+                left: -10px;
+                width: 95%;
+                font-size: 18px;
+                list-style-type: none;
+            }
+                .m-nav a, .logout {
+                    color: white;
+                    text-decoration: none;
+                    margin: 0px;
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
+            .logout {
+                color: white;
+                text-decoration: none;
+                margin: 0px;
+                display: block;
+                font-size: 18px;
+                padding: 0px;
+            }
+            .m-nav li {
+                padding: 5px;
+                background-color: #1A222B;
+                width: 100%;
+            }
+                .m-nav li:hover {
+                    background-color: white;
+                }
+                    .m-nav li:hover a, .m-nav li:hover .logout {
+                        color: black;
+                    }
+        }
+        @@media screen and (min-width: 728px) {
+            .m-nav {
+                display: none !important;
+            }
+        }
+ </style>
 
 
     *@
@@ -107,6 +173,89 @@
             margin: auto;
         }
 
+        .burger {
+            display: none;
+        }
+
+        .m-nav {
+            display: none;
+        }
+
+
+
+        /* CSS for mobile screens */
+        @@media only screen and (max-width: 767px) {
+            .sidebar {
+                display: none; /* hide sidebar */
+            }
+
+
+            .login-partial {
+                display: none; /* hide login partial */
+            }
+
+            .navbar {
+                position: relative;
+                background-color: white;
+            }
+
+            .burger {
+                display: block;
+                position: absolute;
+                left: 8px;
+            }
+
+            .m-nav {
+                position: absolute;
+                top: 60px;
+                margin-left: -3%;
+                width: 95%;
+                font-size: 18px;
+                list-style-type: none;
+            }
+
+                .m-nav a, .logout {
+                    color: white;
+                    text-decoration: none;
+                    margin: 0px;
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
+
+            .logout {
+                color: white;
+                text-decoration: none;
+                margin: 0px;
+                display: block;
+                font-size: 18px;
+                padding: 0px;
+            }
+
+            .m-nav li {
+                padding: 5px;
+                background-color: #1A222B;
+                width: 100%;
+            }
+
+                .m-nav li:hover {
+                    background-color: white;
+                }
+
+                    .m-nav li:hover a, .m-nav li:hover .logout {
+                        color: black;
+                    }
+        }
+
+        @@media screen and (min-width: 728px) {
+            .m-nav {
+                display: none !important;
+            }
+        }
+
+       
+
+
     </style>
 
 
@@ -129,7 +278,12 @@
 <body class="e-bigger">
 
 
-    <partial name="_SideBar" />
+    <div class="sidebar">
+        <partial name="_SideBar" />
+    </div>
+    
+    
+    
 
    
 
@@ -150,19 +304,23 @@
     </header>*@
 
     <nav class="navbar sticky-top bg-body-tertiary">
-        <div class="container-fluid py-2 px-4">
+        <div class="container-fluid py-2 px-4 d-flex justify-content-between" >
 @*             <i class="fa-solid fa-magnifying-glass"></i> *@
             <i class=""></i>
 
-               <partial name="_LoginPartial.cshtml" />
 
-    
-            
+            <div class="login-partial">
+                <partial name="_LoginPartial.cshtml" />
+            </div>
+            <i class="burger fa-solid fa-bars fa-2xl"
+               id="toggle-nav"
+               style="color: #ffffff"></i>
+           
+             
             <div>
                 <i class="fa-solid fa-bell" id="notif" onclick="showNotif()"></i>
-                <i id="alert" class="fa-solid fa-exclamation fa-sm" style="color: red; position:absolute; right: 67px; "></i>
+                <i id="alert" class="fa-solid fa-exclamation fa-sm" style="display: none; color: red; position:absolute; right: 67px; "></i>
               @*   <i class="fa-solid fa-message"></i> *@
-             <img class="profile-pic" src="~/DefaultProfile.png" />
             </div>
         </div>
 
@@ -178,7 +336,22 @@
         <h3>Late Count: @ViewBag.LateCount</h3>
         <h3>Excused Count: @ViewBag.ExcusedCount</h3> *@
 
+        <ul class="m-nav" id="m-nav">
+            <li style="border-top-right-radius: 5px; border-top-left-radius:5px;"> <a href="/Home/Index">Dashboard</a></li>
+            <li> <a href="/Identity/Account/Manage">Account</a></li>
+            <li><a href="/Home/CheckCode">Join Class</a></li>
+            <li > <a href="/Home/DataAnalytics">Data Analytics</a></li>
+            <li style="border-bottom-right-radius:5px; border-bottom-left-radius:5px;">
+                <form style="margin: 0px; padding:0px;"  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="logout btn btn-link" style="text-align:left;">
+                         Logout
+                    </button>
 
+                </form>
+            </li>
+
+           
+        </ul>
 
 
         <div id="notification" class="text-white p-3" style=" display: none ; width: 310px; height: fit-content; position: absolute; top: 60px; right: 30px; background-color: #1A222B; border-radius: 15px;">
@@ -264,45 +437,6 @@
 
 
 
-
-
-           @*  <div id="c" class="w-100 d-flex flex-row mb-3" data-toggle="modal" data-target="#exampleModalCenter" onclick="c()">
-                <div class="d-flex justify-content-center align-items-center  col-2" style="width: 60px; height: 60px; border-radius: 50%; background-color:#223951"> <i class="fa-solid fa-trophy fa-2xl" style="color: #ffffff;"></i></div>
-
-                <div class="ms-3">
-                    Congratulations! 🎉 Your attendance performance is excellent.
-                </div>
-            </div>
-
-
-
-            <div id="a" class="w-100 d-flex flex-row mb-3" data-toggle="modal" data-target="#exampleModalCenter" onclick="a()">
-                <div class="d-flex justify-content-center align-items-center  col-2" style="width: 60px; height: 60px; border-radius: 50%; background-color:#223951"> <i class="fa-solid fa-triangle-exclamation fa-2xl" style="color: #ffffff;"></i></div>
-
-                <div class="ms-3">
-                    Attention! ⚠️ It seems your attendance performance needs improvement.
-                </div>
-            </div>
-
-
-
-
-             <div class="w-100 d-flex flex-row mb-3" >
-                <div class="d-flex justify-content-center align-items-center  col-2" style="width: 60px; height: 60px; border-radius: 50%; background-color:#223951"> <i class="fa-solid fa-exclamation fa-2xl" style="color: #ffffff;"></i></div>
-
-                <div class="ms-3">
-
-                    No Notifications.
-                </div>
-            </div> 
- *@
-
-
-
-
-
-
-
         </div>
 
     </nav>
@@ -340,9 +474,24 @@
 
 
         <script>
+        var burger = document.getElementById("toggle-nav");
+        var m_nav = document.getElementById("m-nav");
+        var x = document.getElementById("notification");
+
+
+        function toggleNav() {
+            if (m_nav.style.display == "block") {
+                m_nav.style.display = "none";
+            } else {
+                m_nav.style.display = "block";
+                x.style.display = "none";
+
+            }
+        }
+
+        burger.addEventListener("click", toggleNav);
 
             function hide() {
-                var x = document.getElementById("notification");
 
 
                 x.style.display = "none";
@@ -355,6 +504,8 @@
                 y.style.display = "none";
                 if (x.style.display === "none") {
                     x.style.display = "block";
+                    m_nav.style.display = "none";
+
                 } else {
                     x.style.display = "none";
                 }

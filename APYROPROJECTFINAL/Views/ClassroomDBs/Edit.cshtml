@@ -6,12 +6,25 @@
 }
 
 
+<style>
+    @@media only screen and (max-width: 767px) {
+        .main-con {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .right {
+            display: none;
+        }
+    }
+</style>
 
 
 
 
 
-<div class="row col-md-12" style="margin-left:10%">
+
+<div class="main-con row col-md-12" ">
     <div class="col-md-12">
 
         <div class="widget p-5 row" style="background-color:#212b36 ; margin-top:-50px">
@@ -53,7 +66,7 @@
                     <div class="form-floating mb-2" style="width: 95%">
                       
                         <input asp-for="Section" class="form-control" style=" color: white ;
-                       background-color: #212529 ; text-transform:uppercase"  />
+                        background-color: #212529 ; text-transform:uppercase"  />
                         <label asp-for="Section" class="form-label"></label>
                         <span asp-validation-for="Section" class="text-danger"></span>
                     </div>
@@ -92,8 +105,7 @@
                     </button>
 
                   
-                        <a class="btn btn-link" style="font-size:18px; width:95%" asp-controller="Educator" asp-action="Index">Back to List</a>
-                    
+                        
 
                 </form>
 

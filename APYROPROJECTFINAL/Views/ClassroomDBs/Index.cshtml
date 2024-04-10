@@ -11,6 +11,24 @@
     <a asp-action="Create">Create New</a>
 </p> *@
 
+
+<style>
+    .btns {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .a {
+        flex: 1 0 30px;
+        text-decoration: none !important;
+    }
+
+</style>
+
 <table class="table table-dark table-bordered  table-striped" style="margin-top:-50px ;width:120%;height:400px;text-align:center;vertical-align:middle">
     <thead>
         <tr>
@@ -74,9 +92,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EducatorEmail)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ClassID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ClassID">Details</a> |
+            <td class="btns text-center">
+                <a asp-action="Edit" asp-route-id="@item.ClassID">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.ClassID">Details</a> 
                 <a asp-action="Delete" asp-route-id="@item.ClassID">Delete</a>
             </td>
         </tr>
