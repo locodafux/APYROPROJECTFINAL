@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/22.1.34/bootstrap5-dark.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/APYROPROJECTFINAL.styles.css" asp-append-version="true" />
+    <link rel="icon" href="~/samplelogo 1.png" type="image/x-icon">
 
     <script src="https://cdn.syncfusion.com/ej2/22.1.34/dist/ej2.min.js"></script>
 
@@ -72,18 +73,92 @@
  *@
 
 
- <style>
-    @@media only screen and (max-width: 767px) {
-        .login-educator {
-            display: none; /* hide login partial */
+    <style>
+        .burger {
+            display: none;
         }
-    }
- </style>
+
+        .m-nav {
+            display: none;
+        }
+
+
+
+        /* CSS for mobile screens */
+        @@media only screen and (max-width: 767px) {
+            .sidebar {
+                display: none; /* hide sidebar */
+            }
+
+
+            .login-partial {
+                display: none; /* hide login partial */
+            }
+
+            .navbar {
+                position: relative;
+                background-color: white;
+            }
+
+            .burger {
+                display: block;
+                position: absolute;
+                left: 8px;
+            }
+
+            .m-nav {
+                position: absolute;
+                top: 50px;
+                left: -10px;
+                width: 95%;
+                font-size: 18px;
+                list-style-type: none;
+            }
+
+                .m-nav a, .logout {
+                    color: white;
+                    text-decoration: none;
+                    margin: 0px;
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
+
+            .logout {
+                color: white;
+                text-decoration: none;
+                margin: 0px;
+                display: block;
+                font-size: 18px;
+                padding: 0px;
+            }
+
+            .m-nav li {
+                padding: 5px;
+                background-color: #1A222B;
+                width: 100%;
+            }
+
+                .m-nav li:hover {
+                    background-color: white;
+                }
+
+                    .m-nav li:hover a, .m-nav li:hover .logout {
+                        color: black;
+                    }
+        }
+
+        @@media screen and (min-width: 728px) {
+            .m-nav {
+                display: none !important;
+            }
+        }
+    </style>
 
 </head>
 
 <body class ="e-bigger">
-    <div class="login-educator">
+    <div class="sidebar">
         <partial name="_SideBarEducator" />
     </div>
     
@@ -107,20 +182,63 @@
     </header>*@
 
     <nav class="navbar sticky-top bg-body-tertiary">
-        <div class="container-fluid py-2 px-4">
-@*             <i class="fa-solid fa-magnifying-glass"></i> *@
-            <i class=" "></i>
-            <div style="margin-top: 15px;">
+        <div class="container-fluid py-2 px-4 d-flex justify-content-between">
+            @*             <i class="fa-solid fa-magnifying-glass"></i> *@
+            <i class=""></i>
+
+
+            <div class="login-partial">
                 <partial name="_LoginPartial.cshtml" />
             </div>
-
-            <div>
-@*                 <i class="fa-solid fa-bell"></i>
-                <i class="fa-solid fa-message"></i> *@
-@*                 <img class="profile-pic" src="~/DefaultProfile.png" /> *@
-
-            </div>
+            <i class="burger fa-solid fa-bars fa-2xl"
+               id="toggle-nav"
+               style="color: #ffffff"></i>
+            </ul>
         </div>
+
+
+        <ul class="m-nav" id="m-nav">
+            <li style="border-top-right-radius: 5px; border-top-left-radius:5px;"> <a href="/Educator/Index">Dashboard</a></li>
+            <li> <a href="/Identity/Account/Manage">Account</a></li>
+            <li> <a href="/ClassroomDBs/Index">Classrooms</a></li>
+            <li style="border-bottom-right-radius:5px; border-bottom-left-radius:5px;">
+                <form style="margin: 0px; padding:0px;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="logout btn btn-link" style="text-align:left;">
+                        Logout
+                    </button>
+
+                </form>
+            </li>
+
+            <script>
+                var burger = document.getElementById("toggle-nav");
+                var m_nav = document.getElementById("m-nav");
+
+
+                function toggleNav() {
+                    if (m_nav.style.display == "block") {
+                        m_nav.style.display = "none";
+                    } else {
+                        m_nav.style.display = "block";
+
+                    }
+                }
+                burger.addEventListener("click", toggleNav);
+
+            </script>
+
+            @*
+
+            <h3>Present Count: @ViewBag.PresentCount</h3>
+            <h3>Absent Count: @ViewBag.AbsentCount</h3>
+            <h3>Late Count: @ViewBag.LateCount</h3>
+            <h3>Excused Count: @ViewBag.ExcusedCount</h3> *@
+
+
+
+
+
+
     </nav>
 
 
