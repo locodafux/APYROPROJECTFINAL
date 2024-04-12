@@ -31,12 +31,16 @@
     <script src="@Url.Content("https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection@0.0.2/dist/face-landmarks-detection.min.js")"></script>
 
 
-    <!-- https://medium.com/swlh/how-to-access-webcam-and-take-picture-with-javascript-b9116a983d78 -->
-    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+@*     <!-- https://medium.com/swlh/how-to-access-webcam-and-take-picture-with-javascript-b9116a983d78 -->
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script> *@
 
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/webcam-easy@1.1.1/dist/webcam-easy.min.js"></script>
+
+    
+
+@*     <script defer src="~/FaceVerification.js"></script> *@
     <script defer src="~/FaceVerification.js"></script>
-
 
     <style>
 
@@ -68,7 +72,7 @@
 
 
 
-        <script type="module">
+      @*   <script type="module">
            // const videoElement = document.querySelector('.webcam');
            // const canvasElement = document.querySelector('.output_canvas');
            // const canvasCtx = canvasElement.getContext('2d');
@@ -114,7 +118,7 @@
                 height: 720
             });
             camera.start();
-        </script>
+        </script> *@
 
 
 

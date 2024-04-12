@@ -1,7 +1,6 @@
 ﻿const webcamElement = document.getElementById('webcam');
 
 
-
 var directions = document.getElementById("directions");
 var count = document.getElementById("countdown");
 var progressBar = document.getElementById("progress");
@@ -45,9 +44,8 @@ function show_value() {
 
 
 
-
-
 const webcam = new Webcam(webcamElement, 'user');
+
 
 let model = null;
 let cameraFrame = null;
