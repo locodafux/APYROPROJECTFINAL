@@ -790,6 +790,8 @@ function updateProgressBar(progress)
 {
     // Update your progress bar here
     console.log("Progress: " + progress + "%");
+    var loadingBar = document.getElementById("loadingMessage");
+    loadingBar.innerHTML = "Loading Classroom "+progress + "%";
 }
 
 
