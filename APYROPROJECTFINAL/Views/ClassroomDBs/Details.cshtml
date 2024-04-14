@@ -188,10 +188,66 @@
         }
     }
 
+    .record-con {
+        width: 940px;
+        height: 650px;
+        background-color: #1a222b;
+        position: relative;
+        border-radius: 15px;
+    }
 
+    .modal-container {
+        width: 900px;
+        height: 550px;
+    }
 
+    .record-con1 {
+        width: 940px;
+        height: 650px;
+        background-color: #1a222b;
+        position: relative;
+        border-radius: 15px;
+    }
 
+    .modal-container1 {
+        width: 900px;
+        height: 550px;
+    }
 
+    @@media only screen and (max-width: 767px) {
+        .record-con {
+            width: 380px;
+            height: 350px;
+        }
+
+        .modal-container {
+            width: 350px;
+            height: 350px;
+        }
+
+        .record-con1 {
+            width: 380px;
+            height: 350px;
+        }
+
+        .modal-container1 {
+            width: 350px;
+            height: 350px;
+        }
+
+        #loadingMessage {
+            font-size: 10px; /* Adjust the font size as needed */
+        }
+
+        .modal-content2 {
+            margin: 70% auto;
+            padding: 10px;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
 </style>
 
 
@@ -1225,12 +1281,12 @@ else
 
 
 <div id="myModal" class="modal">
-    <div style="width:940px;height:650px ;background-color:#1a222b ; position:relative ; border-radius:15px">
+    <div class="record-con">
 
 
         <div class="modal-content" style="background-color:#1a222b">
 
-            <div id="modal-container" style="width:900px;height:550px">
+            <div id="modal-container">
             </div>
         </div>
 
@@ -1262,12 +1318,12 @@ else
 
 
 <div id="myModal1" class="modal">
-    <div style="width:940px;height:650px ;background-color:#1a222b ; position:relative ; border-radius:15px">
+    <div class="record-con1">
 
 
         <div class="modal-content1" style="background-color:#1a222b">
 
-            <div id="modal-container1" style="width:900px;height:550px">
+            <div id="modal-container1">
             </div>
         </div>
 

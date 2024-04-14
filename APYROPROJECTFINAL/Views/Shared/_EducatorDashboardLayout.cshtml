@@ -182,7 +182,7 @@
     </header>*@
 
     <nav class="navbar sticky-top bg-body-tertiary">
-        <div class="container-fluid py-2 px-4 d-flex justify-content-between">
+        <div class="container-fluid py-2 px-4 d-flex justify-content-center position-relative">
             @*             <i class="fa-solid fa-magnifying-glass"></i> *@
             <i class=""></i>
 
@@ -190,6 +190,7 @@
             <div class="login-partial">
                 <partial name="_LoginPartial.cshtml" />
             </div>
+            <i class="fa-solid fa-circle-question" style="position:absolute; right:8px; " data-toggle="modal" data-target="#modalHelp" style="color: #ffffff;"></i>
             <i class="burger fa-solid fa-bars fa-2xl"
                id="toggle-nav"
                style="color: #ffffff"></i>
@@ -270,6 +271,32 @@
                                 </div>
                             </div>
                         }
+
+
+
+                        <div class="modal fade" id="modalHelp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content" style="background-color:#1A222B;">
+
+                                    <div class="modal-body d-flex flex-column align-items-center ">
+
+
+                                        <h1>Contact Us</h1>
+                                        <img class="w-100 h-100" src="/contactus.png" />
+
+
+
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
 
 
                         @RenderBody()

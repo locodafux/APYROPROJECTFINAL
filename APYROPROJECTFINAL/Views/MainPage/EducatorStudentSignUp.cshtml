@@ -11,6 +11,35 @@
 }
 
 
+<style>
+    .card {
+        width: 461px;
+        height: 605px;
+        border-radius: 15px;
+        background-color: #1A222B;
+        color: white;
+        margin-top: -20px;
+    }
+
+    @@media only screen and (max-width: 767px) {
+        .card {
+            width: 100%;
+            height: 100%;
+            margin-top: 5%;
+        }
+
+        .card-body {
+            width: 100%;
+        }
+
+            .card-body img {
+                width: 100%;
+            }
+    }
+
+</style>
+
+
 <div class="col d-flex ms-4 mt-5">
     <div>
   @*       <img src="~/samplelogo.png" height="70px" width="75.5px" /> *@
@@ -26,7 +55,7 @@
 
 
 
-    <div class="card d-flex text-center" style="width: 461px; height:605px; border-radius:15px; background-color:#1A222B; color:white; margin-top:-20px;">
+    <div class="card d-flex text-center" >
         <div class="card-body">
             <img src="/images/20945889 1.png" />
             <h1 class="fw-bold" style="font-size:34px;">APyro</h1>
@@ -35,8 +64,8 @@
             <div class="mx-auto d-flex flex-column mb-4" style="width: 286px; text-align:left;">
       @*           <span class=" mb-3" style="font-size: 16px;">Select Sign Up</span> *@
                 <a href="/Identity/Account/EducatorRegister" class="btn btn-primary mb-2 fw-bold" style="font-size:18px;background-color: #0844F4">
-                    Educator’s sign up here</a>
-                <a href="/Identity/Account/StudentRegister" class="btn btn-primary fw-bold" style="font-size:18px;background-color: #0844F4">Student's sign up here</a>
+                    Educator</a>
+                <a href="/Identity/Account/StudentRegister" class="btn btn-primary fw-bold" style="font-size:18px;background-color: #0844F4">Student</a>
             </div>
             <div class=" d-flex flex-column">
                 <span class="mb-2" style="font-size:14px;">Already have and account?</span>
