@@ -1,0 +1,92 @@
+﻿@using System.Globalization;
+@model IEnumerable<APYROPROJECTFINAL.Models.Userlogs>
+
+@{
+    Layout = "/Views/Shared/AdminLayout.cshtml";
+}
+<style>
+    td, th {
+        padding: 10px
+    }
+</style>
+
+
+
+
+<table class="table table-dark table-bordered  table-striped" style="margin-top:-50px ;width:120%;height:400px;text-align:center;vertical-align:middle">
+    <thead>
+        <tr>
+            @*       <th>
+            @Html.DisplayNameFor(model => model.Attendance_Option)
+            ID
+            </th> *@
+            <th>
+                @* @Html.DisplayNameFor(model => model.ClassCode) *@
+                User ID
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Educator_Name) *@
+                Email
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.ClassName) *@
+                Status
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Section) *@
+                Timestamp
+            </th>
+
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* @foreach (var item in Model)
+        { *@
+        @foreach (var group in Model.GroupBy(x => x.Email))
+        {
+            foreach (var subGroup in group.GroupBy(x => x.UniqueId))
+            {
+                var latestItem = subGroup.OrderByDescending(x => x.Timestamp).FirstOrDefault();
+                if (latestItem != null)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => latestItem.UniqueId)</td>
+                        <td>@Html.DisplayFor(modelItem => latestItem.UserEmail)</td>
+                        <td>
+                        
+                                @{
+                                    string timestampString = latestItem.Timestamp;
+                                    DateTime timestamp;
+
+                                    // Remove the 'am' or 'pm' designator from the end of the string
+                                    string trimmedTimestampString = timestampString.Substring(0, timestampString.LastIndexOf(' '));
+
+                                    if (DateTime.TryParseExact(trimmedTimestampString, "yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out timestamp))
+                                    {
+                                        // Parsing successful
+                                        var philippinesTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "Singapore Standard Time");
+                                        var minutesAgo = (int)(philippinesTime - TimeZoneInfo.ConvertTimeBySystemTimeZoneId(timestamp, "Singapore Standard Time")).TotalMinutes;
+                                        var status = minutesAgo > 0 ? $"Active {minutesAgo} minute{(minutesAgo != 1 ? "s" : "")} ago" : "Active Now";
+                                        @status
+                                    }
+                                    else
+                                    {
+                                        // Parsing failed
+                                        <text>Failed to parse timestamp.</text>
+                                    }
+                                }
+                       
+
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => latestItem.Timestamp)</td>
+                        <td></td>
+                    </tr>
+                }
+            }
+        }
+
+
+    </tbody>
+</table>

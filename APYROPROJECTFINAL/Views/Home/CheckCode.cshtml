@@ -1,16 +1,20 @@
-﻿@model IEnumerable<APYROPROJECTFINAL.Models.ClassroomDB>
+﻿@*         @model IEnumerable<APYROPROJECTFINAL.Models.ClassroomDB> *@
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    var classCodes = ViewBag.ClassCodes as List<ClassroomDB>;
+
+    Layout = "/Views/Shared/_Layout.cshtml";
+
+    // var classCodes = ViewBag.ClassCodes as List<ClassroomDB>;
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 }
 
 
 
-
+@* 
     <style>
     .flex {
         display: flex;
@@ -87,13 +91,96 @@
 
 
 
-    </style>
+    </style> *@
 
 
 
 
 
 
+
+
+
+@* @using (Html.BeginForm("CheckCode", "Home", FormMethod.Post))
+
+       {
+ *@
+
+
+
+
+
+
+@* 
+<div class="main-con row col-md-12">
+    <div class="col-md-12">
+
+        <div class="widget p-5 row" style="background-color:#212b36">
+            <div class="col-md-1"></div>
+            <div class="left  col col-md-5 p-3 ">
+                <h2 class="card-title  pb-3 fw-bold">Join Class</h2>
+                <h4 class="card-subtitle text-muted  pb-5">Enter the code your teacher shared</h4>
+                <div class="form-floating mx-auto mb-3 " style="width:95%;">
+                    <input type="number" id="code" class="form-control w-100 " style=" height: 55px; color: white;
+                    background-color: #212529" autocomplete="current-classname" aria-required="true" />
+                    <label class="form-label">Class Code</label>
+                    <span class="text-danger"></span>
+                </div>
+                <button id="joinClassBtn" class="btn btn-success mb-5  mx-auto" style="font-size:18px; width:95%"> + Join Class</button>
+
+                <a href="#" class="card-link  pb-3" style="text-decoration:none; color:#797979;">Not joining a class?</a>
+                <a href="#" class="card-link " style="color: #4062DB;
+                    text-decoration:none; font-weight:600; font-size:20px;">Back</a>
+
+            </div>
+
+            <div class="right col-md-6 row" style="position:relative">
+                <img class="img-fluid w-100  mx-auto" style="height:120%  ;margin-top:-10% ; position:relative; left:30px" src="/images/join2.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#joinClassBtn").click(function () {
+            var code = $("#code").val();
+            $.ajax({
+                url: "/Home/CheckCode11",
+                type: "POST",
+                data: { code: code },
+                success: function (response) {
+                    // Handle success response
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+
+
+
+</script>
+
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+@* 
 
 <div class="main-con row col-md-12">
     <div class="col-md-12">
@@ -103,10 +190,10 @@
             <div class="left  col col-md-5 p-3 ">
                 <h2 class="card-title  pb-3 fw-bold">Join Class</h2>
                 <h4 class="card-subtitle text-muted  pb-5" >Enter the code your teacher shared</h4>
-                 <form asp-action="CheckCode" >
+                <form asp-action="CheckCode11" method="post" asp-controller="Home">
                 <div class="form-floating mx-auto mb-3 " style="width:95%;">
-                    <input type="text" class="form-control w-100 " style=" height: 55px; color: white;
-                     background-color: #212529" autocomplete="current-classname" aria-required="true" name="code" />
+                        <input type="number" name="code" class="form-control w-100 " style=" height: 55px; color: white;
+                     background-color: #212529" autocomplete="current-classname" aria-required="true" />
                     <label class="form-label">Class Code</label>
                     <span class="text-danger"></span>
                 </div>
@@ -131,17 +218,35 @@
 </div>
 
 
+ *@
 
 
 
 
 
 
+@*        } *@
 
-@if (ViewBag.IsCodeCorrect != null)
+
+@* @using (Html.BeginForm("CheckCode", "Home", FormMethod.Post))
+{
+    <div>
+        <label for="code">Enter Class Code:</label>
+        <input type="text" id="code" name="code" required />
+        <button type="submit">Submit</button>
+    </div>
+} *@
+
+
+
+
+
+
+@* 
+ @if (ViewBag.IsCodeCorrect != null)
 {
 
-    @if ((bool)ViewBag.IsCodeCorrect)
+   @if ((bool)ViewBag.IsCodeCorrect)
     {
         <p>Correct</p>
 
@@ -151,9 +256,11 @@
     }
     else
     {
-      @*  <p>Incorrect</p>*@
-    }
-}
+        <p>Incorrect</p>
+    } 
+ 
+
+ }   *@
 
 
 

@@ -148,7 +148,7 @@ namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
         {
             if (User.Identity.IsAuthenticated)
             {
-                Response.Redirect("/Home/Index");
+                Response.Redirect("/Home/StudentLogout");
             }
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -218,7 +218,7 @@ namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         // return LocalRedirect(returnUrl);
-                        return Redirect("/FaceVerification/Index");
+                        return Redirect("/Home/StudentLogout");
                     }
                 }
                 foreach (var error in result.Errors)

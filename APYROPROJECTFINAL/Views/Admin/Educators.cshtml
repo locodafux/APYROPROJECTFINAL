@@ -1,0 +1,95 @@
+﻿@model IEnumerable<APYROPROJECTFINAL.Areas.Identity.Data.Educator>
+
+
+
+@{
+    Layout = "/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    td, th {
+        padding: 10px
+    }
+</style>
+
+@* <p>
+
+    <a href="/Identity/Account/EducatorRegister" class="btn btn-success" style="margin-top:-120px">+Add Educator</a>
+</p> *@
+
+
+<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/Identity/Account/EducatorRegister">
+    <button id="logout" type="submit" class="btn btn-success" style="margin-top: -120px; margin-bottom: 10px;">
+        Add Educator
+    </button>
+</form>
+
+
+
+<table class="table table-dark table-bordered  table-striped" style="margin-top:-50px ;width:120%;height:400px;text-align:center;vertical-align:middle">
+    <thead>
+        <tr>
+      @*       <th>
+                @Html.DisplayNameFor(model => model.Attendance_Option) 
+                ID
+            </th> *@
+            <th>
+                @* @Html.DisplayNameFor(model => model.ClassCode) *@
+                Firstname
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Educator_Name) *@
+                Lastname
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.ClassName) *@
+                Email
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Section) *@
+                Employee ID 
+            </th>
+
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* @foreach (var item in Model)
+        { *@
+            @foreach (var item in Model)
+            {
+
+        <tr>
+       @*      <td>
+                @Html.DisplayFor(modelItem => item.Attendance_Option) 
+                     @Html.DisplayFor(modelItem => item.Id) 
+      
+            </td> *@
+            <td>
+                @* @Html.DisplayFor(modelItem => item.ClassCode) *@
+                    @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.Educator_Name) *@
+                    @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.ClassName) *@
+                    @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.Section) *@
+                    @Html.DisplayFor(modelItem => item.IDnumber)
+            </td>
+
+            <td>
+                @* <a asp-action="Edit" asp-route-id="@item.ClassID"><i class="fa-solid fa-pencil" style="color:white"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.ClassID"><i class="fa-solid fa-folder-open" style="color:white"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.ClassID"><i class="fa-solid fa-trash" style="color:white"></i></a> *@
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>

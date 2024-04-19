@@ -1,0 +1,156 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<style>
+    .flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        text-align: center;
+        background-color: #222b33;
+        color: white;
+        height: fit-content;
+        border-radius: 20px;
+    }
+
+    .card-body {
+        min-height: 600px;
+    }
+
+    .left {
+        /*  border-right: solid 5px #20242a; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+
+    .input {
+        height: fit-content;
+        background-color: rgb(45, 52, 61);
+        color: white;
+    }
+
+        .input:focus {
+            background-color: rgb(45, 52, 61);
+            color: white;
+        }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+
+    .main-con {
+        margin-left: 10%;
+    }
+
+    @@media only screen and (max-width: 767px) {
+        .main-con {
+            margin-left: 0%;
+            margin-right: 0%;
+        }
+
+        .right {
+            display: none;
+        }
+    }
+
+</style>
+
+
+ 
+<div class="main-con row col-md-12">
+    <div class="col-md-12">
+
+        <div class="widget p-5 row" style="background-color:#212b36">
+            <div class="col-md-1"></div>
+            <div class="left  col col-md-5 p-3 ">
+                <h2 class="card-title  pb-3 fw-bold">Join Class</h2>
+                <h4 class="card-subtitle text-muted  pb-5">Enter the code your teacher shared</h4> 
+                @*  <form asp-action="joinclass" asp-controller="Home" method="post">    *@
+                     <div class="form-floating mx-auto mb-3 " style="width:95%;">
+                        <input type="number" name="code" class="form-control w-100 " style=" height: 55px; color: white;
+                     background-color: #212529" autocomplete="current-classname" aria-required="true" />
+                        <label class="form-label">Class Code</label>
+                        <span class="text-danger"></span>
+                    </div>
+                    <button id="joinClassBtn" class="btn btn-success mb-5  mx-auto" style="font-size:18px; width:95%"> + Join Class</button>
+
+                    <a href="#" class="card-link  pb-3" style="text-decoration:none; color:#797979;">Not joining a class?</a> 
+           @*        </form>  *@  
+                 <a href="#" class="card-link " style="color: #4062DB;
+                 text-decoration:none; font-weight:600; font-size:20px;">Back</a>
+
+            </div>
+
+            <div class="right col-md-6 row" style="position:relative">
+                <img class="img-fluid w-100  mx-auto" style="height:120%  ;margin-top:-10% ; position:relative; left:30px" src="/images/join2.png">
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#joinClassBtn").click(function () {
+            var code = $("input[name='code']").val(); // Use the name attribute to select the input field
+            $.ajax({
+                url: "/Home/CheckCode11",
+                type: "POST",
+                data: { code: code },
+                success: function (response) 
+                {
+                    if (response.success) {
+                        // Redirect to the Index action of the Home controller
+                        window.location.href = '@Url.Action("Index", "Home")';
+                    } else {
+                        // Show an alert or handle the error message
+                        alert('Failed to join the class');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    console.error("AJAX UNSUCCESSFULL");
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+
+
+
+</script>
+
+
+

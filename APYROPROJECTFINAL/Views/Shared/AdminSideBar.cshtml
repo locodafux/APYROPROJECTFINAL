@@ -26,16 +26,37 @@
     {
         text = "Account",
         url = "/Identity/Account/Manage",
-        iconCss = "fa-solid fa-folder-closed"
+        iconCss = "fa-solid fa-user-shield"
 
     });
 
     menuItems.Add(new
     {
-        text = "Database",
-        iconCss = "fa-solid fa-arrow-right-arrow-left",
-        url = "/",
+        text = "Educators",
+        url = "/Admin/Educators",
+        iconCss = "fa-solid fa-users-gear"
+
     });
+
+    menuItems.Add(new
+    {
+        text = "Students",
+        url = "/Admin/Students",
+        iconCss = "fa-solid fa-users-gear"
+
+    });
+
+    menuItems.Add(new
+    {
+        text = "User Logs",
+        url = "/Admin/Alluserslogs",
+        iconCss = "fa-solid fa-users"
+
+    });
+
+
+
+
 
     // menuItems.Add(new
     // {

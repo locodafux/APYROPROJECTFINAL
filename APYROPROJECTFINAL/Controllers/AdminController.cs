@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace APYROPROJECTFINAL.Controllers
@@ -28,12 +29,40 @@ namespace APYROPROJECTFINAL.Controllers
         public async Task<IActionResult> Index()
         {
 
+            // Retrieve data for the dropdown list
+            var categories = GetCategoriesFromDatabase(); // Replace this with your own logic to get categories
 
+            // Create a SelectList to pass to the view
+            SelectList categoryList = new SelectList(categories, "Id", "Name");
+
+
+
+
+            // Pass the SelectList to the view
+            ViewBag.Categories = categoryList;
 
             return _context.ClassroomDBS != null ?
                        View(await _context.ClassroomDBS.ToListAsync()) :
                        Problem("Entity set 'AuthDBContext.ClassroomDBS'  is null.");
         }
+
+
+      
+
+
+
+        private List<Schoolyear> GetCategoriesFromDatabase()
+        {
+            return new List<Schoolyear>
+        {
+            new Schoolyear { Id = 1, Name = "2023 - 2024" },
+            new Schoolyear { Id = 2, Name = "2022 - 2023" },
+            new Schoolyear { Id = 3, Name = "2022 - 2023" },
+            //new Schoolyear { Id = 4, Name = "4th Year" }
+        };
+
+        }
+        
 
 
 
@@ -169,6 +198,32 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+
+
+
+
+        public async Task<IActionResult> Educators()
+        {
+
+            return _context.Educators != null ?
+                          View(await _context.Educators.ToListAsync()) :
+                          Problem("Entity set 'AuthDBContext.Educators'  is null.");
+        }
+
+
+        public async Task<IActionResult> StudentsAsync()
+        {
+            return _context.Students != null ?
+                         View(await _context.Students.ToListAsync()) :
+                         Problem("Entity set 'AuthDBContext.Students'  is null.");
+        }
+
+        public async Task<IActionResult> Alluserslogs()
+        {
+            return _context.Userlogs != null ?
+                         View(await _context.Userlogs.ToListAsync()) :
+                         Problem("Entity set 'AuthDBContext.Userlogs'  is null.");
+        }
 
 
 

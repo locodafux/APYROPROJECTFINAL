@@ -19,7 +19,7 @@ public class AuthDbContext : IdentityDbContext
     public DbSet<Student> Students { get; set; }
     public DbSet<ApplicationUser> Accounts { get; set; }
 
-
+    public DbSet<Userlogs>Userlogs { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder builder)

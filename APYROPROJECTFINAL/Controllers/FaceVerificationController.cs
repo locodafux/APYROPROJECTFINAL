@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using APYROPROJECTFINAL.Migrations;
 
 namespace APYROPROJECTFINAL.Controllers
 {
@@ -66,6 +67,27 @@ namespace APYROPROJECTFINAL.Controllers
                 // Update custom properties
                 student.FileName = fileName;
                 student.FilePath = filePath;
+
+
+
+                var filePaths = await _context.Student_Clasrooms
+                .Where(s => s.StudentEmail == user.Email)
+                .ToListAsync();
+
+
+                var studentClassroomsToUpdate = await _context.Student_Clasrooms
+                .Where(s => s.StudentEmail == user.Email)
+                 .ToListAsync();
+
+                foreach (var classroom in studentClassroomsToUpdate)
+                {
+                    classroom.Filepath = filePath;
+                    classroom.Filename = fileName;
+                }
+
+                await _context.SaveChangesAsync(); // Save changes to the database
+
+
 
                 // Update the user in the database
                 var result = await _userManager.UpdateAsync(student);

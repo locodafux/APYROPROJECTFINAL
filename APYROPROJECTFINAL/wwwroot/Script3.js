@@ -803,14 +803,16 @@ function updateProgressBar(progress)
 //}
 
 
-function displayNoFaceModal(studentNames)
-{
+function displayNoFaceModal(studentNames) {
     let modalBody = $('#modal5 .modal-body');
     modalBody.empty();
 
-    modalBody.append('<h5 style="font-size: 18px;">Students with no detected face:</h5>');
+    // Remove duplicates from the studentNames array
+    let uniqueStudentNames = [...new Set(studentNames)];
+
+    modalBody.append('<h5 style="font-size: 16px;">Students with no registered face in the classroom:</h5>');
     modalBody.append('<ul>');
-    studentNames.forEach(studentName => {
+    uniqueStudentNames.forEach(studentName => {
         modalBody.append(`<li>${studentName}</li>`);
     });
     modalBody.append('</ul>');
@@ -819,6 +821,19 @@ function displayNoFaceModal(studentNames)
 }
 
 
+//function displayNoFaceModal(studentNames) {
+//    let modalBody = $('#modal5 .modal-body');
+//    modalBody.empty();
+
+//    modalBody.append('<h5 style="font-size: 16px;">Students with no registered face in the classroom:</h5>');
+//    modalBody.append('<ul>');
+//    studentNames.forEach(studentName => {
+//        modalBody.append(`<li>${studentName}</li>`);
+//    });
+//    modalBody.append('</ul>');
+
+//    $('#modal5').modal('show');
+//} 
 
 
 

@@ -23,6 +23,9 @@ using APYROPROJECTFINAL.Contants;
 
 namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
 {
+
+
+
     public class EducatorRegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -138,12 +141,12 @@ namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-
+   
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (User.Identity.IsAuthenticated)
             {
-                Response.Redirect("/Educator/Index");
+                Response.Redirect("/Educator/Logout");
             }
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -211,7 +214,7 @@ namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         //return LocalRedirect(returnUrl);
-                        return Redirect("/Educator/Index");
+                        return Redirect("/Educator/Logout");
                     }
                 }
                 foreach (var error in result.Errors)

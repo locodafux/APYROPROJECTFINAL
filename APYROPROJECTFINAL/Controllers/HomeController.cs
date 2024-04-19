@@ -1,4 +1,5 @@
 ﻿using APYROPROJECTFINAL.Areas.Identity.Data;
+using APYROPROJECTFINAL.Areas.Identity.Pages.Account;
 using APYROPROJECTFINAL.Data;
 using APYROPROJECTFINAL.Migrations;
 using APYROPROJECTFINAL.Models;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using Userlogs = APYROPROJECTFINAL.Models.Userlogs;
 
 namespace APYROPROJECTFINAL.Controllers
 {
@@ -15,13 +17,17 @@ namespace APYROPROJECTFINAL.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IWebHostEnvironment _hostEnviroment;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly AuthDbContext _context;
-        public HomeController(ILogger<HomeController> logger,UserManager<ApplicationUser>userManager, AuthDbContext context)
+        public HomeController(ILogger<HomeController> logger, SignInManager<ApplicationUser> signInManager, IWebHostEnvironment hostEnvironment, UserManager<ApplicationUser>userManager, AuthDbContext context)
         {
             _logger = logger;
             this._userManager = userManager;
             _context = context;
+            _signInManager = signInManager;
+            _hostEnviroment = hostEnvironment;
 
         }
 
@@ -41,7 +47,10 @@ namespace APYROPROJECTFINAL.Controllers
 
             ViewData["UserID"] = _userManager.GetUserId(this.User);
 
-
+         
+            
+            await LogUserActivityAsync();
+            
 
 
             if (user != null)
@@ -475,6 +484,35 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+        public IActionResult StudentLogout()
+        {
+            return View();
+        }
+
+
+
+
+        //Check Student Face Registration Modal
+        public async Task<IActionResult> CheckStudentData()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null )
+            {
+                var student = await _context.Students.FirstOrDefaultAsync(s => s.EmailStudent == user.Email);
+                if (student != null && string.IsNullOrEmpty(student.FileName))
+                {
+                    ViewBag.Message = "Null";
+                }
+            }
+
+            return View();
+        }
+
+
+
+
+
         public async Task<IActionResult> ProcessTrackerAsync([FromBody] FetchTracker tracker)
         {
             var studentName = tracker.studentName;
@@ -500,6 +538,11 @@ namespace APYROPROJECTFINAL.Controllers
             if (student != null)
             {
                 // Update the Status field to "Present"
+
+
+
+
+
                 student.Status = "Present";
 
 
@@ -535,6 +578,421 @@ namespace APYROPROJECTFINAL.Controllers
             }
 
         }
+
+ 
+        public ActionResult joinclass()
+        {
+            
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CheckCode11(int code)
+        {
+           
+                var user = await _userManager.GetUserAsync(User);
+                var student = await _context.Students.FirstOrDefaultAsync(s => s.EmailStudent == user.UserName);
+
+
+
+             
+                    string studentName = student.FirstName + student.LastName;
+                    string studentID = student.IDnumber;
+                    string studentEmail = student.EmailStudent;
+                    var imagesFolder = Path.Combine(_hostEnviroment.WebRootPath, "images/Verified");
+                    string filename = student.FileName ?? "image_638491651343075578.jpg"; // Assuming the default image name is "image_638491651343075578.jpg"
+                    string filepath = Path.Combine(imagesFolder, filename);
+
+
+
+
+
+                    var isUserAlreadyAMember = await _context.Student_Clasrooms
+                        .AnyAsync(sc => sc.StudentEmail == studentEmail && sc.Classroom_Code == code);
+
+                    if (isUserAlreadyAMember == false)
+                    {
+                        var classroomRecord = await _context.ClassroomDBS.FirstOrDefaultAsync(c => c.ClassCode == code);
+
+                        if (classroomRecord != null)
+                        {
+                            string AttendanceStart = classroomRecord.Attendance_Start;
+                            string AttendancEnd = classroomRecord.Attendance_End;
+                            string AttendanceOption = classroomRecord.Attendance_Option;
+
+                            AddStudentToClassroomDB(code, studentName, studentID, AttendanceStart, AttendancEnd, "Pending Time", "Accept", studentEmail, filename, filepath, AttendanceOption);
+
+                            
+                           
+                            return Json(new { success = true, message = "Joined updated" });
+                        }
+                    }
+          
+                
+            
+        
+
+            return Json(new { success = false, message = "not Joined" + " " + isUserAlreadyAMember + code});
+        }
+
+
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> joinclassAsync(int classcode)
+        //{
+
+        //    var classCode = _context.ClassroomDBS.FirstOrDefault(c => c.ClassCode == classcode);
+        //    var user = await _userManager.GetUserAsync(User);
+
+        //    if (classCode != null && user is Student student)
+        //    {
+        //        string studentName = student.FirstName + student.LastName; // Replace with the actual property name in your IdentityUser model
+        //        string studentID = student.IDnumber; // Replace with the actual property name in your IdentityUser model
+        //        string studentEmail = student.EmailStudent;
+        //        string filename = student.FileName;
+        //        string filepath = student.FilePath;
+
+        //        // Check if the user is already a member of this class
+        //        var isUserAlreadyAMember = await _context.Student_Clasrooms
+        //            .AnyAsync(sc => sc.Student_ID == studentID && sc.Classroom_Code == classCode.ClassCode);
+
+        //        if (!isUserAlreadyAMember)
+        //        {
+        //            var classroomRecord = await _context.ClassroomDBS.FirstOrDefaultAsync(c => c.ClassCode == classcode);
+
+        //            if (classroomRecord != null)
+        //            {
+        //                string AttendanceStart = classroomRecord.Attendance_Start;
+        //                string AttendancEnd = classroomRecord.Attendance_End;
+        //                string AttendanceOption = classroomRecord.Attendance_Option;
+
+        //                AddStudentToClassroomDB(classcode, studentName, studentID, AttendanceStart, AttendancEnd, "Pending Time", "Accept", studentEmail, filename, filepath, AttendanceOption);
+
+        //                // Set a ViewBag to indicate correctness
+        //                //ViewBag.IsCodeCorrect = true;
+
+        //                return RedirectToAction("Index");
+        //            }
+        //        }
+
+        //    }
+
+        //    return View();
+        //}
+
+
+
+        //public IActionResult joinclass(int classcode)
+        //{
+        //    var classCode = _context.ClassroomDBS.FirstOrDefault(c => c.ClassCode == classcode);
+        //    var user = _userManager.GetUserAsync(User).Result;
+
+        //    if (classCode != null && user is Student student)
+        //    {
+        //        string studentName = student.FirstName + student.LastName; // Replace with the actual property name in your IdentityUser model
+        //        string studentID = student.IDnumber; // Replace with the actual property name in your IdentityUser model
+        //        string studentEmail = student.EmailStudent;
+        //        string filename = student.FileName;
+        //        string filepath = student.FilePath;
+
+        //        // Check if the user is already a member of this class
+        //        var isUserAlreadyAMember = _context.Student_Clasrooms
+        //            .Any(sc => sc.Student_ID == studentID && sc.Classroom_Code == classCode.ClassCode);
+
+        //        if (!isUserAlreadyAMember)
+        //        {
+        //            var classroomRecord = _context.ClassroomDBS.FirstOrDefault(c => c.ClassCode == classcode);
+
+        //            if (classroomRecord != null)
+        //            {
+        //                string AttendanceStart = classroomRecord.Attendance_Start;
+        //                string AttendancEnd = classroomRecord.Attendance_End;
+        //                string AttendanceOption = classroomRecord.Attendance_Option;
+
+        //                AddStudentToClassroomDB(classcode, studentName, studentID, AttendanceStart, AttendancEnd, "Pending Time", "Accept", studentEmail, filename, filepath, AttendanceOption);
+
+        //                // Set a ViewBag to indicate correctness
+        //                // ViewBag.IsCodeCorrect = true;
+
+        //                return RedirectToAction("Index");
+        //            }
+        //        }
+        //    }
+
+        //    return View();
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //public IActionResult CheckCode()
+        //{
+        //    return View();
+        //}
+
+
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> CheckCode11(int code)
+        //{
+        //    var classCode = await _context.ClassroomDBS.FirstOrDefaultAsync(c => c.ClassCode == code);
+        //    var classCodes = await _context.ClassroomDBS.ToListAsync();
+        //    ViewBag.ClassCodes = classCodes;
+
+        //    if (classCode != null)
+        //    {
+        //        var user = await _userManager.GetUserAsync(User);
+        //        var student = await _context.Students.FirstOrDefaultAsync(s => s.EmailStudent == user.UserName);
+
+        //        if (student != null)
+        //        {
+        //            string studentName = student.FirstName + student.LastName;
+        //            string studentID = student.IDnumber;
+        //            string studentEmail = student.EmailStudent;
+        //            string filename = student.FileName;
+        //            string filepath = student.FilePath;
+
+        //            var isUserAlreadyAMember = await _context.Student_Clasrooms
+        //                .AnyAsync(sc => sc.Student_ID == studentID && sc.Classroom_Code == classCode.ClassCode);
+
+        //            if (!isUserAlreadyAMember)
+        //            {
+        //                var classroomRecord = await _context.ClassroomDBS.FirstOrDefaultAsync(c => c.ClassCode == code);
+
+        //                if (classroomRecord != null)
+        //                {
+        //                    string AttendanceStart = classroomRecord.Attendance_Start;
+        //                    string AttendancEnd = classroomRecord.Attendance_End;
+        //                    string AttendanceOption = classroomRecord.Attendance_Option;
+
+        //                    AddStudentToClassroomDB(code, studentName, studentID, AttendanceStart, AttendancEnd, "Pending Time", "Accept", studentEmail, filename, filepath, AttendanceOption);
+
+        //                    return Json(new { success = true, message = "Joined updated" });
+        //                }
+        //            }
+        //            else
+        //            {
+        //                ViewBag.IsCodeCorrect = false;
+        //                ViewBag.ErrorMessage = "You are already a member of this class.";
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        ViewBag.IsCodeCorrect = false;
+        //    }
+
+        //    return Json(new { success = false, message = "not Joined" });
+        //}
+
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> CheckCode11Async(int code)
+        //{
+        //    var classCode = _context.ClassroomDBS.FirstOrDefault(c => c.ClassCode == code);
+
+        //    var user = await _userManager.GetUserAsync(User);
+
+
+        //    if (classCode != null && user is Student student)
+        //    {
+
+        //        string studentName = student.FirstName + student.LastName; // Replace with the actual property name in your IdentityUser model
+        //        string studentID = student.IDnumber; // Replace with the actual property name in your IdentityUser model
+        //        string studentEmail = student.EmailStudent;
+        //        string filename = student.FileName;
+        //        string filepath = student.FilePath;
+
+        //        // Check if the user is already a member of this class
+        //        var isUserAlreadyAMember = await _context.Student_Clasrooms
+        //            .AnyAsync(sc => sc.Student_ID == studentID && sc.Classroom_Code == classCode.ClassCode);
+
+        //        if (!isUserAlreadyAMember)
+        //        {
+        //            var classroomRecord = await _context.ClassroomDBS.FirstOrDefaultAsync(c => c.ClassCode == code);
+
+        //            if (classroomRecord != null)
+        //            {
+        //                string AttendanceStart = classroomRecord.Attendance_Start;
+        //                string AttendancEnd = classroomRecord.Attendance_End;
+        //                string AttendanceOption = classroomRecord.Attendance_Option;
+
+        //                AddStudentToClassroomDB(code, studentName, studentID, AttendanceStart, AttendancEnd, "Pending Time", "Accept", studentEmail, filename, filepath, AttendanceOption);
+
+        //                // Set a ViewBag to indicate correctness
+        //                ViewBag.IsCodeCorrect = true;
+
+        //                return RedirectToAction("Index");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            // User is already a member, show an error message
+        //            ViewBag.IsCodeCorrect = false;
+        //            ViewBag.ErrorMessage = "You are already a member of this class.";
+
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // Code is incorrect, set a ViewBag to indicate incorrectness
+        //        ViewBag.IsCodeCorrect = false;
+
+        //    }
+        //    return View();
+
+        //}
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> joinclassAsync(int code)
+        //{
+
+
+        //    var classCode = _context.ClassroomDBS.FirstOrDefault(c => c.ClassCode == code);
+        //    var classCodes = await _context.ClassroomDBS.ToListAsync();
+
+
+        //    var user = await _userManager.GetUserAsync(User);
+
+
+        //    if (classCode != null && user is Student student)
+        //    {
+
+        //        string studentName = student.FirstName + student.LastName; // Replace with the actual property name in your IdentityUser model
+        //        string studentID = student.IDnumber; // Replace with the actual property name in your IdentityUser model
+        //        string studentEmail = student.EmailStudent;
+        //        string filename = student.FileName;
+        //        string filepath = student.FilePath;
+
+        //        // Check if the user is already a member of this class
+        //        var isUserAlreadyAMember = await _context.Student_Clasrooms
+        //            .AnyAsync(sc => sc.Student_ID == studentID && sc.Classroom_Code == classCode.ClassCode);
+
+        //        if (!isUserAlreadyAMember)
+        //        {
+        //            var classroomRecord = await _context.ClassroomDBS.FirstOrDefaultAsync(c => c.ClassCode == code);
+
+        //            if (classroomRecord != null)
+        //            {
+        //                string AttendanceStart = classroomRecord.Attendance_Start;
+        //                string AttendancEnd = classroomRecord.Attendance_End;
+        //                string AttendanceOption = classroomRecord.Attendance_Option;
+
+        //                AddStudentToClassroomDB(code, studentName, studentID, AttendanceStart, AttendancEnd, "Pending Time", "Accept", studentEmail, filename, filepath, AttendanceOption);
+
+
+        //                return RedirectToAction("Index");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            // User is already a member, show an error message
+        //            //ViewBag.IsCodeCorrect = false;
+        //            //ViewBag.ErrorMessage = "You are already a member of this class.";
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // Code is incorrect, set a ViewBag to indicate incorrectness
+        //        ViewBag.IsCodeCorrect = false;
+        //    }
+
+        //    return View();
+        //}
+
+
+
+
+
+
+
+
+
+
+        public void AddStudentToClassroomDB(int classroomCode, string studentName, string studentID, string attendanceStart, string attendanceEnd, string attendanceTime, string status, string studentEmail, string filename, string filepath, string attendanceOption)
+        {
+            var studentClassroom = new StudentClassroomDB
+            {
+                Classroom_Code = classroomCode,
+                Student_Name = studentName,
+                Student_ID = studentID,
+                Attendance_Start = attendanceStart,
+                Attendance_End = attendanceEnd,
+                Attendance_Time = attendanceTime,
+                Status = status,
+                StudentEmail = studentEmail,
+                Filename = filename,
+                Filepath = filepath,
+                Attendance_Option = attendanceOption
+            };
+
+            // Add the studentClassroom to the database
+            _context.Student_Clasrooms.Add(studentClassroom);
+            _context.SaveChanges();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public async Task LogUserActivityAsync()
+        {
+            // Get the currently logged-in user
+            var user = await _userManager.GetUserAsync(User);
+            TimeZoneInfo phTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
+
+            // Convert the UTC time to Philippines Standard Time
+            DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
+
+            // Update the Attendance_Time field with the Philippines time
+           
+            // Log the user's activity to the UserLogs table
+            if (user != null)
+            {
+                var userLog = new Userlogs
+                {
+
+
+                    UniqueId = user.Id,
+                    Timestamp = phTime.ToString("yyyy-MM-dd hh:mm:ss tt"),
+                    Email = "LoggedIn", // or any other action you want to log
+                    UserEmail = user.Email
+                };
+
+                _context.Userlogs.Add(userLog);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+  
+
+
+
 
 
 
@@ -924,87 +1382,177 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
-        public async Task<IActionResult> CheckCodeAsync(int code)
-        {
-            ViewBag.IsCodeCorrect = null;
 
-            var classCode = _context.ClassroomDBS.FirstOrDefault(c => c.ClassCode == code);
-            var classCodes = await _context.ClassroomDBS.ToListAsync();
-            ViewBag.ClassCodes = classCodes;
 
-            var user = await _userManager.GetUserAsync(User);
+        //public IActionResult ProcessClassCode(string classCode)
+        //{
+        //    // Process the class code here (e.g., validate, save to database, etc.)
+        //    if (!string.IsNullOrEmpty(classCode))
+        //    {
+        //        // Process the class code
+        //        return RedirectToAction("Index");
+        //    }
 
+        //    // If the class code is invalid or empty, return to the form
+        //    return RedirectToAction("Index");
+        //}
+
+
+
+        //public async Task<IActionResult> CheckCodeAsync(int code)
+        //{
+        //    var classCode = _context.ClassroomDBS.FirstOrDefault(c => c.ClassCode == code);
+
+        //    var user = await _userManager.GetUserAsync(User);
+
+
+        //    if (classCode != null && user is Student student)
+        //    {
+
+        //        string studentName = student.FirstName + student.LastName; // Replace with the actual property name in your IdentityUser model
+        //        string studentID = student.IDnumber; // Replace with the actual property name in your IdentityUser model
+        //        string studentEmail = student.EmailStudent;
+        //        string filename = student.FileName;
+        //        string filepath = student.FilePath;
+
+        //        // Check if the user is already a member of this class
+        //        var isUserAlreadyAMember = await _context.Student_Clasrooms
+        //            .AnyAsync(sc => sc.Student_ID == studentID && sc.Classroom_Code == classCode.ClassCode);
+
+        //        if (!isUserAlreadyAMember)
+        //        {
+        //            var classroomRecord = await _context.ClassroomDBS.FirstOrDefaultAsync(c => c.ClassCode == code);
+
+        //            if (classroomRecord != null)
+        //            {
+        //                string AttendanceStart = classroomRecord.Attendance_Start;
+        //                string AttendancEnd = classroomRecord.Attendance_End;
+        //                string AttendanceOption = classroomRecord.Attendance_Option;
+
+        //                AddStudentToClassroomDB(code, studentName, studentID, AttendanceStart, AttendancEnd, "Pending Time", "Accept", studentEmail, filename, filepath, AttendanceOption);
+
+        //                // Set a ViewBag to indicate correctness
+        //                ViewBag.IsCodeCorrect = true;
+
+        //                return RedirectToAction("Index");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            // User is already a member, show an error message
+        //            ViewBag.IsCodeCorrect = false;
+        //            ViewBag.ErrorMessage = "You are already a member of this class.";
+
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // Code is incorrect, set a ViewBag to indicate incorrectness
+        //        ViewBag.IsCodeCorrect = false;
+
+        //    }
+        //    return View();
+
+        //}
+
+
+
+
+
+        //public async Task<IActionResult> CheckCodeAsync(int code)
+        //{
+        //    //ViewBag.IsCodeCorrect = null;
+
+        //    var classCode = _context.ClassroomDBS.FirstOrDefault(c => c.ClassCode == code);
+        //    var classCodes = await _context.ClassroomDBS.ToListAsync();
+        //    ViewBag.ClassCodes = classCodes;
+
+           
             
-            if (classCode != null && user is Student student)
-            {
 
-                string studentName = student.FirstName + student.LastName; // Replace with the actual property name in your IdentityUser model
-                string studentID = student.IDnumber; // Replace with the actual property name in your IdentityUser model
-                string studentEmail = student.EmailStudent;
-                string filename = student.FileName;
-                string filepath = student.FilePath;
+        //    if (classCode != null /*&& user is Student student*/)
+        //    {
 
-                // Check if the user is already a member of this class
-                var isUserAlreadyAMember = await _context.Student_Clasrooms
-                    .AnyAsync(sc => sc.Student_ID == studentID && sc.Classroom_Code == classCode.ClassCode);
-
-                if (!isUserAlreadyAMember)
-                {
-                    var classroomRecord = await _context.ClassroomDBS.FirstOrDefaultAsync(c => c.ClassCode == code);
-
-                    if (classroomRecord != null)
-                    {
-                        string AttendanceStart = classroomRecord.Attendance_Start;
-                        string AttendancEnd = classroomRecord.Attendance_End;
-                        string AttendanceOption = classroomRecord.Attendance_Option;
-
-                        AddStudentToClassroomDB(code, studentName, studentID, AttendanceStart, AttendancEnd, "Pending Time", "Accept", studentEmail, filename, filepath, AttendanceOption);
-
-                        // Set a ViewBag to indicate correctness
-                        ViewBag.IsCodeCorrect = true;
-                    }
-                }
-                else
-                {
-                    // User is already a member, show an error message
-                    ViewBag.IsCodeCorrect = false;
-                    ViewBag.ErrorMessage = "You are already a member of this class.";
-                }
-            }
-            else
-            {
-                // Code is incorrect, set a ViewBag to indicate incorrectness
-                ViewBag.IsCodeCorrect = false;
-            }
-
-            return View("CheckCode", _context.ClassroomDBS.ToList());
-        }
+        //        var user = await _userManager.GetUserAsync(User);
 
 
+        //        var student = await _context.Students.FirstOrDefaultAsync(s => s.EmailStudent == user.UserName);
+
+
+        //        string studentName = student.FirstName + student.LastName; // Replace with the actual property name in your IdentityUser model
+        //        string studentID = student.IDnumber; // Replace with the actual property name in your IdentityUser model
+        //        string studentEmail = student.EmailStudent;
+        //        string filename = student.FileName;
+        //        string filepath = student.FilePath;
+
+        //        // Check if the user is already a member of this class
+        //        var isUserAlreadyAMember = await _context.Student_Clasrooms
+        //            .AnyAsync(sc => sc.Student_ID == studentID && sc.Classroom_Code == classCode.ClassCode);
+
+        //        if (!isUserAlreadyAMember)
+        //        {
+        //            var classroomRecord = await _context.ClassroomDBS.FirstOrDefaultAsync(c => c.ClassCode == code);
+
+        //            //if (classroomRecord != null)
+        //            //{
+        //                string AttendanceStart = classroomRecord.Attendance_Start;
+        //                string AttendancEnd = classroomRecord.Attendance_End;
+        //                string AttendanceOption = classroomRecord.Attendance_Option;
+
+        //                AddStudentToClassroomDB(code, studentName, studentID, AttendanceStart, AttendancEnd, "Pending Time", "Accept", studentEmail, filename, filepath, AttendanceOption);
+
+        //                // Set a ViewBag to indicate correctness
+        //                //ViewBag.IsCodeCorrect = true;
+
+        //                return RedirectToAction("Index");
+        //            //}
+        //        }
+        //        else
+        //        {
+        //            // User is already a member, show an error message
+        //            ViewBag.IsCodeCorrect = false;
+        //            ViewBag.ErrorMessage = "You are already a member of this class.";
+
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // Code is incorrect, set a ViewBag to indicate incorrectness
+        //        ViewBag.IsCodeCorrect = false;
+
+        //    }
+
+        //    //return View("CheckCode", _context.ClassroomDBS.ToList());
+        //    return View();
+        //}
 
 
 
-        private void AddStudentToClassroomDB(int classroomCode, string studentName, string studentID, string attendanceStart, string attendanceEnd, string attendanceTime, string status, string studentEmail, string filename, string filepath, string attendanceOption)
-        {
-            var studentClassroom = new StudentClassroomDB
-            {
-                Classroom_Code = classroomCode,
-                Student_Name = studentName,
-                Student_ID = studentID,
-                Attendance_Start = attendanceStart,
-                Attendance_End = attendanceEnd,
-                Attendance_Time = attendanceTime,
-                Status = status,
-                StudentEmail = studentEmail,
-                Filename = filename,
-                Filepath = filepath,
-                Attendance_Option = attendanceOption
-            };
 
-            // Add the studentClassroom to the database
-            _context.Student_Clasrooms.Add(studentClassroom);
-            _context.SaveChanges();
-        }
+
+
+
+        //private void AddStudentToClassroomDB(int classroomCode, string studentName, string studentID, string attendanceStart, string attendanceEnd, string attendanceTime, string status, string studentEmail, string filename, string filepath, string attendanceOption)
+        //{
+        //    var studentClassroom = new StudentClassroomDB
+        //    {
+        //        Classroom_Code = classroomCode,
+        //        Student_Name = studentName,
+        //        Student_ID = studentID,
+        //        Attendance_Start = attendanceStart,
+        //        Attendance_End = attendanceEnd,
+        //        Attendance_Time = attendanceTime,
+        //        Status = status,
+        //        StudentEmail = studentEmail,
+        //        Filename = filename,
+        //        Filepath = filepath,
+        //        Attendance_Option = attendanceOption
+        //    };
+
+        //    // Add the studentClassroom to the database
+        //    _context.Student_Clasrooms.Add(studentClassroom);
+        //    _context.SaveChanges();
+        //}
 
 
 

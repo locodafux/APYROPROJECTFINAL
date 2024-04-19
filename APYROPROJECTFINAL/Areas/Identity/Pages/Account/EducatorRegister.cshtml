@@ -1,10 +1,10 @@
 ﻿@page
 @model EducatorRegisterModel
+
 @{
     ViewData["Title"] = "EducatorRegister";
     Layout = "~/Areas/Identity/Pages/_AuthLayout2.cshtml";
 }
-
 
 
 
@@ -254,6 +254,9 @@
 
 
 
+
+
+
 <style>
 
     .widgetlim {
@@ -284,9 +287,9 @@
      <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <div class="widgetlim p-3 justify-content-center" >
           
-                <header class="a1 justify-content-center" style="font-size: 25px"><b>Sign Up</b></header>
-                <p style="font-size: 15px">Enter your following details to create an account.</p>
-
+                <header class="a1 justify-content-center" style="font-size: 25px"><b>Add Educator</b></header>
+                @* <p style="font-size: 15px">Enter your following details to create an account.</p>
+ *@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
@@ -364,23 +367,25 @@
                 </div>
                 
  
-         
+                 
 
+
+@* 
                <div class="form-check ms-2 mt-2">
                     <input class="form-check-input" type="checkbox" >
                     <label class="form-check-label" style="margin-top:-5px">
                         I agree with APyro
                         <a data-toggle="modal" data-target="#exampleModalLong" class="btn btn-link" style="margin-left:-10px">Terms and Conditions.</a>
                     </label>
-               </div>
+               </div> *@
                 <div class="btn-group d-flex justify-content-center align-items-center mt-3">
-                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary " style="background-color: #0844F4">Submit</button>
+                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary " style="background-color: #0844F4">Save</button>
                 </div>
-
+                <a href="/Identity/Account/LoginAdmin" class="btn btn-link text-decoration-none fw-bold" style="font-size:20px">Cancel</a>
     
-               <div class="d-flex justify-content-center">
+            @*    <div class="d-flex justify-content-center">
                     <p>Already have account? <a href="/Identity/Account/Login"> Log in</a></p>
-               </div>
+               </div> *@
 
 
         </div>

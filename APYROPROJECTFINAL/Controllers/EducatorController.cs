@@ -165,7 +165,10 @@ namespace APYROPROJECTFINAL.Controllers
         }
 
 
-
+        public IActionResult Logout()
+        {
+            return View();
+        }
 
 
 
