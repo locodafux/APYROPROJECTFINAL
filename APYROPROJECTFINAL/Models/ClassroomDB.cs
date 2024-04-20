@@ -11,6 +11,7 @@ namespace APYROPROJECTFINAL.Models
 
         [Required]
         [Display(Name = "Attendance Option")]
+        [RegularExpression(@"^\d{4}\s*-\s*\d{4}$", ErrorMessage = "The format should be 'year - year', e.g., '2020 - 2024'")]
         public string Attendance_Option { get; set; }
 
         [Required]

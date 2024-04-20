@@ -31,6 +31,8 @@ namespace APYROPROJECTFINAL.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User); // Retrieve the currently logged-in user
+            await LogUserActivityAsync();
+
 
             if (user != null)
             {
@@ -302,6 +304,48 @@ namespace APYROPROJECTFINAL.Controllers
 
             return RedirectToAction("Index", "Admin"); // Redirect to the Index action of the Admin controller
         }
+
+
+
+
+
+
+
+
+        public async Task LogUserActivityAsync()
+        {
+            // Get the currently logged-in user
+            var user = await _userManager.GetUserAsync(User);
+            TimeZoneInfo phTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
+
+            // Convert the UTC time to Philippines Standard Time
+            DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
+
+            // Update the Attendance_Time field with the Philippines time
+
+            // Log the user's activity to the UserLogs table
+            if (user != null)
+            {
+                var userLog = new Userlogs
+                {
+
+
+                    UniqueId = user.Id,
+                    Timestamp = phTime.ToString("yyyy-MM-dd hh:mm:ss tt"),
+                    Email = "LoggedIn", // or any other action you want to log
+                    UserEmail = user.Email
+                };
+
+                _context.Userlogs.Add(userLog);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+
+
+
+
+
 
 
 

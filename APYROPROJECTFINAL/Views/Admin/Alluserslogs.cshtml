@@ -38,7 +38,7 @@
             </th>
 
 
-            <th>Action</th>
+         @*    <th>Action</th> *@
         </tr>
     </thead>
     <tbody>
@@ -48,15 +48,50 @@
         {
             foreach (var subGroup in group.GroupBy(x => x.UniqueId))
             {
-                var latestItem = subGroup.OrderByDescending(x => x.Timestamp).FirstOrDefault();
+                var latestItem = subGroup.OrderByDescending(x => x.userlogs).FirstOrDefault();
                 if (latestItem != null)
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => latestItem.UniqueId)</td>
                         <td>@Html.DisplayFor(modelItem => latestItem.UserEmail)</td>
                         <td>
-                        
-                                @{
+
+                            @{
+                                string timestampString = latestItem.Timestamp;
+                                DateTime timestamp;
+
+                                if (DateTime.TryParseExact(timestampString, "yyyy-MM-dd hh:mm:ss tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out timestamp))
+                                {
+                                    // Parsing successful
+                                    TimeZoneInfo phTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
+                                    DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
+                                    var minutesAgo = (int)(phTime - timestamp).TotalMinutes;
+                                    var status = minutesAgo > 0 ? $"Active {minutesAgo} minute{(minutesAgo != 1 ? "s" : "")} ago" : "Active Now";
+                                    @status
+                                }
+                                else
+                                {
+                                    // Parsing failed
+                                    <text>Failed to parse timestamp.</text>
+                                }
+                            }
+
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => latestItem.Timestamp)</td>
+                   @*      <td></td> *@
+                    </tr>
+                }
+            }
+        }
+
+
+    </tbody>
+</table>
+
+
+
+
+@*  @{
                                     string timestampString = latestItem.Timestamp;
                                     DateTime timestamp;
 
@@ -66,27 +101,15 @@
                                     if (DateTime.TryParseExact(trimmedTimestampString, "yyyy-MM-dd hh:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out timestamp))
                                     {
                                         // Parsing successful
-                                        var philippinesTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "Singapore Standard Time");
-                                        var minutesAgo = (int)(philippinesTime - TimeZoneInfo.ConvertTimeBySystemTimeZoneId(timestamp, "Singapore Standard Time")).TotalMinutes;
-                                        var status = minutesAgo > 0 ? $"Active {minutesAgo} minute{(minutesAgo != 1 ? "s" : "")} ago" : "Active Now";
-                                        @status
+                                    TimeZoneInfo phTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
+                                    DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
+                                    var minutesAgo = (int)(phTime - timestamp).TotalMinutes;
+                                    var status = minutesAgo > 0 ? $"Active {minutesAgo} minute{(minutesAgo != 1 ? "s" : "")} ago" : "Active Now";
+                                    @status
                                     }
                                     else
                                     {
                                         // Parsing failed
                                         <text>Failed to parse timestamp.</text>
                                     }
-                                }
-                       
-
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => latestItem.Timestamp)</td>
-                        <td></td>
-                    </tr>
-                }
-            }
-        }
-
-
-    </tbody>
-</table>
+                                } *@

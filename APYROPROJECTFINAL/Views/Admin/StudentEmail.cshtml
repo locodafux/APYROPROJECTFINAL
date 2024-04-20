@@ -1,0 +1,66 @@
+﻿@model APYROPROJECTFINAL.Areas.Identity.Data.Student
+
+@{
+    Layout = "/Views/Shared/AdminLayout.cshtml";
+}
+
+<html>
+<head>
+    <script defer src="~/JavaScript.js"></script>
+</head>
+<body>
+    <h1>Send Email</h1>
+    Sender Name
+    <input type="text" value="APyro Administrator" id="sendername">
+    <br>
+    To (Email)
+    <input type="text" value="@Model.EmailStudent" id="to">
+    <br>
+    Subject
+    <input type="text" value="APyro Credentials" id="subject">
+    <br>
+    Reply To (Email)
+    <input type="text" value="testapyro@gmail.com" id="replyto">
+    <br>
+    Message
+    <br>
+    <textarea id="message" cols="40" rows="8"></textarea>
+    <button onclick="sendMail();"> Send </button>
+
+
+    <script>
+        // Set the value of the textarea
+        document.getElementById('message').value = '@Model.PasswordStudent';
+    </script>
+
+    <script type="text/javascript">
+        function sendMail() {
+            emailjs.init({
+                publicKey: "__6p3UcCmJ9uu2X-4", // Replace with your EmailJS public key
+            });
+
+            var params = {
+                sendername: document.querySelector("#sendername").value,
+                to: document.querySelector("#to").value,
+                subject: document.querySelector("#subject").value,
+                replyto: document.querySelector("#replyto").value,
+                message: document.querySelector("#message").value,
+            };
+
+            var serviceID = "service_5id2ecc"; // Replace with your EmailJS service ID
+            var templateID = "template_johsume"; // Replace with your EmailJS template ID
+
+            emailjs.send(serviceID, templateID, params)
+                .then(function (res) {
+                    alert("Email sent successfully");
+                })
+                .catch(function (error) {
+                    console.error("Email sending failed:", error);
+                });
+        }
+
+
+
+    </script>
+</body>
+</html>

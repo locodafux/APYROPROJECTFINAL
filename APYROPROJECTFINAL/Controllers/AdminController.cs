@@ -57,7 +57,7 @@ namespace APYROPROJECTFINAL.Controllers
         {
             new Schoolyear { Id = 1, Name = "2023 - 2024" },
             new Schoolyear { Id = 2, Name = "2022 - 2023" },
-            new Schoolyear { Id = 3, Name = "2022 - 2023" },
+            new Schoolyear { Id = 3, Name = "2021 - 2022" },
             //new Schoolyear { Id = 4, Name = "4th Year" }
         };
 
@@ -89,7 +89,7 @@ namespace APYROPROJECTFINAL.Controllers
                 int classCode = random.Next(100000, 999999);
 
                 classroomDB.ClassCode = classCode;
-                classroomDB.Attendance_Option = "Group Recognition";
+                //classroomDB.Attendance_Option = "Group Recognition";
 
                 _context.Add(classroomDB);
                 await _context.SaveChangesAsync();
@@ -198,6 +198,71 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+        public async Task<IActionResult> SendEmailEducator(string? EmailEducator)
+        {
+            if (EmailEducator == null || _context.Educators == null)
+            {
+              
+                return NotFound();
+            }
+
+            var educatoremail = await _context.Educators.FirstOrDefaultAsync(m => m.EmailEducator == EmailEducator);
+
+            if (educatoremail == null)
+            {
+                
+                return NotFound();
+            }
+
+            
+
+            return View(educatoremail);
+        }
+
+     
+  
+        public async Task<IActionResult> StudentEmailAsync(string? EmailStudent)
+        {
+
+            if (EmailStudent == null || _context.Students == null)
+            {
+
+                return NotFound();
+            }
+
+            var StudentEmail = await _context.Students.FirstOrDefaultAsync(m => m.EmailStudent == EmailStudent);
+
+            if (StudentEmail == null)
+            {
+
+                return NotFound();
+            }
+            return View(StudentEmail);
+        }
+
+
+
+        //public async Task<IActionResult> SendStudenEmailAsync(string? EmailStudent)
+        //{
+        //    if (EmailStudent == null || _context.Students == null)
+        //    {
+
+        //        return NotFound();
+        //    }
+
+        //    var StudentEmail = await _context.Students.FirstOrDefaultAsync(m => m.EmailStudent == EmailStudent);
+
+        //    if (StudentEmail == null)
+        //    {
+
+        //        return NotFound();
+        //    }
+
+
+
+        //    return View(StudentEmail);
+        //}
+
 
 
 
@@ -206,8 +271,8 @@ namespace APYROPROJECTFINAL.Controllers
         {
 
             return _context.Educators != null ?
-                          View(await _context.Educators.ToListAsync()) :
-                          Problem("Entity set 'AuthDBContext.Educators'  is null.");
+            View(await _context.Educators.ToListAsync()) :
+             Problem("Entity set 'AuthDBContext.Educators'  is null.");
         }
 
 
@@ -224,6 +289,9 @@ namespace APYROPROJECTFINAL.Controllers
                          View(await _context.Userlogs.ToListAsync()) :
                          Problem("Entity set 'AuthDBContext.Userlogs'  is null.");
         }
+
+
+
 
 
 
@@ -262,10 +330,16 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+        private bool EmailStudentExist(string EmailStudent)
+        {
+            return (_context.Students?.Any(e => e.EmailStudent == EmailStudent)).GetValueOrDefault();
+        }
 
 
-
-
+        private bool EmailEducatorExist(string EmailEducator)
+        {
+            return (_context.Educators?.Any(e => e.EmailEducator == EmailEducator)).GetValueOrDefault();
+        }
 
 
         private bool ClassroomDBExists(int id)

@@ -76,14 +76,20 @@
             </td>
             <td>
                 @* @Html.DisplayFor(modelItem => item.ClassName) *@
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => item.EmailEducator)
             </td>
             <td>
                 @* @Html.DisplayFor(modelItem => item.Section) *@
                     @Html.DisplayFor(modelItem => item.IDnumber)
             </td>
+               
 
+          
             <td>
+                    <a asp-action="SendEmailEducator" asp-route-EmailEducator="@item.EmailEducator"><i class="fa-solid fa-envelope" style="color:white"></i></a>
+
+
+               @*      <a href="/Admin/SendEmailEducator"><i class="fa-solid fa-envelope" style="color:white"></i></a> *@
                 @* <a asp-action="Edit" asp-route-id="@item.ClassID"><i class="fa-solid fa-pencil" style="color:white"></i></a> |
                 <a asp-action="Details" asp-route-id="@item.ClassID"><i class="fa-solid fa-folder-open" style="color:white"></i></a> |
                 <a asp-action="Delete" asp-route-id="@item.ClassID"><i class="fa-solid fa-trash" style="color:white"></i></a> *@

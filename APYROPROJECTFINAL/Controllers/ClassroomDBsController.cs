@@ -1237,7 +1237,7 @@ namespace APYROPROJECTFINAL.Controllers
                     int classCode = random.Next(100000, 999999);
 
                     classroomDB.ClassCode = classCode;
-                    classroomDB.Attendance_Option = "Group Recognition";
+                    //classroomDB.Attendance_Option = "Group Recognition";
 
                     _context.Add(classroomDB);
                     await _context.SaveChangesAsync();

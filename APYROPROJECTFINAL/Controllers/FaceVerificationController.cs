@@ -69,32 +69,13 @@ namespace APYROPROJECTFINAL.Controllers
                 student.FilePath = filePath;
 
 
-
-                var filePaths = await _context.Student_Clasrooms
-                .Where(s => s.StudentEmail == user.Email)
-                .ToListAsync();
-
-
-                var studentClassroomsToUpdate = await _context.Student_Clasrooms
-                .Where(s => s.StudentEmail == user.Email)
-                 .ToListAsync();
-
-                foreach (var classroom in studentClassroomsToUpdate)
-                {
-                    classroom.Filepath = filePath;
-                    classroom.Filename = fileName;
-                }
-
-                await _context.SaveChangesAsync(); // Save changes to the database
-
-
-
-                // Update the user in the database
                 var result = await _userManager.UpdateAsync(student);
+
 
                 if (result.Succeeded)
                 {
                     // The properties have been updated successfully.
+                    await UpdateStudentInformationAsync(fileName, filePath);
                     return Json(new { success = true });
                 }
                 else
@@ -108,6 +89,7 @@ namespace APYROPROJECTFINAL.Controllers
                 // Handle the case where the user is not found or is not a Student.
                 return Json(new { success = false, error = "User not found or not a Student." });
             }
+
 
 
 
@@ -128,6 +110,31 @@ namespace APYROPROJECTFINAL.Controllers
 
 
         }
+
+        private async Task UpdateStudentInformationAsync(string fileName, string filePath)
+        {
+            var user = await _userManager.GetUserAsync(this.User);
+            if (user != null && user is Student student)
+            {
+                var studentClassroomsToUpdate = await _context.Student_Clasrooms
+              .Where(s => s.StudentEmail == user.Email)
+              .ToListAsync();
+
+                foreach (var classroom in studentClassroomsToUpdate)
+                {
+                    classroom.Filepath = filePath;
+                    classroom.Filename = fileName;
+                }
+
+                await _context.SaveChangesAsync();
+
+            }
+
+        }
+
+
+
+
 
 
 
