@@ -29,17 +29,26 @@ namespace APYROPROJECTFINAL.Controllers
         public async Task<IActionResult> Index()
         {
 
+
+            var attendanceOptions = await _context.ClassroomDBS
+              .Select(c => c.Attendance_Option)
+                 .Distinct()
+             .ToListAsync();
+
+
             // Retrieve data for the dropdown list
-            var categories = GetCategoriesFromDatabase(); // Replace this with your own logic to get categories
+            //var categories = GetCategoriesFromDatabase(); // Replace this with your own logic to get categories
 
-            // Create a SelectList to pass to the view
-            SelectList categoryList = new SelectList(categories, "Id", "Name");
+            //// Create a SelectList to pass to the view
+            //SelectList categoryList = new SelectList(categories, "Id", "Name");
 
-
+            var categoryList = new SelectList(attendanceOptions);
 
 
             // Pass the SelectList to the view
             ViewBag.Categories = categoryList;
+
+
 
             return _context.ClassroomDBS != null ?
                        View(await _context.ClassroomDBS.ToListAsync()) :
@@ -198,6 +207,180 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+
+
+        public async Task<IActionResult> EditStudentDataAsync(string? Id)
+        {
+            if (Id == null)
+            {
+                return NotFound();
+            }
+            var student = await _context.Students.FirstOrDefaultAsync(m => m.Id == Id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            return View(student);
+
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditStudentData(string Id, Student student)
+        {
+            if (Id != student.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    // Retrieve the existing educator from the database
+                    var existingStudent = await _context.Students.FirstOrDefaultAsync(e => e.Id == Id);
+
+                    if (existingStudent != null)
+                    {
+
+                        // Update the properties
+                        existingStudent.FirstName = student.FirstName;
+                        existingStudent.LastName = student.LastName;
+                        existingStudent.contactnumber = student.contactnumber;
+                        existingStudent.EmailStudent = student.EmailStudent;
+                        existingStudent.University = student.University;
+                        existingStudent.IDnumber = student.IDnumber;
+                        existingStudent.Username = student.Username;
+                        existingStudent.PasswordStudent = student.PasswordStudent;
+                        
+
+
+
+                        // Update the entity in the database
+                        _context.Update(existingStudent);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!StudentIdExist(student.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Students", "Admin"); // Redirect to the Educators action of the Admin controller
+            }
+            return View(student);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        public async Task<IActionResult> EditEducatorData(string? Id)
+        {
+
+            if (Id == null)
+            {
+                return NotFound();
+            }
+
+
+            var educator = await _context.Educators.FirstOrDefaultAsync(m => m.Id == Id);
+            if (educator == null)
+            {
+                return NotFound();
+            }
+
+            return View(educator);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditEducatorData(string Id, Educator educator)
+        {
+            if (Id != educator.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    // Retrieve the existing educator from the database
+                    var existingEducator = await _context.Educators.FirstOrDefaultAsync(e => e.Id == Id);
+
+                    if (existingEducator != null)
+                    {
+
+                        // Update the properties
+                        existingEducator.FirstName = educator.FirstName;
+                        existingEducator.LastName = educator.LastName;
+                        existingEducator.contactnumber = educator.contactnumber;
+                        existingEducator.EmailEducator = educator.EmailEducator;
+                        existingEducator.University = educator.University;
+                        existingEducator.IDnumber = educator.IDnumber;
+                        existingEducator.Username = educator.Username;
+                        existingEducator.PasswordEducator = educator.PasswordEducator;
+
+                        // Update the entity in the database
+                        _context.Update(existingEducator);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EducatorIdExist(educator.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Educators", "Admin"); // Redirect to the Educators action of the Admin controller
+            }
+            return View(educator);
+        }
+
+
+
+
+
+
+
+
+
+
+
         public async Task<IActionResult> SendEmailEducator(string? EmailEducator)
         {
             if (EmailEducator == null || _context.Educators == null)
@@ -221,6 +404,23 @@ namespace APYROPROJECTFINAL.Controllers
 
      
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public async Task<IActionResult> StudentEmailAsync(string? EmailStudent)
         {
 
@@ -241,27 +441,6 @@ namespace APYROPROJECTFINAL.Controllers
         }
 
 
-
-        //public async Task<IActionResult> SendStudenEmailAsync(string? EmailStudent)
-        //{
-        //    if (EmailStudent == null || _context.Students == null)
-        //    {
-
-        //        return NotFound();
-        //    }
-
-        //    var StudentEmail = await _context.Students.FirstOrDefaultAsync(m => m.EmailStudent == EmailStudent);
-
-        //    if (StudentEmail == null)
-        //    {
-
-        //        return NotFound();
-        //    }
-
-
-
-        //    return View(StudentEmail);
-        //}
 
 
 
@@ -328,7 +507,10 @@ namespace APYROPROJECTFINAL.Controllers
             return View(viewModel);
         }
 
-
+        private bool EducatorIdExist(string Id)
+        {
+            return (_context.Educators?.Any(e => e.Id == Id)).GetValueOrDefault();
+        }
 
         private bool EmailStudentExist(string EmailStudent)
         {
@@ -347,6 +529,11 @@ namespace APYROPROJECTFINAL.Controllers
             return (_context.ClassroomDBS?.Any(e => e.ClassID == id)).GetValueOrDefault();
         }
 
+
+        private bool StudentIdExist(string Id)
+        {
+            return (_context.Students?.Any(e => e.Id == Id)).GetValueOrDefault();
+        }
 
 
     }

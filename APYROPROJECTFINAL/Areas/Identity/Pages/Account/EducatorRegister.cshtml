@@ -301,6 +301,12 @@
                         </div>
 
 
+                    <div class="form-floating mt-2 ms-2">
+                        <input asp-for="Input.ContactNumber" class="form-control" style="background-color: #212529 ;color : white" autocomplete="ContactNumber" aria-required="true" />
+                        <label asp-for="Input.ContactNumber">Middle Name</label>
+                        <span asp-validation-for="Input.ContactNumber" class="text-danger"></span>
+                    </div>
+
 
                     <div class="form-floating mt-2 ms-2">
                         <input asp-for="Input.LastName" class="form-control" style="background-color: #212529 ;color : white" autocomplete="Lastname" aria-required="true" />
@@ -317,11 +323,7 @@
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
 
-                <div class="form-floating mt-2">
-                    <input asp-for="Input.ContactNumber" class="form-control" style="background-color: #212529 ;color : white" autocomplete="ContactNumber" aria-required="true" />
-                    <label asp-for="Input.ContactNumber"></label>
-                    <span asp-validation-for="Input.ContactNumber" class="text-danger"></span>
-                </div>
+        
 
 
 
@@ -352,13 +354,13 @@
                 <div class="col d-flex ms-1 mt-2">
 
                     <div class="form-floating">
-                        <input asp-for="Input.Password" class="form-control" style="background-color: #212529 ;color : white" autocomplete="new-password" aria-required="true" />
+                        <input asp-for="Input.Password" id="password"  class="form-control" style="background-color: #212529 ;color : white" autocomplete="new-password" aria-required="true" />
                         <label asp-for="Input.Password"></label>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
 
                     <div class="form-floating ms-2">
-                        <input asp-for="Input.ConfirmPassword" class="form-control" style="background-color: #212529 ;color : white" autocomplete="new-password" aria-required="true" />
+                        <input asp-for="Input.ConfirmPassword" id="confirmPassword" class="form-control" style="background-color: #212529 ;color : white" autocomplete="new-password" aria-required="true" />
                         <label asp-for="Input.ConfirmPassword"></label>
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
@@ -378,6 +380,11 @@
                         <a data-toggle="modal" data-target="#exampleModalLong" class="btn btn-link" style="margin-left:-10px">Terms and Conditions.</a>
                     </label>
                </div> *@
+
+    
+
+
+
                 <div class="btn-group d-flex justify-content-center align-items-center mt-3">
                     <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary " style="background-color: #0844F4">Save</button>
                 </div>
@@ -393,6 +400,61 @@
     </div>
 
 </div>
+
+
+<input id="password" type="text" />
+<input id="confirmPassword" type="text" />
+<button class="btn btn-secondary" id="generateBtn">
+    Generate Password
+</button>
+
+<script>
+    var password = document.getElementById("password");
+    var confirmPassword = document.getElementById("confirmPassword");
+    var generateBtn = document.getElementById("generateBtn");
+    function generatePass() {
+        let pass = "";
+        let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        let str1 = "abcdefghijklmnopqrstuvwxyz";
+        let special = "!#$%^&*";
+        let numbers = "12345";
+
+        for (let i = 1; i <= 4; i++) {
+            let char = Math.floor(Math.random() * str.length + 1);
+
+            pass += str.charAt(char);
+        }
+        for (let i = 1; i <= 4; i++) {
+            let char = Math.floor(Math.random() * str1.length + 1);
+
+            pass += str1.charAt(char);
+        }
+        for (let i = 1; i <= 3; i++) {
+            let char = Math.floor(Math.random() * special.length + 1);
+
+            pass += special.charAt(char);
+        }
+
+        for (let i = 1; i <= 3; i++) {
+            let char = Math.floor(Math.random() * numbers.length + 1);
+
+            pass += numbers.charAt(char);
+        }
+
+        return pass;
+    }
+    function changeValue() {
+        let generatedPassword = generatePass();
+        password.value = generatedPassword;
+        confirmPassword.value = generatedPassword;
+    }
+    generateBtn.addEventListener("click", changeValue);
+</script>
+
+
+
+
+
 
 
 @section Scripts {

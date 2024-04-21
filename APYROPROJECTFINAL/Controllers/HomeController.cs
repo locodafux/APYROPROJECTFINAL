@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 using Userlogs = APYROPROJECTFINAL.Models.Userlogs;
 
 namespace APYROPROJECTFINAL.Controllers
@@ -70,11 +72,13 @@ namespace APYROPROJECTFINAL.Controllers
                 {
                     var presentCount = userAttendanceData.Sum(sc => sc.Present ?? 0);
                     var absentCount = userAttendanceData.Sum(sc => sc.Absent ?? 0);
-                    //var lateCount = userAttendanceData.Sum(sc => sc.Late ?? 0);
+
+                    var lateCount = userAttendanceData.Sum(sc => sc.Late ?? 0);
                     //var excusedCount = userAttendanceData.Sum(sc => sc.Excused ?? 0);
                     // Use ViewBag to pass counts to the view
                     ViewBag.PresentCount = presentCount;
                     ViewBag.AbsentCount = absentCount;
+                    ViewBag.LateCount = lateCount;
                     //ViewBag.LateCount = lateCount;
                     //ViewBag.ExcusedCount = excusedCount;
 
@@ -83,7 +87,7 @@ namespace APYROPROJECTFINAL.Controllers
                         Day = "Monday",
                         Present = presentCount,
                         Absent = absentCount,
-                        //Late = lateCount
+                        Late = lateCount
                     };
 
                     var data = new List<AttendanceData>
@@ -101,7 +105,8 @@ namespace APYROPROJECTFINAL.Controllers
                     List<DoughnutChartData> ChartPoints = new List<DoughnutChartData>
                         {
                              new DoughnutChartData { Browser= "Present", Users= ViewBag.PresentCount ?? 0, DataLabelMappingName= $"Present: {ViewBag.PresentCount ?? 0}%" },
-                             new DoughnutChartData { Browser= "Absent", Users= ViewBag.AbsentCount ?? 0, DataLabelMappingName= $"Absent: {ViewBag.AbsentCount ?? 0}%" }
+                             new DoughnutChartData { Browser= "Absent", Users= ViewBag.AbsentCount ?? 0, DataLabelMappingName= $"Absent: {ViewBag.AbsentCount ?? 0}%" },
+                             new DoughnutChartData { Browser= "Late", Users=  ViewBag.LateCount ?? 0, DataLabelMappingName= $"Late: {ViewBag.LateCount ?? 0}%" }
                         };
 
                                ViewBag.ChartPoints = ChartPoints;
@@ -166,7 +171,7 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
-
+            
 
 
 
@@ -413,7 +418,10 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
-
+        public IActionResult FaceDataPrivacy()
+        {
+            return View();
+        }
 
 
 
@@ -542,8 +550,7 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
-
-                student.Status = "Present";
+                //student.Status = "Present";
 
 
 
@@ -553,14 +560,32 @@ namespace APYROPROJECTFINAL.Controllers
                 DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
 
                 // Update the Attendance_Time field with the Philippines time
-                student.Attendance_Time = phTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+                student.Attendance_Time = phTime.ToString("dd-MM-yyyy hh:mm tt");
 
-                //student.Attendance_Time = DateTime.Now.ToString();
+                // Convert student.Attendance_Start to DateTime
+                DateTime attendanceStart = DateTime.ParseExact(student.Attendance_Start, "HH:mm", CultureInfo.InvariantCulture);
+
+                if (phTime > attendanceStart.AddMinutes(15))
+                {
+                    student.Status = "Late";
+                    student.Late = (student.Late ?? 0) + 1;
+                }
+                else
+                {
+                    student.Status = "Present";
+                    student.Present = (student.Present ?? 0) + 1;
+                }
 
 
 
 
-                student.Present = (student.Present ?? 0) + 1;
+                //student.Present = (student.Present ?? 0) + 1;
+
+
+
+
+
+
                 // student.Absent = (student.Absent ?? 0) + 15;
                 // student.Late = (student.Late ?? 0) + 11;
 
@@ -578,6 +603,9 @@ namespace APYROPROJECTFINAL.Controllers
             }
 
         }
+
+
+
 
  
         public ActionResult joinclass()
@@ -1027,12 +1055,12 @@ namespace APYROPROJECTFINAL.Controllers
                 {
                     var presentCount = userAttendanceData.Sum(sc => sc.Present ?? 0);
                     var absentCount = userAttendanceData.Sum(sc => sc.Absent ?? 0);
-                    //var lateCount = userAttendanceData.Sum(sc => sc.Late ?? 0);
+                    var lateCount = userAttendanceData.Sum(sc => sc.Late ?? 0);
                     //var excusedCount = userAttendanceData.Sum(sc => sc.Excused ?? 0);
                     // Use ViewBag to pass counts to the view
                     ViewBag.PresentCount = presentCount;
                     ViewBag.AbsentCount = absentCount;
-                    //ViewBag.LateCount = lateCount;
+                    ViewBag.LateCount = lateCount;
                     //ViewBag.ExcusedCount = excusedCount;
 
                     var newDataForTuesday = new AttendanceData
@@ -1040,7 +1068,7 @@ namespace APYROPROJECTFINAL.Controllers
                         Day = "Monday",
                         Present = presentCount,
                         Absent = absentCount,
-                        //Late = lateCount
+                        Late = lateCount
                     };
 
                     var data = new List<AttendanceData>
@@ -1058,7 +1086,8 @@ namespace APYROPROJECTFINAL.Controllers
                     List<DoughnutChartData> ChartPoints = new List<DoughnutChartData>
                         {
                              new DoughnutChartData { Browser= "Present", Users= ViewBag.PresentCount ?? 0, DataLabelMappingName= $"Present: {ViewBag.PresentCount ?? 0}%" },
-                             new DoughnutChartData { Browser= "Absent", Users= ViewBag.AbsentCount ?? 0, DataLabelMappingName= $"Absent: {ViewBag.AbsentCount ?? 0}%" }
+                             new DoughnutChartData { Browser= "Absent", Users= ViewBag.AbsentCount ?? 0, DataLabelMappingName= $"Absent: {ViewBag.AbsentCount ?? 0}%" },
+                              new DoughnutChartData { Browser= "Late", Users= ViewBag.LateCount ?? 0, DataLabelMappingName= $"Late: {ViewBag.LateCount ?? 0}%" }
                         };
 
                     ViewBag.ChartPoints = ChartPoints;
@@ -1077,6 +1106,7 @@ namespace APYROPROJECTFINAL.Controllers
               {
                   sc.Present,
                   sc.Absent,
+                  sc.Late,
                   sc.Classroom_Code
               })
               .ToListAsync();
@@ -1085,6 +1115,7 @@ namespace APYROPROJECTFINAL.Controllers
                     // Calculate total present and absent
                     var totalPresent = userAttendanceData1.Sum(sc => sc.Present ?? 0);
                     var totalAbsent = userAttendanceData1.Sum(sc => sc.Absent ?? 0);
+                    var totalLate = userAttendanceData1.Sum(sc => sc.Late ?? 0);
 
                     // Get the class names for the periods
                     var periods = userAttendanceData1.Select(sc => sc.Classroom_Code).Distinct().ToList();
@@ -1106,7 +1137,8 @@ namespace APYROPROJECTFINAL.Controllers
                             Period = (periodClassNames[g.Key] != null ? periodClassNames[g.Key].ToString() : g.Key.ToString()),
                             ProductRevenue_A = g.Sum(sc => sc.Present ?? 0),
                             ProductRevenue_B = g.Sum(sc => sc.Absent ?? 0),
-                            ProductRevenue_C = 0 // You can add logic here for ProductRevenue_C if needed
+                            ProductRevenue_C = g.Sum(sc => sc.Late ??0)
+                            //ProductRevenue_C = 0 // You can add logic here for ProductRevenue_C if needed
                         })
                         .ToList();
 

@@ -673,7 +673,7 @@ namespace APYROPROJECTFINAL.Controllers
                 DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
 
                 // Update the Attendance_Time field with the Philippines time
-                student.Attendance_Time = phTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+                student.Attendance_Time = phTime.ToString("dd-MM-yyyy hh:mm tt");
 
 
 
@@ -1453,7 +1453,7 @@ namespace APYROPROJECTFINAL.Controllers
                 DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
 
                 // Update the Attendance_Time field with the Philippines time
-                studentClassroom.Attendance_Time = phTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+                studentClassroom.Attendance_Time = phTime.ToString("dd-MM-yyyy hh:mm tt");
 
 
                 //studentClassroom.Attendance_Time = DateTime.Now.ToString();

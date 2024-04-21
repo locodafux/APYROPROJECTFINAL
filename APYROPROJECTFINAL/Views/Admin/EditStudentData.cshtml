@@ -1,0 +1,172 @@
+﻿@model APYROPROJECTFINAL.Areas.Identity.Data.Student
+@{
+    Layout = "/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+<div class="row col-md-12" style="margin-left:10%">
+    <div class="col-md-12">
+
+        <div class="widget p-5 row" style="background-color:#212b36 ; margin-top:-50px">
+            <div class="col-md-1"></div>
+            <div class="left  col col-md-11 p-3 ">
+                <h2 class="card-title  pb-1 fw-bold">Edit Educator</h2>
+                <form asp-action="EditStudentData">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="col-11 d-flex  ">
+                        <div class="form-floating mb-2" style="width: 95%">
+
+                            <input asp-for="FirstName" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                            <label asp-for="FirstName" class="form-label">no name</label>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-floating mb-2 ms-2" style="width: 95%">
+
+                            <input asp-for="contactnumber" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                            <label asp-for="contactnumber" class="form-label">Middle Name </label>
+                            <span asp-validation-for="contactnumber" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-11 d-flex  ">
+                        <div class="form-floating mb-2" style="width: 95%">
+
+                            <input asp-for="LastName" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                            <label asp-for="LastName" class="form-label"> Last Name</label>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-floating mb-2 ms-2" style="width: 95%">
+
+                            <input asp-for="EmailStudent" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                            <label asp-for="EmailStudent" class="form-label">noemail</label>
+                            <span asp-validation-for="EmailStudent" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating mb-2" style="width: 95%">
+
+                        <input asp-for="IDnumber" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                        <label asp-for="IDnumber" class="form-label">ID Number</label>
+                        <span asp-validation-for="IDnumber" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-floating mb-2" style="width: 95%">
+
+                        <input asp-for="University" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                        <label asp-for="University" class="form-label">University</label>
+                        <span asp-validation-for="University" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-floating mb-2" style="width: 95%">
+
+                        <input asp-for="PasswordStudent" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                        <label asp-for="PasswordStudent" class="form-label">Password</label>
+                        <span asp-validation-for="PasswordStudent" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-floating mb-2" style="width: 95%">
+
+                        <input asp-for="Username" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                        <label asp-for="Username" class="form-label">Username</label>
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-floating mb-2" style="width: 95%">
+
+                        <input asp-for="Section" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                        <label asp-for="Section" class="form-label">Section</label>
+                        <span asp-validation-for="Section" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-floating mb-2" style="width: 95%">
+
+                        <input asp-for="FileName" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                        <label asp-for="FileName" class="form-label">FileName</label>
+                        <span asp-validation-for="FileName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-2" style="width: 95%">
+
+                        <input asp-for="FilePath" class="form-control" style=" color: white ;
+                       background-color: #212529 ; text-transform:uppercase" />
+                        <label asp-for="FilePath" class="form-label">FilePath</label>
+                        <span asp-validation-for="FilePath" class="text-danger"></span>
+                    </div>
+
+
+
+
+                    @*           <div class="form-floating mb-2" style="width: 95%">
+
+                    <input asp-for="Id" class="form-control" style=" color: white ;
+                    background-color: #212529 ; text-transform:uppercase" />
+                    <label asp-for="Id" class="form-label">Id</label>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                    </div> *@
+
+
+
+
+
+
+
+
+
+
+
+                    @* <input type="submit" value="Save" class="btn btn-success mb-3" style="font-size:18px; width:95%" />*@
+
+                    <button type="submit" class="btn btn-success mb-3" style="font-size: 18px; width: 92%">
+                        <i class="fa-solid fa-floppy-disk"></i> Save
+                    </button>
+
+
+                    @*     <a class="btn btn-link" style="font-size:18px; width:95%" asp-controller="Admin" asp-action="Index">Back to List</a> *@
+
+
+                </form>
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
