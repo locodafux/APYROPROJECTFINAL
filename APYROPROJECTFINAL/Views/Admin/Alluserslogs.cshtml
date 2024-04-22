@@ -65,14 +65,19 @@
                                     // Parsing successful
                                     TimeZoneInfo phTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
                                     DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
-                                    var minutesAgo = (int)(phTime - timestamp).TotalMinutes;
-                                    var status = minutesAgo > 0 ? $"Active {minutesAgo} minute{(minutesAgo != 1 ? "s" : "")} ago" : "Active Now";
+                                    TimeSpan timeDifference = phTime - timestamp;
+                                    string status;
+
+                                    if (timeDifference.TotalMinutes > 0)
+                                    {
+                                        string formattedTime = $"{(int)timeDifference.TotalHours} hour{(timeDifference.TotalHours != 1 ? "s" : "")} {timeDifference.Minutes} minute{(timeDifference.Minutes != 1 ? "s" : "")} ago";
+                                        status = $"Active {formattedTime}";
+                                    }
+                                    else
+                                    {
+                                        status = "Active Now";
+                                    }
                                     @status
-                                }
-                                else
-                                {
-                                    // Parsing failed
-                                    <text>Failed to parse timestamp.</text>
                                 }
                             }
 
