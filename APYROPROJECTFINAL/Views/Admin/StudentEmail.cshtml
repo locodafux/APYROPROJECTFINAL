@@ -4,29 +4,49 @@
     Layout = "/Views/Shared/AdminLayout.cshtml";
 }
 
-<html>
-<head>
-    <script defer src="~/JavaScript.js"></script>
-</head>
-<body>
-    <h1>Send Email</h1>
-    Sender Name
-    <input type="text" value="APyro Administrator" id="sendername">
-    <br>
-    To (Email)
-    <input type="text" value="@Model.EmailStudent" id="to">
-    <br>
-    Subject
-    <input type="text" value="APyro Credentials" id="subject">
-    <br>
-    Reply To (Email)
-    <input type="text" value="testapyro@gmail.com" id="replyto">
-    <br>
-    Message
-    <br>
-    <textarea id="message" cols="40" rows="8"></textarea>
-    <button onclick="sendMail();"> Send </button>
+<style>
 
+    .input-con {
+        font-family: Inter;
+    }
+
+    input {
+        background-color: #212529;
+        color: white;
+        height: 40px;
+        border-radius: 5px;
+        border: 1px solid white;
+        padding-left: 8px;
+        margin-bottom: 5px;
+    }
+
+    h2 {
+        font-weight: bold;
+    }
+</style>
+
+
+    <script defer src="~/JavaScript.js"></script>
+
+<div class="w-100 d-flex justify-content-center"> 
+    <div class="input-con d-flex flex-column p-5" style="background-color:#1A222B; border-radius:5px; width:600px;">
+        <h2>Send Email</h2>
+        <span class="me-1">
+            &nbsp;Sender Name:
+        </span>
+        <input type="text" value="APyro Administrator" id="sendername">
+        &nbsp;To (Email):
+        <input type="text" value="@Model.EmailStudent" id="to">
+        &nbsp;Subject:
+        <input type="text" value="APyro Credentials" id="subject">
+        &nbsp;Reply To (Email):
+        <input type="text" value="testapyro@gmail.com" id="replyto">
+        &nbsp;Message:
+        <input id="message" /><br />
+        <button class="btn btn-primary" onclick="sendMail();"> Send </button>
+
+    </div>
+</div>
 
     <script>
         // Set the value of the textarea
@@ -62,5 +82,3 @@
 
 
     </script>
-</body>
-</html>
