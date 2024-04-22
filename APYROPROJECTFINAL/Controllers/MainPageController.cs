@@ -17,6 +17,8 @@ namespace APYROPROJECTFINAL.Controllers
 
         public IActionResult AboutUs()
         {
+
+
             return View();
 
         }
