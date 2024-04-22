@@ -4,28 +4,25 @@
 }
 
 
-<html>
-<head>
+
+
     <script defer src="~/JavaScript.js"></script>
-</head>
-<body>
-    <h1>Send Email</h1>
+<div class="w-100 d-flex justify-content-center">
+    <div class="d-flex flex-column p-5" style="background-color:#1A222B; border-radius:5px; width:600px;">
+    <h5>Send Email</h5>
     Sender Name
     <input type="text" value="APyro Administrator" id="sendername">
-    <br>
     To (Email)
     <input type="text" value="@Model.EmailEducator" id="to">
-    <br>
     Subject
     <input type="text" value="APyro Credentials" id="subject">
-    <br>
     Reply To (Email)
     <input type="text" value="testapyro@gmail.com"  id="replyto">
-    <br>
     Message
-    <br>
-    <textarea id="message"  cols="40" rows="8"></textarea>
-    <button onclick="sendMail();"> Send </button>
+    <input id="message" class="mb-3" />
+        <button class="btn btn-primary" onclick="sendMail();"> Send </button>
+    </div>
+    </div>
 
 
     <script>
@@ -62,5 +59,4 @@
       
 
     </script>
-</body>
-</html>
+
