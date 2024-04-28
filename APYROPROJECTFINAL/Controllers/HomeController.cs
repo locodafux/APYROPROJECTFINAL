@@ -1225,6 +1225,63 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+
+
+
+
+                    // Get the unique classroom codes for the student
+                    var classroomCodes = userAttendanceData1.Select(sc => sc.Classroom_Code).Distinct().ToList();
+
+                    // Retrieve the class names for the periods
+                    var classNames1 = await _context.ClassroomDBS
+                        .Where(c => classroomCodes.Contains(c.ClassCode))
+                        .Select(c => new { c.ClassCode, c.ClassName })
+                        .ToListAsync();
+
+                    // Group the user attendance data by Classroom_Code
+                    var groupedData = userAttendanceData1
+                        .GroupBy(sc => sc.Classroom_Code)
+                        .Select(g => new
+                        {
+                            ClassroomCode = g.Key,
+                            Present = g.Sum(sc => sc.Present ?? 0),
+                            Absent = g.Sum(sc => sc.Absent ?? 0),
+                            Late = g.Sum(sc => sc.Late ?? 0)
+                        })
+                        .ToList();
+
+                    // Prepare the data for the chart
+                    var chartData1 = groupedData
+                        .Select(g => new BarChartData
+                        {
+                            Country = classNames.FirstOrDefault(cn => cn.ClassCode == g.ClassroomCode)?.ClassName ?? g.ClassroomCode.ToString(),
+                            GDP = g.Present,        
+                            WorldShare = g.Absent  ,
+                            Late = g.Late
+                                                    
+                        })
+                        .ToList();
+
+
+                    ViewBag.ChartPointsbar = chartData1;
+
+
+                    var top3Absent = groupedData.OrderByDescending(g => g.Absent).Take(3).ToList();
+                    var top3Present = groupedData.OrderByDescending(g => g.Present).Take(3).ToList();
+                    var top3Late = groupedData.OrderByDescending(g => g.Late).Take(3).ToList();
+
+
+                    ViewBag.Top3Absent = top3Absent;
+                    ViewBag.Top3Present = top3Present;
+                    ViewBag.Top3Late = top3Late;
+
+
+
+
+
+
+
+
                 }
 
 
@@ -1300,6 +1357,16 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+                    List<BarChartData> ChartPoints1 = new List<BarChartData>
+            {
+                new BarChartData { Country = "Canada",  GDP = 3.05 , WorldShare = 2.04 },
+                new BarChartData { Country = "Italy", GDP = 1.50 , WorldShare = 2.40 },
+                new BarChartData { Country = "Germany",  GDP = 2.22, WorldShare = 4.56 },
+                new BarChartData { Country = "India", GDP = 6.68 , WorldShare = 3.28  },
+                new BarChartData { Country = "France",  GDP = 1.82, WorldShare = 3.19 },
+                new BarChartData { Country = "Japan",  GDP = 1.71, WorldShare = 6.02 }
+            };
+                    ViewBag.ChartPoints = ChartPoints1;
 
 
 
@@ -1319,8 +1386,14 @@ namespace APYROPROJECTFINAL.Controllers
         }
 
 
-
-        public class PolarAreaChartData
+    public class BarChartData
+    {
+        public string Country;
+        public double GDP;
+        public double WorldShare;
+        public double Late;
+    }
+    public class PolarAreaChartData
         {
             public string Period;
             public double ProductRevenue_A;

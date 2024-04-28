@@ -117,11 +117,6 @@
             chart.refresh();
         }
     </script>
-    
-   
-
-
-
 
 
 
@@ -240,8 +235,9 @@
 
 
 
-
 <div class="row mb-4 mt-4">
+
+
 
 
 
@@ -338,6 +334,91 @@
     </div>
 </center>
 </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="control-section" align="center">
+
+        <ejs-chart id="lineContainer" load="load" title="GDP by Country in 2017">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-tooltipsettings enable="true">
+            </e-chart-tooltipsettings>
+            <e-chart-legendsettings visible="true" enableHighlight="true">
+            </e-chart-legendsettings>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis labelFormat="{value}%"
+                                  title="GDP (In Percentage)"
+                                  edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-series-collection>
+            <e-series dataSource="ViewBag.ChartPointsbar" xName="Country" yName="GDP" name="Present" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar " fill="#274f7e">
+                    <e-series-marker>
+                        <e-series-datalabel position="@Syncfusion.EJ2.Charts.LabelPosition.Top" visible="false">
+                            <e-font color="#ffffff" fontWeight="600"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+
+            <e-series dataSource="ViewBag.ChartPointsbar" xName="Country" yName="Late" name="Late" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar " fill="#EE9322">
+                <e-series-marker>
+                    <e-series-datalabel position="@Syncfusion.EJ2.Charts.LabelPosition.Top" visible="false">
+                        <e-font color="#ffffff" fontWeight="600"></e-font>
+                    </e-series-datalabel>
+                </e-series-marker>
+            </e-series>
+
+
+            <e-series dataSource="ViewBag.ChartPointsbar" xName="Country" yName="WorldShare" name="Absent" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar" fill="#219C90">
+                    <e-series-marker>
+                        <e-series-datalabel position="@Syncfusion.EJ2.Charts.LabelPosition.Top" visible="false">
+                            <e-font color="#ffffff" fontWeight="600"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+
+
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+    </script>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Classroom Code</th>
+            <th>Top 3 Highest Absent</th>
+            <th>Top 3 Highest Present</th>
+            <th>Top 3 Highest Late</th>
+        </tr>
+    </thead>
+    <tbody>
+     
+    </tbody>
+</table>
+
 
 
 

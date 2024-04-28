@@ -66,16 +66,20 @@
                                     TimeZoneInfo phTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Singapore Standard Time");
                                     DateTime phTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, phTimeZone);
                                     TimeSpan timeDifference = phTime - timestamp;
-                                    string status;
-
+                                    string status ;
+                     
                                     if (timeDifference.TotalMinutes > 0)
                                     {
                                         string formattedTime = $"{(int)timeDifference.TotalHours} hour{(timeDifference.TotalHours != 1 ? "s" : "")} {timeDifference.Minutes} minute{(timeDifference.Minutes != 1 ? "s" : "")} ago";
                                         status = $"Active {formattedTime}";
                                     }
-                                    else
+
+                                    else 
                                     {
+
                                         status = "Active Now";
+
+                                  
                                     }
                                     @status
                                 }
