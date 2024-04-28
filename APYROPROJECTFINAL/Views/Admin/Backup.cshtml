@@ -1,0 +1,193 @@
+﻿@model IEnumerable<APYROPROJECTFINAL.Models.StudentClassroomDB>
+
+@{
+    Layout = "/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    td, th {
+        padding: 10px
+    }
+
+    .table {
+        width: 120%;
+        height: 400px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+/*     .btn {
+        margin-top: -120px;
+    } */
+
+    .list {
+        margin-top: -40px;
+        display: flex;
+        width: 120%;
+        justify-content: end;
+    }
+
+    .custom-dropdown {
+        width: 250px;
+        height: 30px;
+        background-color: #1A222B;
+        color: white;
+    }
+</style>
+
+<div class="col-md-12 mb-2">
+
+    
+      
+
+    <div class="list">
+
+        <div class="me-2">
+            @using (Html.BeginForm("ActionName", "Admin", FormMethod.Post, new { id = "myFormClassName" }))
+            {
+                @Html.DropDownList("SelectedCategoryId", (IEnumerable<SelectListItem>)ViewBag.Categories2, "Class Name (All)", new { @class = "custom-dropdown", id = "myDropdownClassName" })
+            }
+        </div>
+   
+
+
+        @using (Html.BeginForm("ActionName", "Admin", FormMethod.Post, new { id = "myForm" }))
+        {
+            @Html.DropDownList("SelectedCategoryId", (IEnumerable<SelectListItem>)ViewBag.Categories1, "School Year (All)", new { @class = "custom-dropdown", id = "myDropdown" })
+        }
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#myDropdown").change(function () {
+            var selectedText = $(this).find("option:selected").text(); // Get the selected text
+            console.log("Selected name: " + selectedText);
+
+            // Filter the table based on the selected value
+            $("table tbody tr").each(function () {
+                var attendanceOption = $(this).find("td:eq(0)").text(); // Assuming Attendance_Option is the first column
+                if (selectedText === "School Year (All)" || attendanceOption === selectedText) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#myDropdownClassName").change(function () {
+            var selectedText = $(this).find("option:selected").text(); // Get the selected text
+            console.log("Selected class name: " + selectedText);
+
+            // Filter the table based on the selected value
+            $("table tbody tr").each(function () {
+                var className = $(this).find("td:eq(1)").text(); // Assuming ClassName is the second column
+                if (selectedText === "Class Name (All)" || className === selectedText) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+    <table class="table table-dark table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>School Year</th>
+                <th>Class Name</th>
+                <th>Educator</th>
+                <th>Section</th>
+                <th>@Html.DisplayNameFor(model => model.StudentEmail)</th>
+                <th>@Html.DisplayNameFor(model => model.Student_ID)</th>
+                <th>@Html.DisplayNameFor(model => model.Student_Name)</th>
+                <th>Attendance Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+
+                    <td>@Html.DisplayFor(modelItem => item.Attendance_Option)</td>
+
+                    <td>
+                        @{
+                            var className = "";
+                            if (ViewBag.ClassCodes != null && ViewBag.ClassCodes.ContainsKey(item.Classroom_Code))
+                            {
+                                className = ViewBag.ClassCodes[item.Classroom_Code].ClassName;
+                            }
+                        }
+                        @className
+                    </td>
+
+                    <td>
+                        @{
+                            var EducatorName = "";
+                            if (ViewBag.ClassCodes != null && ViewBag.ClassCodes.ContainsKey(item.Classroom_Code))
+                            {
+                                EducatorName = ViewBag.ClassCodes[item.Classroom_Code].EducatorName;
+                            }
+                        }
+                        @EducatorName
+                    </td>
+                    <td>
+                        @{
+                            var Section = "";
+                            if (ViewBag.ClassCodes != null && ViewBag.ClassCodes.ContainsKey(item.Classroom_Code))
+                            {
+                                Section = ViewBag.ClassCodes[item.Classroom_Code].Section;
+                            }
+                        }
+                        @Section
+                    </td>
+
+                    <td>@Html.DisplayFor(modelItem => item.StudentEmail)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Student_ID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Student_Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Attendance_Time)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

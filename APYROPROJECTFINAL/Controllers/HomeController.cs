@@ -1266,14 +1266,74 @@ namespace APYROPROJECTFINAL.Controllers
                     ViewBag.ChartPointsbar = chartData1;
 
 
-                    var top3Absent = groupedData.OrderByDescending(g => g.Absent).Take(3).ToList();
-                    var top3Present = groupedData.OrderByDescending(g => g.Present).Take(3).ToList();
-                    var top3Late = groupedData.OrderByDescending(g => g.Late).Take(3).ToList();
 
 
-                    ViewBag.Top3Absent = top3Absent;
-                    ViewBag.Top3Present = top3Present;
-                    ViewBag.Top3Late = top3Late;
+
+
+
+
+
+                    var userAttendanceData3 = await _context.Student_Clasrooms
+                        .Where(sc => sc.StudentEmail == user.UserName)
+                        .OrderByDescending(sc => sc.Present)
+                        .Take(3)
+                        .Join(_context.ClassroomDBS,
+                            sc => sc.Classroom_Code,
+                            c => c.ClassCode,
+                            (sc, c) => new
+                            {
+                                sc.Present,
+                                sc.Classroom_Code,
+                                ClassName = c.ClassName,
+                                Professor = c.Educator_Name
+                            })
+                        .ToListAsync();
+
+                    ViewBag.GroupedData = userAttendanceData3;
+
+
+
+
+                    var userAttendanceData4 = await _context.Student_Clasrooms
+                   .Where(sc => sc.StudentEmail == user.UserName)
+                    .OrderByDescending(sc => sc.Absent)
+                      .Take(3)
+                     .Join(_context.ClassroomDBS,
+                      sc => sc.Classroom_Code,
+                       c => c.ClassCode,
+                      (sc, c) => new
+                       {
+                        sc.Absent,
+                        sc.Classroom_Code,
+                        ClassName = c.ClassName,
+                        Professor = c.Educator_Name
+                        })
+                         .ToListAsync();
+
+                    ViewBag.GroupedData1 = userAttendanceData4;
+
+
+
+
+
+
+
+                    var userAttendanceData5 = await _context.Student_Clasrooms
+                  .Where(sc => sc.StudentEmail == user.UserName)
+                    .OrderByDescending(sc => sc.Late)
+                      .Take(3)
+                     .Join(_context.ClassroomDBS,
+                      sc => sc.Classroom_Code,
+                       c => c.ClassCode,
+                      (sc, c) => new
+                      {
+                          sc.Late,
+                          sc.Classroom_Code,
+                          ClassName = c.ClassName,
+                          Professor = c.Educator_Name
+                      })
+                         .ToListAsync();
+                    ViewBag.GroupedData2 = userAttendanceData5;
 
 
 

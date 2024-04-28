@@ -76,6 +76,50 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+        public async Task <IActionResult> Backup()
+        {
+            var schoolyear = await _context.Student_Clasrooms
+             .Select(c => c.Attendance_Option)
+                .Distinct()
+            .ToListAsync();
+
+            var categoryList = new SelectList(schoolyear);
+
+
+            // Pass the SelectList to the view
+            ViewBag.Categories1 = categoryList;
+
+            var classname = await _context.ClassroomDBS
+             .Select(c => c.ClassName)
+              .Distinct()
+                     .ToListAsync();
+
+            var categoryList1 = new SelectList(classname);
+
+            ViewBag.Categories2 = categoryList1;
+
+            // Assuming you have a dictionary mapping Classroom_Code to class names
+            var classCodes = _context.ClassroomDBS.ToDictionary(c => c.ClassCode, c => new { ClassName = c.ClassName, EducatorName = c.Educator_Name , Section = c.Section });
+            ViewBag.ClassCodes = classCodes;
+
+
+
+
+
+            return _context.Student_Clasrooms != null ?
+           View(await _context.Student_Clasrooms.ToListAsync()) :
+            Problem("Entity set 'AuthDBContext.Student_Clasrooms'  is null.");
+
+        }
+
+
+
+
+
+
+
+
+
         public IActionResult Create()
         {
           

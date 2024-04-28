@@ -346,7 +346,7 @@
 
     <div class="control-section" align="center">
 
-        <ejs-chart id="lineContainer" load="load" title="GDP by Country in 2017">
+    <ejs-chart id="lineContainer" load="load" title="Classroom Attendance Rankings">
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
@@ -358,12 +358,12 @@
                 <e-majorgridlines width="0"></e-majorgridlines>
                 <e-majorticklines width="0"></e-majorticklines>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis labelFormat="{value}%"
+@*             <e-chart-primaryyaxis labelFormat="{value}%"
                                   title="GDP (In Percentage)"
                                   edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
                 <e-majorticklines width="0"></e-majorticklines>
                 <e-linestyle width="0"></e-linestyle>
-            </e-chart-primaryyaxis>
+            </e-chart-primaryyaxis> *@
             <e-series-collection>
             <e-series dataSource="ViewBag.ChartPointsbar" xName="Country" yName="GDP" name="Present" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar " fill="#274f7e">
                     <e-series-marker>
@@ -405,19 +405,82 @@
     </script>
 
 
-<table>
+
+
+
+
+
+
+
+
+<table class="table table-dark table-bordered table-striped" style="margin-top: 50px;">
     <thead>
         <tr>
-            <th>Classroom Code</th>
-            <th>Top 3 Highest Absent</th>
-            <th>Top 3 Highest Present</th>
-            <th>Top 3 Highest Late</th>
+   
+            <th>Class Name</th>
+            <th>Professor</th>
+            <th>Present</th>
         </tr>
     </thead>
     <tbody>
-     
+        @foreach (var item in ViewBag.GroupedData)
+        {
+            <tr>
+                <td>@item.ClassName</td>
+                <td>@item.Professor</td>
+                <td>@item.Present</td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+
+<table class="table table-dark table-bordered table-striped" style="margin-top: 50px;">
+    <thead>
+        <tr>
+
+            <th>Class Name</th>
+            <th>Professor</th>
+            <th>Absent</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.GroupedData1)
+        {
+            <tr>
+                <td>@item.ClassName</td>
+                <td>@item.Professor</td>
+                <td>@item.Absent</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+<table class="table table-dark table-bordered table-striped" style="margin-top: 50px;">
+    <thead>
+        <tr>
+
+            <th>Class Name</th>
+            <th>Professor</th>
+            <th>Late</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.GroupedData2)
+        {
+            <tr>
+                <td>@item.ClassName</td>
+                <td>@item.Professor</td>
+                <td>@item.Late</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 
 
 
