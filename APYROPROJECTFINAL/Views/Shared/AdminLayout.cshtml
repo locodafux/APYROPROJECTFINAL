@@ -28,15 +28,16 @@
     <partial name="AdminSideBar" />
 
     <nav class="navbar sticky-top bg-body-tertiary">
-        <div class="container-fluid py-2 px-4 d-flex justify-content-center">
+        <div class="container-fluid py-2 px-4 d-flex justify-content-center position-relative  ">
             @* <i class="fa-solid fa-magnifying-glass"></i> *@
             <partial name="_LoginPartial.cshtml" />
 
-         @*    <div>
-                <i class="fa-solid fa-bell"></i>
+            <div class="position-absolute" style=" right:8px;">
+                @* <i class="fa-solid fa-bell"></i>
                 <i class="fa-solid fa-message"></i>
-                <img class="profile-pic" src="~/DefaultProfile.png" />
-            </div> *@
+                <img class="profile-pic" src="~/defaultprofile.png" /> *@
+                <i class="fa-solid fa-book" style="color: #ffffff;" data-toggle="modal" data-target="#manual"></i>
+            </div>
         </div>
     </nav>
 
@@ -69,6 +70,22 @@
                                 </div>
                             </div>
                         }
+
+                        <div class="modal fade" id="manual" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="background-color:#1A222B; border:none;">
+
+                                    <div class="modal-body">
+                                        <h5 class="modal-title" id="exampleModalLabel">User Manual PDF</h5>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a href="~/AdminUserGuide.pdf" download="AdminUserGuide.pdf" class="btn btn-primary">Download</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
                         @RenderBody()
