@@ -840,7 +840,7 @@ else
          ${else if (Status == "Accept")}
          <span id="statusBadge" class="btn bg-success " style="color:#fff;font-size:14px;font-weight: bold;"> ${ Status } </span>
               ${else if (Status == "Late")}
-         <span id="statusBadge" class="badge " style="color:#2c50e3;background-color:#1e2231;font-size:16px"> ${ Status } </span>
+             <span id="statusBadge" class="badge " style="color:yellow;background-color:#8B8000;font-size:16px"> ${ Status } </span>
     @*           ${else if (Status == "Active")}
          <span id="statusBadge" class="badge " style="color:#2c50e3;background-color:#1e2231;font-size:16px"> ${ Status } </span> *@
         ${else }
@@ -997,7 +997,8 @@ else
                     (currentHour > selectedRecordHour || (currentHour === selectedRecordHour && currentMinute >= selectedRecordMinute)) &&
                     rowData.Status !== "Accept" &&
                     rowData.Status !== "Present" &&
-                    rowData.Status !== "Absent"
+                    rowData.Status !== "Absent" &&
+                    rowData.Status !== "Late" 
                 ) {
                    
                     var studentID = rowData.StudentID;
