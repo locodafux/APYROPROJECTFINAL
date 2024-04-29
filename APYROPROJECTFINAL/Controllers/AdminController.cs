@@ -301,7 +301,7 @@ namespace APYROPROJECTFINAL.Controllers
                         existingStudent.IDnumber = student.IDnumber;
                         existingStudent.Username = student.Username;
                         existingStudent.PasswordStudent = student.PasswordStudent;
-                        
+                        existingStudent.Section =student.Section;
 
 
 
