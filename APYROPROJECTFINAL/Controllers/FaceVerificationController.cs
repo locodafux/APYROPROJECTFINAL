@@ -64,10 +64,12 @@ namespace APYROPROJECTFINAL.Controllers
 
             if (user != null && user is Student student)
             {
-                // Update custom properties
+
+
+
                 student.FileName = fileName;
                 student.FilePath = filePath;
-
+                
 
                 var result = await _userManager.UpdateAsync(student);
 

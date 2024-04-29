@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using APYROPROJECTFINAL.Contants;
+using Microsoft.Extensions.Hosting;
 
 namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
 {
@@ -31,12 +32,13 @@ namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<StudentRegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private readonly IWebHostEnvironment _hostEnviroment;
         public StudentRegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<StudentRegisterModel> logger,
+            IWebHostEnvironment hostEnvironment,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -45,6 +47,7 @@ namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _hostEnviroment = hostEnvironment;
         }
 
         /// <summary>
@@ -181,6 +184,11 @@ namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
 
                 user.PasswordStudent = Input.Password;
 
+                //var imagesFolder = Path.Combine(_hostEnviroment.WebRootPath, "images/Verified");
+
+                //user.FileName = "image_638491651343075578.jpg";
+                
+                //user.FilePath = Path.Combine(imagesFolder, "image_638491651343075578.jpg");
 
 
 
