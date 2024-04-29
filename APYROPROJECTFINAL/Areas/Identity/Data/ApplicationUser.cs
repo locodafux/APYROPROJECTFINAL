@@ -53,10 +53,10 @@ public class Student : ApplicationUser
     public string PasswordStudent { get; set; }
 
     [PersonalData]
-    public string? FileName { get; set; }
+    public string FileName { get; set; }
 
     [PersonalData]
-    public string? FilePath { get; set; }
+    public string FilePath { get; set; }
 
 
 }

@@ -184,11 +184,11 @@ namespace APYROPROJECTFINAL.Areas.Identity.Pages.Account
 
                 user.PasswordStudent = Input.Password;
 
-                //var imagesFolder = Path.Combine(_hostEnviroment.WebRootPath, "images/Verified");
+                var imagesFolder = Path.Combine(_hostEnviroment.WebRootPath, "images/Verified");
 
-                //user.FileName = "image_638491651343075578.jpg";
-                
-                //user.FilePath = Path.Combine(imagesFolder, "image_638491651343075578.jpg");
+                user.FileName = "image_638491651343075578.jpg";
+
+                user.FilePath = Path.Combine(imagesFolder, "image_638491651343075578.jpg");
 
 
 
