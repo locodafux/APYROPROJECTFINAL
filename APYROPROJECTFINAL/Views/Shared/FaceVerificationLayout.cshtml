@@ -192,13 +192,18 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
                     })
-                        .then(function (response) {
+                        .then(function (response)
+                        {
                             return response.json();
                         })
-                        .then(function (data) {
+                        .then(function (data) 
+                        {
                             console.log(data);
+                        window.location.href = '/Home/Index';
+
                         })
-                        .catch(function (err) {
+                        .catch(function (err)
+                        {
                             console.log(err);
                         });
 
@@ -233,7 +238,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Retake</button>
-                        <a href="/Home/Index" class="btn btn-success" onclick="openSecondModal();">Save</a>
+                        <a @* href="/Home/Index" *@ class="btn btn-success" onclick="openSecondModal();">Save</a>
                         @*<button type="button" class="btn btn-success" onclick="openSecondModal();">Save</button>*@
                     </div>
                 </div>
