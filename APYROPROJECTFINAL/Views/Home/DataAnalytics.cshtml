@@ -16,6 +16,7 @@
         referrerpolicy="no-referrer"></script>
 
 <style>
+
     @@media only screen and (max-width: 768px) {
         .container {
             margin-bottom: 50px;
@@ -227,6 +228,165 @@
 
 
 
+        <div class="widget mt-2">
+
+            <div class="chart-div row">
+                <div class="control-section" align="center">
+
+                    <ejs-chart id="lineContainer" load="load" title="Classroom Attendance Rankings">
+                        <e-chart-chartarea>
+                            <e-chartarea-border width="0"></e-chartarea-border>
+                        </e-chart-chartarea>
+                        <e-chart-tooltipsettings enable="true">
+                        </e-chart-tooltipsettings>
+                        <e-chart-legendsettings visible="true" enableHighlight="true">
+                        </e-chart-legendsettings>
+                        <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                            <e-majorgridlines width="0"></e-majorgridlines>
+                            <e-majorticklines width="0"></e-majorticklines>
+                        </e-chart-primaryxaxis>
+                        @*             <e-chart-primaryyaxis labelFormat="{value}%"
+                        title="GDP (In Percentage)"
+                        edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-linestyle width="0"></e-linestyle>
+                        </e-chart-primaryyaxis> *@
+                        <e-series-collection>
+                            <e-series dataSource="ViewBag.ChartPointsbar" xName="Country" yName="GDP" name="Present" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar " fill="#274f7e">
+                                <e-series-marker>
+                                    <e-series-datalabel position="@Syncfusion.EJ2.Charts.LabelPosition.Top" visible="false">
+                                        <e-font color="#ffffff" fontWeight="600"></e-font>
+                                    </e-series-datalabel>
+                                </e-series-marker>
+                            </e-series>
+
+                            <e-series dataSource="ViewBag.ChartPointsbar" xName="Country" yName="Late" name="Late" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar " fill="#EE9322">
+                                <e-series-marker>
+                                    <e-series-datalabel position="@Syncfusion.EJ2.Charts.LabelPosition.Top" visible="false">
+                                        <e-font color="#ffffff" fontWeight="600"></e-font>
+                                    </e-series-datalabel>
+                                </e-series-marker>
+                            </e-series>
+
+
+                            <e-series dataSource="ViewBag.ChartPointsbar" xName="Country" yName="WorldShare" name="Absent" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar" fill="#219C90">
+                                <e-series-marker>
+                                    <e-series-datalabel position="@Syncfusion.EJ2.Charts.LabelPosition.Top" visible="false">
+                                        <e-font color="#ffffff" fontWeight="600"></e-font>
+                                    </e-series-datalabel>
+                                </e-series-marker>
+                            </e-series>
+
+
+                        </e-series-collection>
+                    </ejs-chart>
+                </div>
+
+
+
+            </div>
+
+
+            <d iv class="table-div row d-flex justify-content-evenly">
+                <table class="table table-dark table-bordered table-striped" style="margin-top: 50px; width: 25%; height: 40px; text-align: center; vertical-align: middle">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid white; padding: 8px;">Class Name</th>
+                            <th style="border: 1px solid white; padding: 8px;">Professor</th>
+                            <th style="border: 1px solid white; padding: 8px;">Present</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            @foreach (var item in ViewBag.GroupedData)
+                            {
+                            <tr>
+                                <td>@item.ClassName</td>
+                                <td>@item.Professor</td>
+                                <td>@item.Present</td>
+                            </tr>
+                            }
+
+                        </tr>
+
+                    </tbody>
+
+
+                </table>
+
+
+                <table class="table table-dark table-bordered table-striped" style="margin-top: 50px; width: 25%; height: 40px; text-align: center; vertical-align: middle">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid white; padding: 8px;">Class Name</th>
+                            <th style="border: 1px solid white; padding: 8px;">Professor</th>
+                            <th style="border: 1px solid white; padding: 8px;">Absent</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            @foreach (var item in ViewBag.GroupedData1)
+                            {
+                            <tr>
+                                <td>@item.ClassName</td>
+                                <td>@item.Professor</td>
+                                <td>@item.Absent</td>
+                            </tr>
+                            }
+
+                        </tr>
+
+                    </tbody>
+
+
+                </table>
+
+
+
+                <table class="table table-dark table-bordered table-striped" style="margin-top: 50px; width: 25%; height: 40px; text-align: center; vertical-align: middle">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid white; padding: 8px;">Class Name</th>
+                            <th style="border: 1px solid white; padding: 8px;">Professor</th>
+                            <th style="border: 1px solid white; padding: 8px;">Late</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            @foreach (var item in ViewBag.GroupedData1)
+                            {
+                            <tr>
+                                <td>@item.ClassName</td>
+                                <td>@item.Professor</td>
+                                <td>@* @item.Late *@</td>
+                            </tr>
+                            }
+
+                        </tr>
+
+                    </tbody>
+
+
+                </table>
+
+            </d>
+        </div>
+
+
+        <script>
+            function load(args) {
+                var selectedTheme = location.hash.split('/')[1];
+                selectedTheme = selectedTheme ? selectedTheme : 'Material';
+                args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+                args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+
+                args.chart.titleStyle = { color: 'white' };
+
+            }
+        </script>
 
 
 
@@ -344,65 +504,8 @@
 
 
 
-    <div class="control-section" align="center">
 
-    <ejs-chart id="lineContainer" load="load" title="Classroom Attendance Rankings">
-            <e-chart-chartarea>
-                <e-chartarea-border width="0"></e-chartarea-border>
-            </e-chart-chartarea>
-            <e-chart-tooltipsettings enable="true">
-            </e-chart-tooltipsettings>
-            <e-chart-legendsettings visible="true" enableHighlight="true">
-            </e-chart-legendsettings>
-            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
-                <e-majorgridlines width="0"></e-majorgridlines>
-                <e-majorticklines width="0"></e-majorticklines>
-            </e-chart-primaryxaxis>
-@*             <e-chart-primaryyaxis labelFormat="{value}%"
-                                  title="GDP (In Percentage)"
-                                  edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
-                <e-majorticklines width="0"></e-majorticklines>
-                <e-linestyle width="0"></e-linestyle>
-            </e-chart-primaryyaxis> *@
-            <e-series-collection>
-            <e-series dataSource="ViewBag.ChartPointsbar" xName="Country" yName="GDP" name="Present" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar " fill="#274f7e">
-                    <e-series-marker>
-                        <e-series-datalabel position="@Syncfusion.EJ2.Charts.LabelPosition.Top" visible="false">
-                            <e-font color="#ffffff" fontWeight="600"></e-font>
-                        </e-series-datalabel>
-                    </e-series-marker>
-                </e-series>
-
-            <e-series dataSource="ViewBag.ChartPointsbar" xName="Country" yName="Late" name="Late" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar " fill="#EE9322">
-                <e-series-marker>
-                    <e-series-datalabel position="@Syncfusion.EJ2.Charts.LabelPosition.Top" visible="false">
-                        <e-font color="#ffffff" fontWeight="600"></e-font>
-                    </e-series-datalabel>
-                </e-series-marker>
-            </e-series>
-
-
-            <e-series dataSource="ViewBag.ChartPointsbar" xName="Country" yName="WorldShare" name="Absent" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar" fill="#219C90">
-                    <e-series-marker>
-                        <e-series-datalabel position="@Syncfusion.EJ2.Charts.LabelPosition.Top" visible="false">
-                            <e-font color="#ffffff" fontWeight="600"></e-font>
-                        </e-series-datalabel>
-                    </e-series-marker>
-                </e-series>
-
-
-            </e-series-collection>
-        </ejs-chart>
-    </div>
-
-    <script>
-        function load(args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Material';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
-            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
-        }
-    </script>
+   
 
 
 
@@ -413,6 +516,8 @@
 
 
 
+
+@* 
 <table class="table table-dark table-bordered table-striped" style="margin-top: 50px;">
     <thead>
         <tr>
@@ -432,10 +537,12 @@
             </tr>
         }
     </tbody>
-</table>
+</table> *@
 
 
 
+@* 
+    
 <table class="table table-dark table-bordered table-striped" style="margin-top: 50px;">
     <thead>
         <tr>
@@ -456,10 +563,10 @@
         }
     </tbody>
 </table>
+ *@
 
 
-
-
+@* 
 <table class="table table-dark table-bordered table-striped" style="margin-top: 50px;">
     <thead>
         <tr>
@@ -486,7 +593,7 @@
 
 
 
-
+ *@
 
 
 
