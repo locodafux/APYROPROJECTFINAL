@@ -6,7 +6,13 @@
 @{
     Layout = "/Views/Shared/_MainHomePageLayout.cshtml";
 }
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<style>
+    #myPDF {
+        width: 100%;
+        height: 700px;
+    }
+</style>
+@* <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
@@ -32,7 +38,7 @@
             </div>
         </div>
         <div class="flex-container" style="color: white">
-         
+
 
             <div class="d-flex flex-column align-items-center">
                 <h1 class="mb-3" style="margin-top:-20px">Documentation</h1>
@@ -55,4 +61,13 @@
 
         </div>
     </section>
+</div> *@
+<div class="container d-flex flex-column text-white">
+    <h2 class="mb-3 text-center">User Guides</h2>
+    <h4 class="mb-3 ">Student User Guide</h4>
+    <iframe id="myPDF" class="mb-3" src="~/StudentUserGuide.pdf"></iframe>
+    <h4 class="mb-3 text-left">Admin User Guide</h4>
+    <iframe id="myPDF" class="mb-3" src="~/AdminUserGuide.pdf"></iframe>
+    <h4 class="mb-3 text-left">Educator User Guide</h4>
+    <iframe id="myPDF" class="mb-3" src="~/EducatorUserGuide.pdf"></iframe>
 </div>

@@ -328,6 +328,7 @@
             <div class="d-flex justify-content-center">
                 <i class="fa-solid fa-bell" id="notif" onclick="showNotif()"></i>
                 <i class="fa-solid fa-circle-question" data-toggle="modal" data-target="#modalHelp" style="color: #ffffff;"></i>
+                <i class="fa-solid fa-book" style="color: #ffffff;" data-toggle="modal" data-target="#manual"></i>
                 <i id="alert" class="fa-solid fa-exclamation fa-sm" style="display: none; color: red; position:absolute; right: 67px; "></i>
               @*   <i class="fa-solid fa-message"></i> *@
             </div>
@@ -620,7 +621,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="modal fade" id="manual" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="background-color:#1A222B; border:none;">
 
+                                    <div class="modal-body">
+                                        <h5 class="modal-title" id="exampleModalLabel">User Manual PDF</h5>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a href="~/StudentUserGuide.pdf" download="StudentUserGuide.pdf" class="btn btn-primary">Download</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         @RenderBody()
                     </main>

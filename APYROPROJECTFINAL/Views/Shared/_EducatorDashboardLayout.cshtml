@@ -190,13 +190,16 @@
             <div class="login-partial">
                 <partial name="_LoginPartial.cshtml" />
             </div>
-            <i class="fa-solid fa-circle-question" style="position:absolute; right:8px; " data-toggle="modal" data-target="#modalHelp" style="color: #ffffff;"></i>
+            <div style="position:absolute; right:8px;">
+                <i class="fa-solid fa-circle-question" color: #ffffff;" data-toggle="modal" data-target="#modalHelp"></i>
+                <i class="fa-solid fa-book" style="color: #ffffff;" data-toggle="modal" data-target="#manual"></i>
+            </div>
             <i class="burger fa-solid fa-bars fa-2xl"
                id="toggle-nav"
                style="color: #ffffff"></i>
             </ul>
         </div>
-
+     
 
         <ul class="m-nav" id="m-nav">
             <li style="border-top-right-radius: 5px; border-top-left-radius:5px;"> <a href="/Educator/Index">Dashboard</a></li>
@@ -296,6 +299,21 @@
                             </div>
                         </div>
 
+                        <div class="modal fade" id="manual" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="background-color:#1A222B; border:none;">
+
+                                    <div class="modal-body">
+                                        <h5 class="modal-title" id="exampleModalLabel">User Manual PDF</h5>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a href="~/EducatorUserGuide.pdf" download="EducatorUserGuide.pdf" class="btn btn-primary">Download</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
 
