@@ -1,0 +1,84 @@
+﻿@model IEnumerable<APYROPROJECTFINAL.Models.AttendanceReportDatanew>
+  
+
+@{
+    Layout = "~/Views/Shared/_EducatorDashboardLayout.cshtml";
+
+}
+
+<style>
+    .btns {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .a {
+        flex: 1 0 30px;
+        text-decoration: none !important;
+    }
+
+</style>
+
+
+
+<table class="table table-dark table-bordered  table-striped" style="margin-top:-50px ;width:120%;height:400px;text-align:center;vertical-align:middle">
+    <thead>
+        <tr>
+            @*           <th>
+            @Html.DisplayNameFor(model => model.Attendance_Option)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.DateTBL)
+            </th>
+            @*      <th>
+            @Html.DisplayNameFor(model => model.Educator_Name)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.TimeTBL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeTBL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescriptionTBL)
+            </th>
+            <th>
+                Action
+            </th>
+    
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*          <td>
+            @Html.DisplayFor(modelItem => item.Attendance_Option)
+            </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTBL)
+                </td>
+                @*            <td>
+            @Html.DisplayFor(modelItem => item.Educator_Name)
+            </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeTBL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeTBL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescriptionTBL)
+                </td>
+              
+                <td class="btns text-center">
+                    <a asp-action="ViewRecords" asp-route-EducatorClassCode="@item.EducatorClassCode">View Records</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

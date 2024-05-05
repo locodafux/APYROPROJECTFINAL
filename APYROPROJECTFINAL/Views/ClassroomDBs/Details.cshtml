@@ -511,6 +511,13 @@ else
         <label for="imageUploadNew" class="btn btn-success btn-block btn-outlined" style="color: #fff; font-weight: bold; width: 250px; margin-top: 8px; border-radius: 15px; font-size: 20px;">Virtual Meeting <i class="fa-solid fa-upload"></i></label>
     </div>
 
+
+    <button id="SaveAttendance" class="btn btn-success" type="submit" name="button" style="color: #fff; font-weight: bold; width: 250px; margin-top: 8px; border-radius: 15px; font-size: 20px;">
+        Save Attendance <i class="fa-solid fa-clock"></i>
+
+    </button>
+
+
     <button id="studentracker" class="btn btn-primary" type="submit" name="button" style="color: #fff; font-weight: bold; width: 250px; margin-top: 8px; border-radius: 15px; font-size: 20px;">
         @* Enable Tracker *@ @ViewBag.enable  <i class="fa-solid fa-users-viewfinder"></i>
 
@@ -562,6 +569,69 @@ else
             Enable Tracker  <i class="fa-solid fa-users-viewfinder"></i>
         </button> *@
     
+
+        <script>
+
+            $(document).ready(function () {
+                $('#SaveAttendance').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ClassroomDBs/SaveAttendance', // Replace with your actual controller and action
+                        data: { Save: "Save", classcode5: '@ViewBag.Class' },
+                        success: function (response) {
+                            if (response.success) {
+                                console.log('Save Attendance updated successfully');
+                                alert('Save Attendance status updated.');
+                            } else {
+                                console.log('Error updating Save Attendance:', response.message);
+                            }
+                        },
+                        error: function (error) {
+                            console.log('Error updating Save Attendance:', error);
+                        }
+                    });
+                });
+            });
+
+
+
+            $(document).ready(function () {
+                $('#SaveAttendance').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ClassroomDBs/SaveAttendanceData', // Replace with your actual controller and action
+                        data: { Save1: "Save1", classcode6: '@ViewBag.Class' },
+                        success: function (response) {
+                            if (response.success) {
+                                console.log('Save Attendance Records updated successfully');
+                                alert('Save Attendance Records updated.');
+                            } else {
+                                console.log('Error updating Save Attendance Records:', response.message);
+                            }
+                        },
+                        error: function (error) {
+                            console.log('Error updating Save Attendance Records', error);
+                        }
+                    });
+                });
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+         </script>
+
+
+
+
 
         <script>
             $(document).ready(function () {

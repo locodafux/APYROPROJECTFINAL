@@ -19,6 +19,11 @@ public class AuthDbContext : IdentityDbContext
     public DbSet<Student> Students { get; set; }
     public DbSet<ApplicationUser> Accounts { get; set; }
 
+    public DbSet<AttendanceReportDatanew> AttendanceReportDatanew { get; set; }
+
+
+    public DbSet<AttendanceReportData> AttendanceReportData { get; set; }
+
     public DbSet<Userlogs>Userlogs { get; set; }
 
 

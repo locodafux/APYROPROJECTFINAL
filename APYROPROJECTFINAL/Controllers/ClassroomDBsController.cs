@@ -32,6 +32,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using System.Diagnostics;
 using System.Xml.Linq;
 using Microsoft.Extensions.Hosting;
+using System.Security.Cryptography.X509Certificates;
 
 namespace APYROPROJECTFINAL.Controllers
 {
@@ -1314,12 +1315,138 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> SaveAttendanceAsync (string Save, string classcode5)
+        {
+
+            int classIDParse = int.Parse(classcode5);
+       
+
+
+                var classroomDB1 = await _context.ClassroomDBS.FirstOrDefaultAsync(m => m.ClassID == classIDParse);
+
+
+               var classroomDB = await _context.Student_Clasrooms.FirstOrDefaultAsync(m => m.Classroom_Code == classroomDB1.ClassCode);
+
+
+
+
+
+            if (classroomDB != null)
+                {
+
+
+                DateTime dateTime = DateTime.ParseExact(classroomDB.Attendance_Time, "dd-MM-yyyy h:mm tt", null);
+                string dateOnly = dateTime.ToString("ddd dd MMM yyyy");
+                var startTime = DateTime.Parse(classroomDB.Attendance_Start);
+                var endTime = DateTime.Parse(classroomDB.Attendance_End);
+
+                var attendanceReportDataNew = new AttendanceReportDatanew
+                    {
+                    // Set other properties of attendanceReportDataNew here
+                        DateTBL = dateOnly,
+                    TimeTBL = startTime.ToString("h:mmtt").ToUpper() + " - " + endTime.ToString("h:mmtt").ToUpper(),
+                    TypeTBL = "All Students",
+                        DescriptionTBL = "Regular Class Session",
+                        EducatorClassCode = classroomDB.Classroom_Code,
+                        EducatorName = classroomDB1.Educator_Name,
+                        EducatorEmail = classroomDB1.EducatorEmail,
+                        EducatorSection = classroomDB1.Section,
+                        CourseName = classroomDB1.ClassName
+
+
+                };
+
+                    _context.AttendanceReportDatanew.Add(attendanceReportDataNew);
+                    await _context.SaveChangesAsync();
+
+                    return Json(new { success = true, message = "Attendance saved successfully" });
+                }
+       
+        
+
+            return Json(new { success = false, message = "Not saved" });
+        }
+
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> SaveAttendanceDataAsync (string Save1, string classcode6)
+        {
+
+            int classIDParse = int.Parse(classcode6);
+
+            var classroomDB1 = await _context.ClassroomDBS.FirstOrDefaultAsync(m => m.ClassID == classIDParse);
+            var classroomDBs = await _context.Student_Clasrooms.Where(m => m.Classroom_Code == classroomDB1.ClassCode).ToListAsync();
+
+
+            if (classroomDBs != null && classroomDBs.Any())
+            {
+
+
+                foreach (var classroomDB in classroomDBs)
+                {
+                    DateTime dateTime = DateTime.ParseExact(classroomDB.Attendance_Time, "dd-MM-yyyy h:mm tt", null);
+                    string dateOnly = dateTime.ToString("ddd dd MMM yyyy");
+
+                    var attendanceReportData = new AttendanceReportData
+                    {
+                        Codeclass = classroomDB.Classroom_Code,
+                        StudentTBL = classroomDB.Student_Name,
+                        StudentIDTBL = classroomDB.Student_ID,
+                        AttendanceDateTBL = dateOnly,
+                        StatusTBL = classroomDB.Status
+                       
+                    };
+
+                    _context.AttendanceReportData.Add(attendanceReportData);
+                }
+
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true, message = "Attendance Records saved successfully" });
+            }
+
+            return Json(new { success = false, message = "No records found or not saved" });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpPost]
         public async Task<IActionResult> TrackerAsync(string trackerstatus, string classcode1)
         {
             int classIDParse = int.Parse(classcode1);
 
             var classroomDB = await _context.ClassroomDBS.FirstOrDefaultAsync(m => m.ClassID == classIDParse);
+
+
+
+
 
             if (classroomDB != null)
             {
@@ -1475,7 +1602,22 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+        public async Task<IActionResult> EducatorReportsAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var educator = await _context.Educators.FirstOrDefaultAsync(m => m.EmailEducator == user.UserName);
 
+            if (educator != null)
+            {
+                var classroomData = await _context.ClassroomDBS
+                    .Where(c => c.EducatorEmail == user.UserName)
+                    .ToListAsync();
+
+                return View(classroomData);
+            }
+
+            return Problem("User is not an Educator");
+        }
 
 
 
@@ -1655,6 +1797,92 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+        public async  Task <IActionResult> ViewRecords(int? EducatorClassCode)
+        {
+            if (EducatorClassCode == null)
+            {
+                return NotFound();
+            }
+
+            var ViewRecords = await _context.AttendanceReportData.Where(m => m.Codeclass == EducatorClassCode).ToListAsync();
+
+            if (ViewRecords == null || !ViewRecords.Any())
+            {
+                return NotFound();
+            }
+
+            return View(ViewRecords);
+
+        }
+
+
+
+        public async Task<IActionResult> ViewStudents(int? ClassCode)
+        {
+            if (ClassCode == null)
+            {
+                return NotFound();
+            }
+
+            var ViewRecords = await _context.AttendanceReportData.Where(m => m.Codeclass == ClassCode).ToListAsync();
+
+            if (ViewRecords == null || !ViewRecords.Any())
+            {
+                return NotFound();
+            }
+
+            return View(ViewRecords);
+        }
+
+
+
+
+
+
+
+        public async Task<IActionResult>  ViewReports(int? ClassCode)
+        {
+
+
+            if (ClassCode == null)
+            {
+                return NotFound();
+            }
+
+            var ViewReports = await _context.AttendanceReportDatanew.Where(m => m.EducatorClassCode == ClassCode).ToListAsync();
+
+            if (ViewReports == null || !ViewReports.Any())
+            {
+                return NotFound();
+            }
+
+            return View(ViewReports);
+        }
+
+
+
+
+
+
+
+
+        private bool ViewRecordsExist(int EducatorClassCode)
+        {
+            return (_context.ClassroomDBS?.Any(e => e.ClassCode == EducatorClassCode)).GetValueOrDefault();
+        }
+
+
+
+
+
+
+
+
+
+        private bool ViewReportsExist(int ClassCode)
+        {
+            return (_context.ClassroomDBS?.Any(e => e.ClassCode == ClassCode)).GetValueOrDefault();
+        }
 
 
 
