@@ -24,15 +24,13 @@
 </style>
 
 
-
-
 @{
-    var groupedAttendance = Model.GroupBy(a => new { a.StudentTBL, a.StatusTBL })
-                                  .Select(g => new { Student = g.Key.StudentTBL, Status = g.Key.StatusTBL, Count = g.Count(), StudentID = g.First().StudentIDTBL, AttendanceDate = g.First().AttendanceDateTBL })
+    var groupedAttendance = Model.GroupBy(a => a.StudentTBL)
+                                  .Select(g => new { Student = g.Key, Records = g.ToList() })
                                   .ToList();
 }
 
-<table class="table table-dark table-bordered  table-striped" style="margin-top:-50px ;width:120%;height:400px;text-align:center;vertical-align:middle">
+<table class="table table-dark table-bordered table-striped" style="margin-top:-50px; width:120%; height:400px; text-align:center; vertical-align:middle">
     <thead>
         <tr>
             <th>
@@ -44,12 +42,6 @@
             <th>
                 Session
             </th>
-         @*    <th>
-                Attendance Date
-            </th> *@
-          @*   <th>
-                Status
-            </th> *@
             <th>
                 P
             </th>
@@ -60,56 +52,62 @@
                 A
             </th>
             <th>
-                Percentage
+               Overall Percentage
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in groupedAttendance)
+        @foreach (var group in groupedAttendance)
         {
+            var student = group.Student;
+            var records = group.Records;
+            var presentCount = records.Count(r => r.StatusTBL == "Present");
+            var lateCount = records.Count(r => r.StatusTBL == "Late");
+            var absentCount = records.Count(r => r.StatusTBL == "Absent");
+
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Student)
+                    @Html.DisplayFor(modelItem => student)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StudentID)
+                    @Html.DisplayFor(modelItem => records.First().StudentIDTBL)
                 </td>
                 <td>
                     @ViewBag.ViewRecordsCount
                 </td>
-
-
-              @*   <td>
-                    @Html.DisplayFor(modelItem => item.AttendanceDate)
-                </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td> *@
-                <td>
-                    @if (item.Status == "Present")
+                    @if (presentCount > 0)
                     {
-                        @item.Count
+                        @presentCount
                     }
                 </td>
                 <td>
-                    @if (item.Status == "Late")
+                    @if (lateCount > 0)
                     {
-                        @item.Count
+                        @lateCount
                     }
                 </td>
                 <td>
-                    @if (item.Status == "Absent")
+                    @if (absentCount > 0)
                     {
-                        @item.Count
+                        @absentCount
                     }
                 </td>
-                <td >
-                  
-
-
-
+                <td>
+                    @if (ViewBag.ViewRecordsCount > 0)
+                    {
+                        var presentPercentage = ((double)presentCount / ViewBag.ViewRecordsCount) * 100;
+                        var latePercentage = ((double)lateCount / ViewBag.ViewRecordsCount) * 100;
+                        var absentPercentage = ((double)absentCount / ViewBag.ViewRecordsCount) * 100;
+                        <div class="percentage">P: @presentPercentage.ToString("0.00")%</div>
+                        <div class="percentage">L: @latePercentage.ToString("0.00")%</div>
+                        <div class="percentage">A: @absentPercentage.ToString("0.00")%</div>
+                    }
+                    else
+                    {
+                        <text>N/A</text>
+                    }
                 </td>
-
             </tr>
         }
     </tbody>
