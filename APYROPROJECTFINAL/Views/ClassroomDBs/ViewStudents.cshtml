@@ -26,27 +26,32 @@
 
 
 
+@{
+    var groupedAttendance = Model.GroupBy(a => new { a.StudentTBL, a.StatusTBL })
+                                  .Select(g => new { Student = g.Key.StudentTBL, Status = g.Key.StatusTBL, Count = g.Count(), StudentID = g.First().StudentIDTBL, AttendanceDate = g.First().AttendanceDateTBL })
+                                  .ToList();
+}
+
 <table class="table table-dark table-bordered  table-striped" style="margin-top:-50px ;width:120%;height:400px;text-align:center;vertical-align:middle">
     <thead>
         <tr>
-            @*           <th>
-            @Html.DisplayNameFor(model => model.Attendance_Option)
+            <th>
+                Student
+            </th>
+            <th>
+                Student ID
+            </th>
+            <th>
+                Session
+            </th>
+         @*    <th>
+                Attendance Date
+            </th> *@
+          @*   <th>
+                Status
             </th> *@
             <th>
-                @Html.DisplayNameFor(model => model.StudentTBL)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.StudentIDTBL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AttendanceDateTBL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StatusTBL)
-            </th>
-            <th>
-               P
+                P
             </th>
             <th>
                 L
@@ -55,45 +60,56 @@
                 A
             </th>
             <th>
-                Action
+                Percentage
             </th>
-
         </tr>
     </thead>
     <tbody>
-
-
-
-        @foreach (var item in Model)
+        @foreach (var item in groupedAttendance)
         {
             <tr>
-                @*          <td>
-            @Html.DisplayFor(modelItem => item.Attendance_Option)
-            </td> *@
                 <td>
-                    @Html.DisplayFor(modelItem => item.StudentTBL)
-                </td>
-                @*            <td>
-            @Html.DisplayFor(modelItem => item.Educator_Name)
-            </td> *@
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentIDTBL)
+                    @Html.DisplayFor(modelItem => item.Student)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AttendanceDateTBL)
+                    @Html.DisplayFor(modelItem => item.StudentID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StatusTBL)
+                    @ViewBag.ViewRecordsCount
+                </td>
+
+
+              @*   <td>
+                    @Html.DisplayFor(modelItem => item.AttendanceDate)
                 </td>
                 <td>
-                   
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td> *@
+                <td>
+                    @if (item.Status == "Present")
+                    {
+                        @item.Count
+                    }
                 </td>
                 <td>
+                    @if (item.Status == "Late")
+                    {
+                        @item.Count
+                    }
                 </td>
                 <td>
+                    @if (item.Status == "Absent")
+                    {
+                        @item.Count
+                    }
                 </td>
-                <td class="btns text-center">
+                <td >
+                  
+
+
+
                 </td>
+
             </tr>
         }
     </tbody>

@@ -1830,6 +1830,12 @@ namespace APYROPROJECTFINAL.Controllers
             {
                 return NotFound();
             }
+            var ViewStudents = await _context.AttendanceReportDatanew.Where(m => m.EducatorClassCode == ClassCode).ToListAsync();
+
+
+            ViewBag.ViewRecordsCount = ViewStudents.Count;
+
+
 
             return View(ViewRecords);
         }
