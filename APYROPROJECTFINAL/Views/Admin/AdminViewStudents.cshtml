@@ -1,0 +1,125 @@
+﻿@model IEnumerable<APYROPROJECTFINAL.Models.AttendanceReportData>
+
+@{
+    Layout = "/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+<style>
+    .btns {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .a {
+        flex: 1 0 30px;
+        text-decoration: none !important;
+    }
+
+
+</style>
+
+
+@{
+    var groupedAttendance = Model.GroupBy(a => a.StudentTBL)
+                                  .Select(g => new { Student = g.Key, Records = g.ToList() })
+                                  .ToList();
+}
+
+
+
+
+
+
+
+
+
+<table class="table table-dark table-bordered table-striped" style="margin-top:-50px; width:120%; height:400px; text-align:center; vertical-align:middle">
+    <thead>
+        <tr>
+            <th>
+                Student
+            </th>
+            <th>
+                Student ID
+            </th>
+            <th>
+                Session
+            </th>
+            <th>
+                P
+            </th>
+            <th>
+                L
+            </th>
+            <th>
+                A
+            </th>
+            <th>
+                Overall Percentage
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in groupedAttendance)
+        {
+            var student = group.Student;
+            var records = group.Records;
+            var presentCount = records.Count(r => r.StatusTBL == "Present");
+            var lateCount = records.Count(r => r.StatusTBL == "Late");
+            var absentCount = records.Count(r => r.StatusTBL == "Absent");
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => student)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => records.First().StudentIDTBL)
+                </td>
+                <td>
+                    @ViewBag.ViewRecordsCount
+                </td>
+                <td>
+                    @if (presentCount > 0)
+                    {
+                        @presentCount
+                    }
+                </td>
+                <td>
+                    @if (lateCount > 0)
+                    {
+                        @lateCount
+                    }
+                </td>
+                <td>
+                    @if (absentCount > 0)
+                    {
+                        @absentCount
+                    }
+                </td>
+                <td>
+                    @if (ViewBag.ViewRecordsCount > 0)
+                    {
+                        var presentPercentage = ((double)presentCount / ViewBag.ViewRecordsCount) * 100;
+                        var latePercentage = ((double)lateCount / ViewBag.ViewRecordsCount) * 100;
+                        var absentPercentage = ((double)absentCount / ViewBag.ViewRecordsCount) * 100;
+                        <div class="percentage">P: @presentPercentage.ToString("0.00")%</div>
+                        <div class="percentage">L: @latePercentage.ToString("0.00")%</div>
+                        <div class="percentage">A: @absentPercentage.ToString("0.00")%</div>
+                    }
+                    else
+                    {
+                        <text>N/A</text>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

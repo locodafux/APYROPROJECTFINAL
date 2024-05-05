@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_EducatorDashboardLayout.cshtml";
+}
+
+
+
+
+<style>
+    img {
+        width: 100px;
+        margin-bottom: 16px;
+    }
+</style>
+<div class="Container">
+
+    <img src="~/close.png" alt="Error" />
+
+    <h1 class="mb-3">No Attendance Record Data</h1>
+
+
+    <p>Kindly Ensure that a Session within this Class is Successfully Recorded.</p>
+
+    <a class="btn btn-primary" href="@Url.Action("EducatorReports", "ClassroomDBs")">Back</a>
+
+
+
+</div>

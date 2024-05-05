@@ -1804,7 +1804,16 @@ namespace APYROPROJECTFINAL.Controllers
                 return NotFound();
             }
 
-            var ViewRecords = await _context.AttendanceReportData.Where(m => m.Codeclass == EducatorClassCode).ToListAsync();
+            var datetbl = await _context.AttendanceReportDatanew
+         .Select(m => m.DateTBL)
+         .ToListAsync();
+
+            var ViewRecords = await _context.AttendanceReportData
+                .Where(m => m.Codeclass == EducatorClassCode && datetbl.Contains(m.AttendanceDateTBL))
+                .ToListAsync();
+
+
+
 
             if (ViewRecords == null || !ViewRecords.Any())
             {
@@ -1817,18 +1826,22 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+
+
+
+
         public async Task<IActionResult> ViewStudents(int? ClassCode)
         {
             if (ClassCode == null)
             {
-                return NotFound();
+                return RedirectToAction("ErrorPage", "ClassroomDBs");
             }
 
             var ViewRecords = await _context.AttendanceReportData.Where(m => m.Codeclass == ClassCode).ToListAsync();
 
             if (ViewRecords == null || !ViewRecords.Any())
             {
-                return NotFound();
+                return RedirectToAction("ErrorPage", "ClassroomDBs");
             }
             var ViewStudents = await _context.AttendanceReportDatanew.Where(m => m.EducatorClassCode == ClassCode).ToListAsync();
 
@@ -1845,6 +1858,13 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+        public IActionResult ErrorPage()
+        {
+            return View();
+        }
+
+
+
 
         public async Task<IActionResult>  ViewReports(int? ClassCode)
         {
@@ -1852,14 +1872,14 @@ namespace APYROPROJECTFINAL.Controllers
 
             if (ClassCode == null)
             {
-                return NotFound();
+                return RedirectToAction("ErrorPage", "ClassroomDBs");
             }
 
             var ViewReports = await _context.AttendanceReportDatanew.Where(m => m.EducatorClassCode == ClassCode).ToListAsync();
 
             if (ViewReports == null || !ViewReports.Any())
             {
-                return NotFound();
+                return RedirectToAction("ErrorPage", "ClassroomDBs");
             }
 
             return View(ViewReports);

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace APYROPROJECTFINAL.Controllers
 {
@@ -418,6 +419,138 @@ namespace APYROPROJECTFINAL.Controllers
 
 
 
+
+        
+
+
+        public async Task <IActionResult> AdminReports()
+        {
+
+            var EducatorsName = await _context.ClassroomDBS
+              .Select(c => c.Educator_Name)
+                 .Distinct()
+             .ToListAsync();
+
+
+            // Retrieve data for the dropdown list
+            //var categories = GetCategoriesFromDatabase(); // Replace this with your own logic to get categories
+
+            //// Create a SelectList to pass to the view
+            //SelectList categoryList = new SelectList(categories, "Id", "Name");
+
+            var categoryList = new SelectList(EducatorsName);
+
+
+            // Pass the SelectList to the view
+            ViewBag.Educators = categoryList;
+
+
+
+            return _context.ClassroomDBS != null ?
+                       View(await _context.ClassroomDBS.ToListAsync()) :
+                       Problem("Entity set 'AuthDBContext.ClassroomDBS'  is null.");
+
+        }
+
+
+        public async Task<IActionResult> AdminViewReportAsync(int? ClassCode)
+        {
+
+
+
+            if (ClassCode == null)
+            {
+                return RedirectToAction("AdminErrorPage", "Admin");
+            }
+
+            var ViewReports = await _context.AttendanceReportDatanew.Where(m => m.EducatorClassCode == ClassCode).ToListAsync();
+
+            if (ViewReports == null || !ViewReports.Any())
+            {
+                return RedirectToAction("AdminErrorPage", "Admin");
+            }
+
+            return View(ViewReports);
+        }
+
+
+
+
+
+
+        public async Task<IActionResult> AdminViewRecordsAsync(int? EducatorClassCode)
+        {
+
+
+            if (EducatorClassCode == null)
+            {
+                return RedirectToAction("AdminErrorPage", "Admin");
+            }
+
+            var datetbl = await _context.AttendanceReportDatanew
+         .Select(m => m.DateTBL)
+         .ToListAsync();
+
+            var ViewRecords = await _context.AttendanceReportData
+                .Where(m => m.Codeclass == EducatorClassCode && datetbl.Contains(m.AttendanceDateTBL))
+                .ToListAsync();
+
+
+
+
+            if (ViewRecords == null || !ViewRecords.Any())
+            {
+                return RedirectToAction("AdminErrorPage", "Admin");
+            }
+
+
+
+            return View(ViewRecords);
+        }
+
+
+
+
+        public async Task<IActionResult> AdminViewStudentsAsync(int? ClassCode)
+        {
+
+
+
+            if (ClassCode == null)
+            {
+                return RedirectToAction("AdminErrorPage", "Admin");
+            }
+
+            var ViewRecords = await _context.AttendanceReportData.Where(m => m.Codeclass == ClassCode).ToListAsync();
+
+            if (ViewRecords == null || !ViewRecords.Any())
+            {
+                return RedirectToAction("AdminErrorPage", "Admin");
+            }
+            var ViewStudents = await _context.AttendanceReportDatanew.Where(m => m.EducatorClassCode == ClassCode).ToListAsync();
+
+
+            ViewBag.ViewRecordsCount = ViewStudents.Count;
+
+
+
+
+            return View(ViewRecords);
+        }
+
+
+
+
+
+
+
+
+
+
+        public IActionResult AdminErrorPage()
+        {
+            return View();
+        }
 
 
 

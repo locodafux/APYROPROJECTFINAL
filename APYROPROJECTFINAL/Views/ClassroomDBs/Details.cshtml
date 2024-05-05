@@ -580,13 +580,15 @@ else
                         data: { Save: "Save", classcode5: '@ViewBag.Class' },
                         success: function (response) {
                             if (response.success) {
-                                console.log('Save Attendance updated successfully');
-                                alert('Save Attendance status updated.');
+                                console.log('Attendance Saved successfully');
+                                alert('Attendance Saved successfully');
                             } else {
-                                console.log('Error updating Save Attendance:', response.message);
+                                alert('Attendance Time column should be all formated as a valid date');
+                                console.log('Attendance Time column should be all formated as a valid date', response.message);
                             }
                         },
                         error: function (error) {
+                            alert('Attendance Time column should be all formated as a valid date');
                             console.log('Error updating Save Attendance:', error);
                         }
                     });
@@ -603,10 +605,10 @@ else
                         data: { Save1: "Save1", classcode6: '@ViewBag.Class' },
                         success: function (response) {
                             if (response.success) {
-                                console.log('Save Attendance Records updated successfully');
-                                alert('Save Attendance Records updated.');
+                                // console.log('Save Attendance Records updated successfully');
+                                // alert('Save Attendance Records updated.');
                             } else {
-                                console.log('Error updating Save Attendance Records:', response.message);
+                                // console.log('Error updating Save Attendance Records:', response.message);
                             }
                         },
                         error: function (error) {

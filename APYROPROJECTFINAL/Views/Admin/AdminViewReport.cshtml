@@ -1,6 +1,6 @@
-﻿@model IEnumerable<APYROPROJECTFINAL.Models.AttendanceReportData>
+﻿@model IEnumerable<APYROPROJECTFINAL.Models.AttendanceReportDatanew>
 @{
-    Layout = "~/Views/Shared/_EducatorDashboardLayout.cshtml";
+    Layout = "/Views/Shared/AdminLayout.cshtml";
 }
 
 
@@ -32,21 +32,23 @@
             @Html.DisplayNameFor(model => model.Attendance_Option)
             </th> *@
             <th>
-                @Html.DisplayNameFor(model => model.StudentTBL)
+                @Html.DisplayNameFor(model => model.DateTBL)
             </th>
-
+            @*      <th>
+            @Html.DisplayNameFor(model => model.Educator_Name)
+            </th> *@
             <th>
-                @Html.DisplayNameFor(model => model.StudentIDTBL)
+                @Html.DisplayNameFor(model => model.TimeTBL)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AttendanceDateTBL)
+                @Html.DisplayNameFor(model => model.TypeTBL)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StatusTBL)
+                @Html.DisplayNameFor(model => model.DescriptionTBL)
             </th>
-           
- 
-          
+            <th>
+                Action
+            </th>
 
         </tr>
     </thead>
@@ -58,22 +60,24 @@
             @Html.DisplayFor(modelItem => item.Attendance_Option)
             </td> *@
                 <td>
-                    @Html.DisplayFor(modelItem => item.StudentTBL)
+                    @Html.DisplayFor(modelItem => item.DateTBL)
                 </td>
                 @*            <td>
             @Html.DisplayFor(modelItem => item.Educator_Name)
             </td> *@
                 <td>
-                    @Html.DisplayFor(modelItem => item.StudentIDTBL)
+                    @Html.DisplayFor(modelItem => item.TimeTBL)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AttendanceDateTBL)
+                    @Html.DisplayFor(modelItem => item.TypeTBL)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StatusTBL)
+                    @Html.DisplayFor(modelItem => item.DescriptionTBL)
                 </td>
-            
-         
+
+                <td class="btns text-center">
+                    <a asp-action="AdminViewRecords" asp-route-EducatorClassCode="@item.EducatorClassCode">View Records</a>
+                </td>
             </tr>
         }
     </tbody>
